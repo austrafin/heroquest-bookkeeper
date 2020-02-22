@@ -34,7 +34,7 @@ const PlayerCard = ({ imagePath, characterName }) => {
           className={classes.media}
           src={imagePath}
           component="img"
-          title="Barbarian"
+          title={characterName}
         />
         <HealthSpinner labelText={"Body"} />
         <HealthSpinner labelText={"Mind"} />
