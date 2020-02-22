@@ -1,5 +1,5 @@
 import React from "react";
-import HealthSpinner from "./HealthSpinner";
+import NumberInput from "./NumberInput";
 import {
   Grid,
   Card,
@@ -36,8 +36,8 @@ const PlayerCard = ({ imagePath, characterName }) => {
           component="img"
           title={characterName}
         />
-        <HealthSpinner labelText={"Body"} />
-        <HealthSpinner labelText={"Mind"} />
+        <NumberInput labelText={"Body"} />
+        <NumberInput labelText={"Mind"} />
       </Grid>
     </Card>
   );

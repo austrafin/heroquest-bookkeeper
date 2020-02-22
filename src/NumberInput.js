@@ -1,13 +1,13 @@
 import React from "react";
 import { TextField } from "@material-ui/core";
 
-const HealthSpinner = ({ labelText }) => {
+const NumberInput = ({ labelText, maxValue = "100", step = "1" }) => {
   return (
     <TextField
       id="standard-basic"
       label={labelText}
       type="number"
-      inputProps={{ min: "0", max: "100", step: "1" }}
+      inputProps={{ min: "0", maxValue, step }}
       onKeyPress={evt => {
         var charCode = evt.which ? evt.which : evt.keyCode;
         if (
@@ -30,4 +30,4 @@ const HealthSpinner = ({ labelText }) => {
   );
 };
 
-export default HealthSpinner;
+export default NumberInput;
