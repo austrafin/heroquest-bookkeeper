@@ -7,6 +7,7 @@ import {
   CardMedia,
   Typography
 } from "@material-ui/core";
+import PlayerGold from "./PlayerGold";
 
 const useStyles = makeStyles({
   root: {
@@ -38,6 +39,7 @@ const PlayerCard = ({ imagePath, characterName }) => {
         />
         <NumberInput labelText={"Body"} />
         <NumberInput labelText={"Mind"} />
+        <PlayerGold />
       </Grid>
     </Card>
   );
