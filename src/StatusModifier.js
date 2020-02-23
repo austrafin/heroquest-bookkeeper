@@ -24,7 +24,12 @@ const StatusModifier = ({ maxValue = 100, step = 1, labelText }) => {
         />
       </Grid>
       <Grid item xs>
-        <ButtonGroup color="primary" variant="contained" fullWidth={true}>
+        <ButtonGroup
+          color="primary"
+          variant="contained"
+          fullWidth={true}
+          style={{ marginTop: 12 }}
+        >
           <Button onClick={() => addToStatus(inputRef)}>+</Button>
           <Button onClick={() => takeFromStatus(inputRef)}>-</Button>
         </ButtonGroup>
