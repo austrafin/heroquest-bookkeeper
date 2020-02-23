@@ -2,15 +2,29 @@ import React, { useRef } from "react";
 import NumberInput from "./NumberInput";
 import { Button, ButtonGroup, Grid } from "@material-ui/core";
 
-function addToStatus(input) {
-  input.current.value = "";
+function changeStatus(input, label, defaultValue, add) {
+  if (input && label) {
+    var currentValue = label.current.innerHTML;
+    if (currentValue === null || currentValue === "") {
+      label.current.innerHTML = "";
+    } else if (add) {
+      label.current.innerHTML =
+        Number(currentValue) + Number(input.current.value);
+    } else {
+      label.current.innerHTML =
+        Number(currentValue) - Number(input.current.value);
+    }
+    input.current.value = defaultValue;
+  }
 }
 
-function takeFromStatus(input) {
-  input.current.value = "";
-}
-
-const StatusModifier = ({ maxValue = 100, step = 1, labelText }) => {
+const StatusModifier = ({
+  maxValue = 100,
+  step = 1,
+  defaultValue = 1,
+  labelText,
+  labelReference
+}) => {
   const inputRef = useRef(null);
 
   return (
@@ -21,6 +35,7 @@ const StatusModifier = ({ maxValue = 100, step = 1, labelText }) => {
           labelText={labelText}
           maxValue={maxValue}
           step={step}
+          defaultValue={defaultValue}
         />
       </Grid>
       <Grid item xs>
@@ -30,8 +45,18 @@ const StatusModifier = ({ maxValue = 100, step = 1, labelText }) => {
           fullWidth={true}
           style={{ marginTop: 12 }}
         >
-          <Button onClick={() => addToStatus(inputRef)}>+</Button>
-          <Button onClick={() => takeFromStatus(inputRef)}>-</Button>
+          <Button
+            onClick={() =>
+              changeStatus(inputRef, labelReference, defaultValue, true)
+            }
+          >
+            +
+          </Button>
+          <Button
+            onClick={() => changeStatus(inputRef, labelReference, defaultValue)}
+          >
+            -
+          </Button>
         </ButtonGroup>
       </Grid>
     </Grid>

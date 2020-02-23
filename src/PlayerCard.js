@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useRef } from "react";
 import StatusModifier from "./StatusModifier";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import SchoolIcon from "@material-ui/icons/School";
 import GavelIcon from "@material-ui/icons/Gavel";
 import SecurityIcon from "@material-ui/icons/Security";
 import EuroIcon from "@material-ui/icons/Euro";
+import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
 
 import {
   Grid,
@@ -13,7 +14,6 @@ import {
   CardMedia,
   Typography
 } from "@material-ui/core";
-import PlayerGold from "./StatusModifier";
 import StatusLabel from "./StatusLabel";
 
 const useStyles = makeStyles({
@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     padding: "15px"
   },
   media: {
-    height: 160,
+    height: 195,
     width: "100%"
   },
   typography: {
@@ -29,8 +29,11 @@ const useStyles = makeStyles({
   }
 });
 
-const PlayerCard = ({ imagePath, characterName }) => {
+const PlayerCard = props => {
   const classes = useStyles();
+  const bodyRef = useRef(null);
+  const mindRef = useRef(null);
+  const goldRef = useRef(null);
 
   return (
     <Card raised={true} className={classes.root}>
@@ -39,37 +42,61 @@ const PlayerCard = ({ imagePath, characterName }) => {
           <Grid item xs>
             <CardMedia
               className={classes.media}
-              src={imagePath}
+              src={props.imagePath}
               component="img"
-              title={characterName}
+              title={props.characterName}
             />
           </Grid>
           <Grid item xs style={{ marginLeft: 10 }}>
             <Grid container justify="center" direction="column">
               <Typography variant="h4" className={classes.typography}>
-                {characterName}
+                {props.characterName}
               </Typography>
-              <StatusLabel labelText="Body">
+              <StatusLabel
+                labelText="Body"
+                labelValue={props.startBody}
+                labelRef={bodyRef}
+              >
                 <FavoriteIcon style={{ fill: "red" }} />
               </StatusLabel>
-              <StatusLabel labelText="Mind">
+              <StatusLabel
+                labelText="Mind"
+                labelValue={props.startMind}
+                labelRef={mindRef}
+              >
                 <SchoolIcon style={{ fill: "purple" }} />
               </StatusLabel>
-              <StatusLabel labelText="Attack">
+              <StatusLabel labelText="Attack" labelValue={props.startAttack}>
                 <GavelIcon style={{ fill: "black" }} />
               </StatusLabel>
-              <StatusLabel labelText="Defence">
+              <StatusLabel labelText="Defence" labelValue={props.startDefence}>
                 <SecurityIcon style={{ fill: "blue" }} />
               </StatusLabel>
-              <StatusLabel labelText="Gold">
+              <StatusLabel
+                labelText="Movement"
+                labelValue={props.startMovement}
+              >
+                <DirectionsRunIcon style={{ fill: "green" }} />
+              </StatusLabel>
+              <StatusLabel
+                labelText="Gold"
+                labelValue={props.startGold}
+                labelRef={goldRef}
+              >
                 <EuroIcon style={{ fill: "gold" }} />
               </StatusLabel>
             </Grid>
           </Grid>
         </Grid>
-        <StatusModifier maxValue={100} step={1} labelText={"Body"} />
-        <StatusModifier maxValue={100} step={1} labelText={"Mind"} />
-        <StatusModifier maxValue={100000} step={5} labelText={"Gold"} />
+        <StatusModifier labelText={"Body"} labelReference={bodyRef} />
+        <StatusModifier labelText={"Mind"} labelReference={mindRef} />
+        <StatusModifier
+          maxValue={100000}
+          step={5}
+          labelText={"Gold"}
+          labelReference={goldRef}
+          defaultValue={25}
+        />
       </Grid>
     </Card>
   );
