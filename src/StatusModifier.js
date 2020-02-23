@@ -2,15 +2,15 @@ import React, { useRef } from "react";
 import NumberInput from "./NumberInput";
 import { Button, ButtonGroup, Grid } from "@material-ui/core";
 
-function addGold(gold) {
-  gold.current.value = "";
+function addToStatus(input) {
+  input.current.value = "";
 }
 
-function takeGold(gold) {
-  gold.current.value = "";
+function takeFromStatus(input) {
+  input.current.value = "";
 }
 
-const PlayerGold = () => {
+const StatusModifier = ({ maxValue = 100, step = 1, labelText }) => {
   const inputRef = useRef(null);
 
   return (
@@ -18,19 +18,19 @@ const PlayerGold = () => {
       <Grid item xs>
         <NumberInput
           reference={inputRef}
-          labelText={"Gold"}
-          maxValue={10000}
-          step={5}
+          labelText={labelText}
+          maxValue={maxValue}
+          step={step}
         />
       </Grid>
       <Grid item xs>
         <ButtonGroup color="primary" variant="contained" fullWidth={true}>
-          <Button onClick={() => addGold(inputRef)}>+</Button>
-          <Button onClick={() => takeGold(inputRef)}>-</Button>
+          <Button onClick={() => addToStatus(inputRef)}>+</Button>
+          <Button onClick={() => takeFromStatus(inputRef)}>-</Button>
         </ButtonGroup>
       </Grid>
     </Grid>
   );
 };
 
-export default PlayerGold;
+export default StatusModifier;

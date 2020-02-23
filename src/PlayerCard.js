@@ -1,5 +1,5 @@
 import React from "react";
-import NumberInput from "./NumberInput";
+import StatusModifier from "./StatusModifier";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import SchoolIcon from "@material-ui/icons/School";
 import GavelIcon from "@material-ui/icons/Gavel";
@@ -13,7 +13,7 @@ import {
   CardMedia,
   Typography
 } from "@material-ui/core";
-import PlayerGold from "./PlayerGold";
+import PlayerGold from "./StatusModifier";
 import StatusLabel from "./StatusLabel";
 
 const useStyles = makeStyles({
@@ -67,10 +67,9 @@ const PlayerCard = ({ imagePath, characterName }) => {
             </Grid>
           </Grid>
         </Grid>
-
-        <NumberInput labelText={"Body"} />
-        <NumberInput labelText={"Mind"} />
-        <PlayerGold />
+        <StatusModifier maxValue={100} step={1} labelText={"Body"} />
+        <StatusModifier maxValue={100} step={1} labelText={"Mind"} />
+        <StatusModifier maxValue={100000} step={5} labelText={"Gold"} />
       </Grid>
     </Card>
   );
