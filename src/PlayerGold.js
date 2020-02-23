@@ -24,7 +24,7 @@ const PlayerGold = () => {
         />
       </Grid>
       <Grid item xs>
-        <ButtonGroup color="primary" variant="contained" fullWidth="true">
+        <ButtonGroup color="primary" variant="contained" fullWidth={true}>
           <Button onClick={() => addGold(inputRef)}>+</Button>
           <Button onClick={() => takeGold(inputRef)}>-</Button>
         </ButtonGroup>

@@ -26,7 +26,7 @@ const PlayerCard = ({ imagePath, characterName }) => {
   const classes = useStyles();
 
   return (
-    <Card raised="true" className={classes.root}>
+    <Card raised={true} className={classes.root}>
       <Grid container justify="center" direction="column">
         <Typography variant="h1" className={classes.typography}>
           {characterName}
