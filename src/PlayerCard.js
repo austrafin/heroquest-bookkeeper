@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import StatusModifier from "./StatusModifier";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import SchoolIcon from "@material-ui/icons/School";
@@ -30,10 +30,11 @@ const useStyles = makeStyles({
 });
 
 const PlayerCard = props => {
+  const [bodyPoints, setBodyPoints] = useState(props.startBody);
+  const [mindPoints, setMindPoints] = useState(props.startMind);
+  const [gold, setGold] = useState(props.startGold);
+
   const classes = useStyles();
-  const bodyRef = useRef(null);
-  const mindRef = useRef(null);
-  const goldRef = useRef(null);
 
   return (
     <Card raised={true} className={classes.root}>
@@ -52,18 +53,10 @@ const PlayerCard = props => {
               <Typography variant="h4" className={classes.typography}>
                 {props.characterName}
               </Typography>
-              <StatusLabel
-                labelText="Body"
-                labelValue={props.startBody}
-                labelRef={bodyRef}
-              >
+              <StatusLabel labelText="Body" labelValue={bodyPoints}>
                 <FavoriteIcon style={{ fill: "red" }} />
               </StatusLabel>
-              <StatusLabel
-                labelText="Mind"
-                labelValue={props.startMind}
-                labelRef={mindRef}
-              >
+              <StatusLabel labelText="Mind" labelValue={mindPoints}>
                 <SchoolIcon style={{ fill: "purple" }} />
               </StatusLabel>
               <StatusLabel labelText="Attack" labelValue={props.startAttack}>
@@ -78,23 +71,30 @@ const PlayerCard = props => {
               >
                 <DirectionsRunIcon style={{ fill: "green" }} />
               </StatusLabel>
-              <StatusLabel
-                labelText="Gold"
-                labelValue={props.startGold}
-                labelRef={goldRef}
-              >
+              <StatusLabel labelText="Gold" labelValue={gold}>
                 <EuroIcon style={{ fill: "gold" }} />
               </StatusLabel>
             </Grid>
           </Grid>
         </Grid>
-        <StatusModifier labelText={"Body"} labelReference={bodyRef} />
-        <StatusModifier labelText={"Mind"} labelReference={mindRef} />
+        <StatusModifier
+          labelText={"Body"}
+          setLabelValue={setBodyPoints}
+          labelValue={bodyPoints}
+          defaultValue={1}
+        />
+        <StatusModifier
+          labelText={"Mind"}
+          setLabelValue={setMindPoints}
+          labelValue={mindPoints}
+          defaultValue={1}
+        />
         <StatusModifier
           maxValue={100000}
           step={5}
           labelText={"Gold"}
-          labelReference={goldRef}
+          setLabelValue={setGold}
+          labelValue={gold}
           defaultValue={25}
         />
       </Grid>

@@ -1,41 +1,19 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import NumberInput from "./NumberInput";
 import { Button, ButtonGroup, Grid } from "@material-ui/core";
 
-function changeStatus(input, label, defaultValue, add) {
-  if (input && label) {
-    var currentValue = label.current.innerHTML;
-    if (currentValue === null || currentValue === "") {
-      label.current.innerHTML = "";
-    } else if (add) {
-      label.current.innerHTML =
-        Number(currentValue) + Number(input.current.value);
-    } else {
-      label.current.innerHTML =
-        Number(currentValue) - Number(input.current.value);
-    }
-    input.current.value = defaultValue;
-  }
-}
-
-const StatusModifier = ({
-  maxValue = 100,
-  step = 1,
-  defaultValue = 1,
-  labelText,
-  labelReference
-}) => {
-  const inputRef = useRef(null);
+const StatusModifier = props => {
+  const [inputValue, setInputValue] = useState(props.defaultValue);
 
   return (
     <Grid container spacing={1}>
       <Grid item xs>
         <NumberInput
-          reference={inputRef}
-          labelText={labelText}
-          maxValue={maxValue}
-          step={step}
-          defaultValue={defaultValue}
+          labelText={props.labelText}
+          maxValue={props.maxValue}
+          step={props.step}
+          defaultValue={props.defaultValue}
+          setValue={setInputValue}
         />
       </Grid>
       <Grid item xs>
@@ -46,14 +24,12 @@ const StatusModifier = ({
           style={{ marginTop: 12 }}
         >
           <Button
-            onClick={() =>
-              changeStatus(inputRef, labelReference, defaultValue, true)
-            }
+            onClick={() => props.setLabelValue(props.labelValue + inputValue)}
           >
             +
           </Button>
           <Button
-            onClick={() => changeStatus(inputRef, labelReference, defaultValue)}
+            onClick={() => props.setLabelValue(props.labelValue - inputValue)}
           >
             -
           </Button>

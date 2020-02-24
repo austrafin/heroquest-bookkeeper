@@ -3,10 +3,10 @@ import { TextField } from "@material-ui/core";
 
 const NumberInput = ({
   labelText,
-  maxValue = 1000,
+  maxValue = 100,
   step = 1,
-  defaultValue = 1,
-  reference
+  defaultValue,
+  setValue
 }) => {
   return (
     <TextField
@@ -17,8 +17,7 @@ const NumberInput = ({
       inputProps={{
         min: 0,
         max: maxValue,
-        step: step,
-        ref: reference
+        step: step
       }}
       onKeyPress={(evt, value = maxValue) => {
         var charCode = evt.which ? evt.which : evt.keyCode;
@@ -37,6 +36,9 @@ const NumberInput = ({
         } else {
           evt.preventDefault();
         }
+      }}
+      onChange={evt => {
+        setValue(Number(evt.target.value));
       }}
     />
   );
