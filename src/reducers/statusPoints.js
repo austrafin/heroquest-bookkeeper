@@ -8,41 +8,15 @@ const initialValue = {
 function statusPointsReducer(state = initialValue, action) {
   switch (action.type) {
     case INCREMENT:
-      switch (action.label) {
-        case "body":
-          return {
-            ...state,
-            body: state.body + action.incrementValue
-          };
-        case "mind":
-          return {
-            ...state,
-            mind: state.mind + action.incrementValue
-          };
-        case "gold":
-          return {
-            ...state,
-            gold: state.gold + action.incrementValue
-          };
-      }
+      return {
+        ...state,
+        [action.label]: state[[action.label]] + action.incrementValue
+      };
     case DECREMENT:
-      switch (action.label) {
-        case "body":
-          return {
-            ...state,
-            body: state.body - action.incrementValue
-          };
-        case "mind":
-          return {
-            ...state,
-            mind: state.mind - action.incrementValue
-          };
-        case "gold":
-          return {
-            ...state,
-            gold: state.gold - action.incrementValue
-          };
-      }
+      return {
+        ...state,
+        [action.label]: state[[action.label]] - action.incrementValue
+      };
   }
 
   return state;
