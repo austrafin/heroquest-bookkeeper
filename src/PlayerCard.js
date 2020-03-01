@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import StatusModifier from "./StatusModifier";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import SchoolIcon from "@material-ui/icons/School";
@@ -6,6 +6,7 @@ import GavelIcon from "@material-ui/icons/Gavel";
 import SecurityIcon from "@material-ui/icons/Security";
 import EuroIcon from "@material-ui/icons/Euro";
 import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
+import { useSelector } from "react-redux";
 
 import {
   Grid,
@@ -30,11 +31,8 @@ const useStyles = makeStyles({
 });
 
 const PlayerCard = props => {
-  const [bodyPoints, setBodyPoints] = useState(props.startBody);
-  const [mindPoints, setMindPoints] = useState(props.startMind);
-  const [gold, setGold] = useState(props.startGold);
-
   const classes = useStyles();
+  const statusPoints = useSelector(state => state.statusLabel);
 
   return (
     <Card raised={true} className={classes.root}>
@@ -53,10 +51,10 @@ const PlayerCard = props => {
               <Typography variant="h4" className={classes.typography}>
                 {props.characterName}
               </Typography>
-              <StatusLabel labelText="Body" labelValue={bodyPoints}>
+              <StatusLabel labelText="Body" labelValue={statusPoints.body}>
                 <FavoriteIcon style={{ fill: "red" }} />
               </StatusLabel>
-              <StatusLabel labelText="Mind" labelValue={mindPoints}>
+              <StatusLabel labelText="Mind" labelValue={statusPoints.mind}>
                 <SchoolIcon style={{ fill: "purple" }} />
               </StatusLabel>
               <StatusLabel labelText="Attack" labelValue={props.startAttack}>
@@ -71,7 +69,7 @@ const PlayerCard = props => {
               >
                 <DirectionsRunIcon style={{ fill: "green" }} />
               </StatusLabel>
-              <StatusLabel labelText="Gold" labelValue={gold}>
+              <StatusLabel labelText="Gold" labelValue={statusPoints.gold}>
                 <EuroIcon style={{ fill: "gold" }} />
               </StatusLabel>
             </Grid>
@@ -79,23 +77,23 @@ const PlayerCard = props => {
         </Grid>
         <StatusModifier
           labelText={"Body"}
-          setLabelValue={setBodyPoints}
-          labelValue={bodyPoints}
+          labelValue={0}
           defaultValue={1}
+          labelParameter={"body"}
         />
         <StatusModifier
           labelText={"Mind"}
-          setLabelValue={setMindPoints}
-          labelValue={mindPoints}
+          labelValue={0}
           defaultValue={1}
+          labelParameter={"mind"}
         />
         <StatusModifier
           maxValue={100000}
           step={5}
           labelText={"Gold"}
-          setLabelValue={setGold}
-          labelValue={gold}
+          labelValue={0}
           defaultValue={25}
+          labelParameter={"gold"}
         />
       </Grid>
     </Card>

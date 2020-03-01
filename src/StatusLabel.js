@@ -8,9 +8,7 @@ const StatusLabel = ({ children, labelText, labelValue }) => {
       <label style={{ fontSize: 20, flex: 1, marginLeft: 5 }}>
         {labelText}
       </label>
-      <span value={labelValue} style={{ fontSize: 20 }}>
-        {labelValue}
-      </span>
+      <span style={{ fontSize: 20 }}>{labelValue}</span>
     </Box>
   );
 };

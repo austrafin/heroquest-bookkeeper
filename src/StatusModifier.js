@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import NumberInput from "./NumberInput";
 import { Button, ButtonGroup, Grid } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { increment, decrement } from "./actions/statusPoints";
 
 const StatusModifier = props => {
-  const [inputValue, setInputValue] = useState(props.defaultValue);
+  const dispatch = useDispatch();
+  const inputValue = useSelector(
+    state => state.inputValue[props.labelParameter]
+  );
 
   return (
     <Grid container spacing={1}>
@@ -13,7 +18,7 @@ const StatusModifier = props => {
           maxValue={props.maxValue}
           step={props.step}
           defaultValue={props.defaultValue}
-          setValue={setInputValue}
+          labelParameter={props.labelParameter}
         />
       </Grid>
       <Grid item xs>
@@ -24,12 +29,16 @@ const StatusModifier = props => {
           style={{ marginTop: 12 }}
         >
           <Button
-            onClick={() => props.setLabelValue(props.labelValue + inputValue)}
+            onClick={() =>
+              dispatch(increment(inputValue, props.labelParameter))
+            }
           >
             +
           </Button>
           <Button
-            onClick={() => props.setLabelValue(props.labelValue - inputValue)}
+            onClick={() =>
+              dispatch(decrement(inputValue, props.labelParameter))
+            }
           >
             -
           </Button>

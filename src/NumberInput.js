@@ -1,13 +1,16 @@
 import React from "react";
 import { TextField } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { setInputValue } from "./actions/inputValue";
 
 const NumberInput = ({
   labelText,
   maxValue = 100,
   step = 1,
   defaultValue,
-  setValue
+  labelParameter
 }) => {
+  const dispatch = useDispatch();
   return (
     <TextField
       id="standard-basic"
@@ -38,7 +41,7 @@ const NumberInput = ({
         }
       }}
       onChange={evt => {
-        setValue(Number(evt.target.value));
+        dispatch(setInputValue(Number(evt.target.value), labelParameter));
       }}
     />
   );
