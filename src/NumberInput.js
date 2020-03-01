@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField } from "@material-ui/core";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setInputValue } from "./actions/inputValue";
 
 const NumberInput = ({
@@ -11,6 +11,12 @@ const NumberInput = ({
   labelParameter
 }) => {
   const dispatch = useDispatch();
+  const inputValue = useSelector(state => state.inputValue);
+
+  if (inputValue[labelParameter] === undefined) {
+    dispatch(setInputValue(defaultValue, labelParameter));
+  }
+
   return (
     <TextField
       id="standard-basic"

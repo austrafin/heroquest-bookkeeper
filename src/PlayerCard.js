@@ -6,7 +6,6 @@ import GavelIcon from "@material-ui/icons/Gavel";
 import SecurityIcon from "@material-ui/icons/Security";
 import EuroIcon from "@material-ui/icons/Euro";
 import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
-import { useSelector } from "react-redux";
 
 import {
   Grid,
@@ -32,7 +31,12 @@ const useStyles = makeStyles({
 
 const PlayerCard = props => {
   const classes = useStyles();
-  const statusPoints = useSelector(state => state.statusLabel);
+  const bodyLabelParameter = "body" + props.characterName;
+  const mindLabelParameter = "mind" + props.characterName;
+  const attackLabelParameter = "attack" + props.characterName;
+  const defenceLabelParameter = "defence" + props.characterName;
+  const movementLabelParameter = "movement" + props.characterName;
+  const goldLabelParameter = "gold" + props.characterName;
 
   return (
     <Card raised={true} className={classes.root}>
@@ -51,25 +55,46 @@ const PlayerCard = props => {
               <Typography variant="h4" className={classes.typography}>
                 {props.characterName}
               </Typography>
-              <StatusLabel labelText="Body" labelValue={statusPoints.body}>
+              <StatusLabel
+                labelText="Body"
+                labelParameter={bodyLabelParameter}
+                startValue={props.startBody}
+              >
                 <FavoriteIcon style={{ fill: "red" }} />
               </StatusLabel>
-              <StatusLabel labelText="Mind" labelValue={statusPoints.mind}>
+              <StatusLabel
+                labelText="Mind"
+                labelParameter={mindLabelParameter}
+                startValue={props.startMind}
+              >
                 <SchoolIcon style={{ fill: "purple" }} />
               </StatusLabel>
-              <StatusLabel labelText="Attack" labelValue={props.startAttack}>
+              <StatusLabel
+                labelText="Attack"
+                labelParameter={attackLabelParameter}
+                startValue={props.startAttack}
+              >
                 <GavelIcon style={{ fill: "black" }} />
               </StatusLabel>
-              <StatusLabel labelText="Defence" labelValue={props.startDefence}>
+              <StatusLabel
+                labelText="Defence"
+                labelParameter={defenceLabelParameter}
+                startValue={props.startDefence}
+              >
                 <SecurityIcon style={{ fill: "blue" }} />
               </StatusLabel>
               <StatusLabel
                 labelText="Movement"
-                labelValue={props.startMovement}
+                labelParameter={movementLabelParameter}
+                startValue={props.startMovement}
               >
                 <DirectionsRunIcon style={{ fill: "green" }} />
               </StatusLabel>
-              <StatusLabel labelText="Gold" labelValue={statusPoints.gold}>
+              <StatusLabel
+                labelText="Gold"
+                labelParameter={goldLabelParameter}
+                startValue={0}
+              >
                 <EuroIcon style={{ fill: "gold" }} />
               </StatusLabel>
             </Grid>
@@ -77,23 +102,23 @@ const PlayerCard = props => {
         </Grid>
         <StatusModifier
           labelText={"Body"}
-          labelValue={0}
+          startValue={0}
           defaultValue={1}
-          labelParameter={"body"}
+          labelParameter={bodyLabelParameter}
         />
         <StatusModifier
           labelText={"Mind"}
-          labelValue={0}
+          startValue={0}
           defaultValue={1}
-          labelParameter={"mind"}
+          labelParameter={mindLabelParameter}
         />
         <StatusModifier
           maxValue={100000}
           step={5}
           labelText={"Gold"}
-          labelValue={0}
+          startValue={0}
           defaultValue={25}
-          labelParameter={"gold"}
+          labelParameter={goldLabelParameter}
         />
       </Grid>
     </Card>

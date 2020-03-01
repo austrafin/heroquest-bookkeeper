@@ -3,7 +3,7 @@ import statusPointsReducer from "./reducers/statusPoints";
 import inputValueReducer from "./reducers/inputValue";
 
 const rootReducer = combineReducers({
-  statusLabel: statusPointsReducer,
+  statusPoints: statusPointsReducer,
   inputValue: inputValueReducer
 });
 

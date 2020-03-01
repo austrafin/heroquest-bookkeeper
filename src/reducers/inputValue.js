@@ -1,10 +1,4 @@
-const initialValue = {
-  body: 1,
-  mind: 1,
-  gold: 25
-};
-
-function inputValueReducer(state = initialValue, action) {
+function inputValueReducer(state, action) {
   return {
     ...state,
     [action.status]: action.value
