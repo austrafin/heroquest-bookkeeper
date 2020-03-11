@@ -55,46 +55,31 @@ const PlayerCard = props => {
               <Typography variant="h4" className={classes.typography}>
                 {props.characterName}
               </Typography>
-              <StatusLabel
-                labelText="Body"
-                labelParameter={bodyLabelParameter}
-                startValue={props.startBody}
-              >
+              <StatusLabel labelText="Body" labelParameter={bodyLabelParameter}>
                 <FavoriteIcon style={{ fill: "red" }} />
               </StatusLabel>
-              <StatusLabel
-                labelText="Mind"
-                labelParameter={mindLabelParameter}
-                startValue={props.startMind}
-              >
+              <StatusLabel labelText="Mind" labelParameter={mindLabelParameter}>
                 <SchoolIcon style={{ fill: "purple" }} />
               </StatusLabel>
               <StatusLabel
                 labelText="Attack"
                 labelParameter={attackLabelParameter}
-                startValue={props.startAttack}
               >
                 <GavelIcon style={{ fill: "black" }} />
               </StatusLabel>
               <StatusLabel
                 labelText="Defence"
                 labelParameter={defenceLabelParameter}
-                startValue={props.startDefence}
               >
                 <SecurityIcon style={{ fill: "blue" }} />
               </StatusLabel>
               <StatusLabel
                 labelText="Movement"
                 labelParameter={movementLabelParameter}
-                startValue={props.startMovement}
               >
                 <DirectionsRunIcon style={{ fill: "green" }} />
               </StatusLabel>
-              <StatusLabel
-                labelText="Gold"
-                labelParameter={goldLabelParameter}
-                startValue={0}
-              >
+              <StatusLabel labelText="Gold" labelParameter={goldLabelParameter}>
                 <EuroIcon style={{ fill: "gold" }} />
               </StatusLabel>
             </Grid>
@@ -102,13 +87,11 @@ const PlayerCard = props => {
         </Grid>
         <StatusModifier
           labelText={"Body"}
-          startValue={0}
           defaultValue={1}
           labelParameter={bodyLabelParameter}
         />
         <StatusModifier
           labelText={"Mind"}
-          startValue={0}
           defaultValue={1}
           labelParameter={mindLabelParameter}
         />
@@ -116,7 +99,6 @@ const PlayerCard = props => {
           maxValue={100000}
           step={5}
           labelText={"Gold"}
-          startValue={0}
           defaultValue={25}
           labelParameter={goldLabelParameter}
         />

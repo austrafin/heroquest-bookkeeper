@@ -6,6 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { increment } from "./actions/statusPoints";
 
 function a11yProps(index) {
   return {
@@ -15,6 +18,26 @@ function a11yProps(index) {
 }
 
 function App() {
+  const dispatch = useDispatch();
+
+  axios
+    .get("http://localhost:5000/player_cards")
+    .then(response => {
+      response.data.map(card => {
+        dispatch(increment(card.bodyPoints, "body" + card.characterName));
+        dispatch(increment(card.mindPoints, "mind" + card.characterName));
+        dispatch(increment(card.attackPoints, "attack" + card.characterName));
+        dispatch(increment(card.defencePoints, "defence" + card.characterName));
+        dispatch(
+          increment(card.movementPoints, "movement" + card.characterName)
+        );
+        dispatch(increment(card.gold, "gold" + card.characterName));
+      });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
   const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
@@ -49,45 +72,16 @@ function App() {
               <PlayerCard
                 imagePath={"barbarian.webp"}
                 characterName={"Barbarian"}
-                startBody={7}
-                startMind={3}
-                startAttack={3}
-                startDefence={2}
-                startMovement={2}
               />
             </Grid>
             <Grid item xs>
-              <PlayerCard
-                imagePath={"dwarf.jpg"}
-                characterName={"Dwarf"}
-                startBody={7}
-                startMind={3}
-                startAttack={2}
-                startDefence={2}
-                startMovement={2}
-              />
+              <PlayerCard imagePath={"dwarf.jpg"} characterName={"Dwarf"} />
             </Grid>
             <Grid item xs>
-              <PlayerCard
-                imagePath={"elf.jpg"}
-                characterName={"Elf"}
-                startBody={6}
-                startMind={4}
-                startAttack={2}
-                startDefence={2}
-                startMovement={2}
-              />
+              <PlayerCard imagePath={"elf.jpg"} characterName={"Elf"} />
             </Grid>
             <Grid item xs>
-              <PlayerCard
-                imagePath={"wizard.webp"}
-                characterName={"Wizard"}
-                startBody={4}
-                startMind={6}
-                startAttack={1}
-                startDefence={2}
-                startMovement={2}
-              />
+              <PlayerCard imagePath={"wizard.webp"} characterName={"Wizard"} />
             </Grid>
           </Grid>
         </TabPanel>
