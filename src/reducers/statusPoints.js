@@ -1,4 +1,4 @@
-import { INCREMENT, DECREMENT } from "../actions/statusPoints";
+import { INCREMENT, DECREMENT, INITIALISE } from "../actions/statusPoints";
 
 function statusPointsReducer(state = {}, action) {
   switch (action.type) {
@@ -23,6 +23,11 @@ function statusPointsReducer(state = {}, action) {
       return {
         ...state,
         [action.label]: 0 - action.incrementValue
+      };
+    case INITIALISE:
+      return {
+        ...state,
+        ...action.data
       };
   }
 

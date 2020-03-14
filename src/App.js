@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PlayerCard from "./PlayerCard";
 import TabPanel from "./TabPanel";
 import { Grid } from "@material-ui/core";
@@ -6,9 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import axios from "axios";
 import { useDispatch } from "react-redux";
-import { increment } from "./actions/statusPoints";
+import { initialise } from "./actions/statusPoints";
+import axios from "axios";
 
 function a11yProps(index) {
   return {
@@ -19,25 +19,6 @@ function a11yProps(index) {
 
 function App() {
   const dispatch = useDispatch();
-
-  axios
-    .get("http://localhost:5000/player_cards")
-    .then(response => {
-      response.data.map(card => {
-        dispatch(increment(card.bodyPoints, "body" + card.characterName));
-        dispatch(increment(card.mindPoints, "mind" + card.characterName));
-        dispatch(increment(card.attackPoints, "attack" + card.characterName));
-        dispatch(increment(card.defencePoints, "defence" + card.characterName));
-        dispatch(
-          increment(card.movementPoints, "movement" + card.characterName)
-        );
-        dispatch(increment(card.gold, "gold" + card.characterName));
-      });
-    })
-    .catch(error => {
-      console.log(error);
-    });
-
   const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
@@ -51,6 +32,26 @@ function App() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    const initialValues = {};
+    axios
+      .get("http://localhost:5000/player_cards")
+      .then(response => {
+        response.data.map(card => {
+          initialValues["body" + card.characterName] = card.bodyPoints;
+          initialValues["mind" + card.characterName] = card.mindPoints;
+          initialValues["attack" + card.characterName] = card.attackPoints;
+          initialValues["defence" + card.characterName] = card.defencePoints;
+          initialValues["movement" + card.characterName] = card.movementPoints;
+          initialValues["gold" + card.characterName] = card.gold;
+        });
+        dispatch(initialise(initialValues));
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <Grid container>
