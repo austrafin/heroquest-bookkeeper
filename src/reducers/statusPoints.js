@@ -3,26 +3,40 @@ import { INCREMENT, DECREMENT, INITIALISE } from "../actions/statusPoints";
 function statusPointsReducer(state = {}, action) {
   switch (action.type) {
     case INCREMENT:
-      if ([action.label] in state) {
+      if (action.cardId in state) {
         return {
           ...state,
-          [action.label]: state[[action.label]] + action.incrementValue
+          [action.cardId]: {
+            ...state[action.cardId],
+            [action.label]:
+              state[action.cardId][action.label] + action.incrementValue
+          }
         };
       }
       return {
         ...state,
-        [action.label]: 0 + action.incrementValue
+        [action.cardId]: {
+          ...state[action.cardId],
+          [action.label]: 0 + action.incrementValue
+        }
       };
     case DECREMENT:
-      if ([action.label] in state) {
+      if (action.cardId in state) {
         return {
           ...state,
-          [action.label]: state[[action.label]] - action.incrementValue
+          [action.cardId]: {
+            ...state[action.cardId],
+            [action.label]:
+              state[action.cardId][action.label] - action.incrementValue
+          }
         };
       }
       return {
         ...state,
-        [action.label]: 0 - action.incrementValue
+        [action.cardId]: {
+          ...state[action.cardId],
+          [action.label]: 0 - action.incrementValue
+        }
       };
     case INITIALISE:
       return {

@@ -8,13 +8,17 @@ const NumberInput = ({
   maxValue = 100,
   step = 1,
   defaultValue,
-  labelParameter
+  labelParameter,
+  cardId
 }) => {
   const dispatch = useDispatch();
   const inputValue = useSelector(state => state.inputValue);
 
-  if (inputValue[labelParameter] === undefined) {
-    dispatch(setInputValue(defaultValue, labelParameter));
+  if (
+    inputValue[cardId] === undefined ||
+    inputValue[cardId][labelParameter] === undefined
+  ) {
+    dispatch(setInputValue(defaultValue, labelParameter, cardId));
   }
 
   return (
@@ -47,7 +51,9 @@ const NumberInput = ({
         }
       }}
       onChange={evt => {
-        dispatch(setInputValue(Number(evt.target.value), labelParameter));
+        dispatch(
+          setInputValue(Number(evt.target.value), labelParameter, cardId)
+        );
       }}
     />
   );

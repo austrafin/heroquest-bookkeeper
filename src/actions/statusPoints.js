@@ -9,18 +9,20 @@ export function initialise(data) {
   };
 }
 
-export function increment(value, label) {
+export function increment(value, label, cardId) {
   return {
     type: INCREMENT,
     incrementValue: value,
-    label: label
+    label: label,
+    cardId: cardId
   };
 }
 
-export function decrement(value, label) {
+export function decrement(value, label, cardId) {
   return {
     type: DECREMENT,
     incrementValue: value,
-    label: label
+    label: label,
+    cardId: cardId
   };
 }

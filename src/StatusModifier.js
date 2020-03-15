@@ -6,9 +6,7 @@ import { increment, decrement } from "./actions/statusPoints";
 
 const StatusModifier = props => {
   const dispatch = useDispatch();
-  const inputValue = useSelector(
-    state => state.inputValue[props.labelParameter]
-  );
+  const inputValue = useSelector(state => state.inputValue[props.cardId]);
 
   return (
     <Grid container spacing={1}>
@@ -19,6 +17,7 @@ const StatusModifier = props => {
           step={props.step}
           defaultValue={props.defaultValue}
           labelParameter={props.labelParameter}
+          cardId={props.cardId}
         />
       </Grid>
       <Grid item xs>
@@ -30,14 +29,26 @@ const StatusModifier = props => {
         >
           <Button
             onClick={() =>
-              dispatch(increment(inputValue, props.labelParameter))
+              dispatch(
+                increment(
+                  inputValue[props.labelParameter],
+                  props.labelParameter,
+                  props.cardId
+                )
+              )
             }
           >
             +
           </Button>
           <Button
             onClick={() =>
-              dispatch(decrement(inputValue, props.labelParameter))
+              dispatch(
+                decrement(
+                  inputValue[props.labelParameter],
+                  props.labelParameter,
+                  props.cardId
+                )
+              )
             }
           >
             -

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PlayerCard from "./PlayerCard";
 import TabPanel from "./TabPanel";
 import { Grid } from "@material-ui/core";
@@ -18,16 +18,19 @@ function a11yProps(index) {
 }
 
 function App() {
+  const [value, setValue] = useState(0);
+  const [hasLoaded, setLoaded] = useState(null);
+  const [cardIds, setCardIds] = useState(null);
   const dispatch = useDispatch();
-  const useStyles = makeStyles(theme => ({
-    root: {
-      flexGrow: 1,
-      backgroundColor: "rgba(148, 133, 0, 0.603)"
-    }
-  }));
 
-  const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const classes = () => {
+    return makeStyles(theme => ({
+      root: {
+        flexGrow: 1,
+        backgroundColor: "rgba(148, 133, 0, 0.603)"
+      }
+    }));
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -35,23 +38,36 @@ function App() {
 
   useEffect(() => {
     const initialValues = {};
+    const ids = [];
     axios
       .get("http://localhost:5000/player_cards")
       .then(response => {
         response.data.map(card => {
-          initialValues["body" + card.characterName] = card.bodyPoints;
-          initialValues["mind" + card.characterName] = card.mindPoints;
-          initialValues["attack" + card.characterName] = card.attackPoints;
-          initialValues["defence" + card.characterName] = card.defencePoints;
-          initialValues["movement" + card.characterName] = card.movementPoints;
-          initialValues["gold" + card.characterName] = card.gold;
+          const values = {};
+          values["bodyPoints"] = card.bodyPoints;
+          values["mindPoints"] = card.mindPoints;
+          values["attackPoints"] = card.attackPoints;
+          values["defencePoints"] = card.defencePoints;
+          values["movementPoints"] = card.movementPoints;
+          values["gold"] = card.gold;
+
+          initialValues[card._id] = values;
+          ids.push(card._id);
         });
+        setCardIds(ids);
         dispatch(initialise(initialValues));
+        setLoaded(true);
       })
       .catch(error => {
         console.log(error);
       });
   }, []);
+
+  console.log(cardIds);
+
+  if (!hasLoaded) {
+    return "Loading...";
+  }
 
   return (
     <Grid container>
@@ -73,16 +89,29 @@ function App() {
               <PlayerCard
                 imagePath={"barbarian.webp"}
                 characterName={"Barbarian"}
+                cardId={cardIds[0]}
               />
             </Grid>
             <Grid item xs>
-              <PlayerCard imagePath={"dwarf.jpg"} characterName={"Dwarf"} />
+              <PlayerCard
+                imagePath={"dwarf.jpg"}
+                characterName={"Dwarf"}
+                cardId={cardIds[1]}
+              />
             </Grid>
             <Grid item xs>
-              <PlayerCard imagePath={"elf.jpg"} characterName={"Elf"} />
+              <PlayerCard
+                imagePath={"elf.jpg"}
+                characterName={"Elf"}
+                cardId={cardIds[2]}
+              />
             </Grid>
             <Grid item xs>
-              <PlayerCard imagePath={"wizard.webp"} characterName={"Wizard"} />
+              <PlayerCard
+                imagePath={"wizard.webp"}
+                characterName={"Wizard"}
+                cardId={cardIds[3]}
+              />
             </Grid>
           </Grid>
         </TabPanel>

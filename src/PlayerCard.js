@@ -31,12 +31,12 @@ const useStyles = makeStyles({
 
 const PlayerCard = props => {
   const classes = useStyles();
-  const bodyLabelParameter = "body" + props.characterName;
-  const mindLabelParameter = "mind" + props.characterName;
-  const attackLabelParameter = "attack" + props.characterName;
-  const defenceLabelParameter = "defence" + props.characterName;
-  const movementLabelParameter = "movement" + props.characterName;
-  const goldLabelParameter = "gold" + props.characterName;
+  const bodyLabelParameter = "bodyPoints";
+  const mindLabelParameter = "mindPoints";
+  const attackLabelParameter = "attackPoints";
+  const defenceLabelParameter = "defencePoints";
+  const movementLabelParameter = "movementPoints";
+  const goldLabelParameter = "gold";
 
   return (
     <Card raised={true} className={classes.root}>
@@ -55,31 +55,46 @@ const PlayerCard = props => {
               <Typography variant="h4" className={classes.typography}>
                 {props.characterName}
               </Typography>
-              <StatusLabel labelText="Body" labelParameter={bodyLabelParameter}>
+              <StatusLabel
+                labelText="Body"
+                labelParameter={bodyLabelParameter}
+                cardId={props.cardId}
+              >
                 <FavoriteIcon style={{ fill: "red" }} />
               </StatusLabel>
-              <StatusLabel labelText="Mind" labelParameter={mindLabelParameter}>
+              <StatusLabel
+                labelText="Mind"
+                labelParameter={mindLabelParameter}
+                cardId={props.cardId}
+              >
                 <SchoolIcon style={{ fill: "purple" }} />
               </StatusLabel>
               <StatusLabel
                 labelText="Attack"
                 labelParameter={attackLabelParameter}
+                cardId={props.cardId}
               >
                 <GavelIcon style={{ fill: "black" }} />
               </StatusLabel>
               <StatusLabel
                 labelText="Defence"
                 labelParameter={defenceLabelParameter}
+                cardId={props.cardId}
               >
                 <SecurityIcon style={{ fill: "blue" }} />
               </StatusLabel>
               <StatusLabel
                 labelText="Movement"
                 labelParameter={movementLabelParameter}
+                cardId={props.cardId}
               >
                 <DirectionsRunIcon style={{ fill: "green" }} />
               </StatusLabel>
-              <StatusLabel labelText="Gold" labelParameter={goldLabelParameter}>
+              <StatusLabel
+                labelText="Gold"
+                labelParameter={goldLabelParameter}
+                cardId={props.cardId}
+              >
                 <EuroIcon style={{ fill: "gold" }} />
               </StatusLabel>
             </Grid>
@@ -89,11 +104,13 @@ const PlayerCard = props => {
           labelText={"Body"}
           defaultValue={1}
           labelParameter={bodyLabelParameter}
+          cardId={props.cardId}
         />
         <StatusModifier
           labelText={"Mind"}
           defaultValue={1}
           labelParameter={mindLabelParameter}
+          cardId={props.cardId}
         />
         <StatusModifier
           maxValue={100000}
@@ -101,6 +118,7 @@ const PlayerCard = props => {
           labelText={"Gold"}
           defaultValue={25}
           labelParameter={goldLabelParameter}
+          cardId={props.cardId}
         />
       </Grid>
     </Card>
