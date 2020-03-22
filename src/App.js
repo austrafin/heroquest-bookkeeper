@@ -63,8 +63,6 @@ function App() {
       });
   }, []);
 
-  console.log(cardIds);
-
   if (!hasLoaded) {
     return "Loading...";
   }
