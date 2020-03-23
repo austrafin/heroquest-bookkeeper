@@ -33,11 +33,23 @@ router.route("/add").post((req, res) => {
 });
 
 router.route("/update").post((req, res) => {
-  for (var id in req.body) {
-    PlayerCard.findOneAndUpdate({ _id: id }, req.body[id]).catch(err =>
-      res.status(400).json("Error: " + err)
-    );
-  }
+  const fs = require("mz/fs");
+
+  fs.readFile("./burger.png").then(data => {
+    for (var id in req.body) {
+      let base64 = data.toString("base64");
+      let imageBuffer = new Buffer(base64, "base64");
+
+      const values = req.body[id];
+      values["imageFile"] = imageBuffer;
+      console.log(id);
+
+      PlayerCard.findOneAndUpdate({ _id: id }, values).catch(err =>
+        res.status(400).json("Error: " + err)
+      );
+    }
+  });
+
   res.json("Player cards updated");
 });
 

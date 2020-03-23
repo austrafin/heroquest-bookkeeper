@@ -11,7 +11,8 @@ const playerCardSchema = new Schema(
     attackPoints: { type: Number, required: true },
     defencePoints: { type: Number, required: true },
     movementPoints: { type: Number, required: true },
-    gold: { type: Number, required: true }
+    gold: { type: Number, required: true },
+    imageFile: { type: Buffer, required: false }
   },
   {
     timestamps: true

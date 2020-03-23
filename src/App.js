@@ -21,6 +21,7 @@ function App() {
   const [value, setValue] = useState(0);
   const [hasLoaded, setLoaded] = useState(null);
   const [cardIds, setCardIds] = useState(null);
+  const [imageFiles, setImageFiles] = useState(null);
   const dispatch = useDispatch();
 
   const classes = () => {
@@ -39,6 +40,7 @@ function App() {
   useEffect(() => {
     const initialValues = {};
     const ids = [];
+    const img = [];
     axios
       .get("http://localhost:5000/player_cards")
       .then(response => {
@@ -52,9 +54,19 @@ function App() {
           values["gold"] = card.gold;
 
           initialValues[card._id] = values;
+
+          const base64 = btoa(
+            new Uint8Array(card.imageFile.data).reduce(
+              (data, byte) => data + String.fromCharCode(byte),
+              ""
+            )
+          );
+
+          img.push("data:image/png;base64," + base64);
           ids.push(card._id);
         });
         setCardIds(ids);
+        setImageFiles(img);
         dispatch(initialise(initialValues));
         setLoaded(true);
       })
@@ -85,28 +97,28 @@ function App() {
           <Grid container spacing={4}>
             <Grid item xs>
               <PlayerCard
-                imagePath={"barbarian.webp"}
+                imagePath={imageFiles[0]}
                 characterName={"Barbarian"}
                 cardId={cardIds[0]}
               />
             </Grid>
             <Grid item xs>
               <PlayerCard
-                imagePath={"dwarf.jpg"}
+                imagePath={imageFiles[1]}
                 characterName={"Dwarf"}
                 cardId={cardIds[1]}
               />
             </Grid>
             <Grid item xs>
               <PlayerCard
-                imagePath={"elf.jpg"}
+                imagePath={imageFiles[2]}
                 characterName={"Elf"}
                 cardId={cardIds[2]}
               />
             </Grid>
             <Grid item xs>
               <PlayerCard
-                imagePath={"wizard.webp"}
+                imagePath={imageFiles[3]}
                 characterName={"Wizard"}
                 cardId={cardIds[3]}
               />
