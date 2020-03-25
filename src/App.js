@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import PlayerCard from "./PlayerCard";
 import TabPanel from "./TabPanel";
 import { Grid } from "@material-ui/core";
@@ -23,6 +23,7 @@ function App() {
   const [cardIds, setCardIds] = useState(null);
   const [imageFiles, setImageFiles] = useState(null);
   const dispatch = useDispatch();
+  const stableDispatch = useCallback(dispatch, []);
 
   const classes = () => {
     return makeStyles(theme => ({
@@ -44,7 +45,7 @@ function App() {
     axios
       .get("http://localhost:5000/player_cards")
       .then(response => {
-        response.data.map(card => {
+        response.data.forEach(card => {
           const values = {};
           values["bodyPoints"] = card.bodyPoints;
           values["mindPoints"] = card.mindPoints;
@@ -67,13 +68,13 @@ function App() {
         });
         setCardIds(ids);
         setImageFiles(img);
-        dispatch(initialise(initialValues));
+        stableDispatch(initialise(initialValues));
         setLoaded(true);
       })
       .catch(error => {
         console.log(error);
       });
-  }, []);
+  }, [stableDispatch]);
 
   if (!hasLoaded) {
     return "Loading...";

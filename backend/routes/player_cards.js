@@ -1,5 +1,5 @@
 const router = require("express").Router();
-let PlayerCard = require("../models/player_card.model");
+const PlayerCard = require("../models/player_card.model");
 
 router.route("").get((req, res) => {
   PlayerCard.find()
@@ -33,24 +33,30 @@ router.route("/add").post((req, res) => {
 });
 
 router.route("/update").post((req, res) => {
-  const fs = require("mz/fs");
-
-  fs.readFile("./burger.png").then(data => {
-    for (var id in req.body) {
-      let base64 = data.toString("base64");
-      let imageBuffer = new Buffer(base64, "base64");
-
-      const values = req.body[id];
-      values["imageFile"] = imageBuffer;
-      console.log(id);
-
-      PlayerCard.findOneAndUpdate({ _id: id }, values).catch(err =>
-        res.status(400).json("Error: " + err)
-      );
-    }
-  });
+  for (var id in req.body) {
+    PlayerCard.findOneAndUpdate({ _id: id }, req.body[id]).catch(err =>
+      res.status(400).json("Error: " + err)
+    );
+  }
 
   res.json("Player cards updated");
+});
+
+router.route("/upload_image/:id").post((req, res) => {
+  if (req.files == null) {
+    return res.status(400).json({ msg: "No file uploaded" });
+  }
+
+  PlayerCard.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      imageFile: new Buffer(
+        req.files.characterImage.data.toString("base64"),
+        "base64"
+      )
+    }
+  ).catch(err => res.status(400).json("Error: " + err));
+  res.json("Character image uploaded.");
 });
 
 /*

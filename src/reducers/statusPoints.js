@@ -43,9 +43,9 @@ function statusPointsReducer(state = {}, action) {
         ...state,
         ...action.data
       };
+    default:
+      return state;
   }
-
-  return state;
 }
 
 export default statusPointsReducer;
