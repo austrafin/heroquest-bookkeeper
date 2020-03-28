@@ -47,6 +47,14 @@ router.route("/upload_image/:id").post((req, res) => {
     return res.status(400).json({ msg: "No file uploaded" });
   }
 
+  if (req.files.characterImage.size > 17825792) {
+    return res.status(400).json({ msg: "File size too large." });
+  }
+
+  if (!/^image[/]/.test(req.files.characterImage.mimetype)) {
+    return res.status(400).json({ msg: "Error: file type is not image." });
+  }
+
   PlayerCard.findOneAndUpdate(
     { _id: req.params.id },
     {
@@ -55,8 +63,9 @@ router.route("/upload_image/:id").post((req, res) => {
         "base64"
       )
     }
-  ).catch(err => res.status(400).json("Error: " + err));
-  res.json("Character image uploaded.");
+  )
+    .then(() => res.json("Character image uploaded."))
+    .catch(err => res.status(400).json("Error: " + err));
 });
 
 /*

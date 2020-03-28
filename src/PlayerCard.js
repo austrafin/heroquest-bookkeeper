@@ -44,23 +44,36 @@ const PlayerCard = props => {
     <>
       <input
         type="file"
+        accept="image/*"
         onChange={event => {
-          setSelectedFile(event.target.files[0]);
+          const file = event.target.files[0];
+          if (file === undefined || file === null) {
+            console.log("Error: selected file null");
+          } else if (file.size > 17825792) {
+            console.log("Error: Selected file is too large.");
+          } else if (!/^image[/]/.test(file.type)) {
+            console.log("Error: file type is not image.");
+          } else {
+            console.log(file);
+            setSelectedFile(event.target.files[0]);
+          }
         }}
       />
       <button
         onClick={event => {
-          console.log(selectedFile);
-          const formData = new FormData();
-          formData.append("characterImage", selectedFile, selectedFile.name);
-          axios
-            .post(
-              "http://localhost:5000/player_cards/upload_image/" + props.cardId,
-              formData
-            )
-            .catch(error => {
-              console.log(error);
-            });
+          if (selectedFile !== null) {
+            const formData = new FormData();
+            formData.append("characterImage", selectedFile, selectedFile.name);
+            axios
+              .post(
+                "http://localhost:5000/player_cards/upload_image/" +
+                  props.cardId,
+                formData
+              )
+              .catch(error => {
+                console.log(error);
+              });
+          }
         }}
       >
         Upload!
