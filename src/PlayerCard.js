@@ -39,6 +39,7 @@ const PlayerCard = props => {
   const movementLabelParameter = "movementPoints";
   const goldLabelParameter = "gold";
   const [selectedFile, setSelectedFile] = useState(null);
+  const [imageFile, setImageFile] = useState(props.imagePath);
   const browseImageId = "browse-image-" + props.cardId;
   let imageUploadInputs = null;
 
@@ -90,6 +91,7 @@ const PlayerCard = props => {
           className={styles.uploadbutton}
           onClick={event => {
             setSelectedFile(null);
+            setImageFile(props.imagePath);
           }}
         />
         <label htmlFor={cancelId}>
@@ -114,7 +116,7 @@ const PlayerCard = props => {
               <div className={styles.container}>
                 <CardMedia
                   className={styles.media}
-                  src={props.imagePath}
+                  src={imageFile}
                   component="img"
                   title={props.characterName}
                 />
@@ -134,6 +136,12 @@ const PlayerCard = props => {
                       // Avoid stupid Visual studio formatting bug when using '!'
                       console.log("Error: file type is not image.");
                     } else {
+                      let reader = new FileReader();
+                      reader.onloadend = () => {
+                        setImageFile(reader.result);
+                      };
+
+                      reader.readAsDataURL(file);
                       setSelectedFile(file);
                     }
                   }}
