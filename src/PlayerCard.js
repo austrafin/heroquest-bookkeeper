@@ -1,37 +1,35 @@
 import React, { useState } from "react";
 import StatusModifier from "./StatusModifier";
+import axios from "axios";
+import styles from "./PlayerCard.module.css";
+import StatusLabel from "./StatusLabel";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import SchoolIcon from "@material-ui/icons/School";
 import GavelIcon from "@material-ui/icons/Gavel";
 import SecurityIcon from "@material-ui/icons/Security";
 import EuroIcon from "@material-ui/icons/Euro";
 import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
-import axios from "axios";
-
+import PhotoCamera from "@material-ui/icons/PhotoCamera";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import {
   Grid,
   Card,
-  makeStyles,
   CardMedia,
-  Typography
+  Typography,
+  IconButton
 } from "@material-ui/core";
-import StatusLabel from "./StatusLabel";
 
-const useStyles = makeStyles({
-  root: {
-    padding: "15px"
-  },
-  media: {
-    height: 195,
-    width: "100%"
-  },
-  typography: {
-    fontSize: 30
+const theme = createMuiTheme({
+  overrides: {
+    MuiTypography: {
+      h4: {
+        fontSize: 30
+      }
+    }
   }
 });
 
 const PlayerCard = props => {
-  const classes = useStyles();
   const bodyLabelParameter = "bodyPoints";
   const mindLabelParameter = "mindPoints";
   const attackLabelParameter = "attackPoints";
@@ -42,23 +40,6 @@ const PlayerCard = props => {
 
   return (
     <>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={event => {
-          const file = event.target.files[0];
-          if (file === undefined || file === null) {
-            console.log("Error: selected file null");
-          } else if (file.size > 17825792) {
-            console.log("Error: Selected file is too large.");
-          } else if (!/^image[/]/.test(file.type)) {
-            console.log("Error: file type is not image.");
-          } else {
-            console.log(file);
-            setSelectedFile(event.target.files[0]);
-          }
-        }}
-      />
       <button
         onClick={event => {
           if (selectedFile !== null) {
@@ -78,22 +59,57 @@ const PlayerCard = props => {
       >
         Upload!
       </button>
-      <Card raised={true} className={classes.root}>
+      <Card raised={true} className={styles.root}>
         <Grid container justify="center" direction="column">
           <Grid container direction="row">
             <Grid item xs>
-              <CardMedia
-                className={classes.media}
-                src={props.imagePath}
-                component="img"
-                title={props.characterName}
-              />
+              <div className={styles.container}>
+                <CardMedia
+                  className={styles.media}
+                  src={props.imagePath}
+                  component="img"
+                  title={props.characterName}
+                />
+
+                <input
+                  id="icon-button-file"
+                  className={styles.button}
+                  type="file"
+                  accept="image/*"
+                  onChange={event => {
+                    const file = event.target.files[0];
+                    if (file === undefined || file === null) {
+                      console.log("Error: selected file null");
+                    } else if (file.size > 17825792) {
+                      console.log("Error: Selected file is too large.");
+                    } else if (/^image[/]/.test(file.type) === false) {
+                      // Avoid stupid Visual studio formatting bug when using '!'
+                      console.log("Error: file type is not image.");
+                    } else {
+                      console.log(file);
+                      setSelectedFile(event.target.files[0]);
+                    }
+                  }}
+                />
+
+                <label htmlFor="icon-button-file">
+                  <IconButton
+                    className={styles.button}
+                    color="primary"
+                    aria-label="upload picture"
+                    component="span"
+                  >
+                    <PhotoCamera />
+                  </IconButton>
+                </label>
+              </div>
             </Grid>
+
             <Grid item xs style={{ marginLeft: 10 }}>
               <Grid container justify="center" direction="column">
-                <Typography variant="h4" className={classes.typography}>
-                  {props.characterName}
-                </Typography>
+                <MuiThemeProvider theme={theme}>
+                  <Typography variant="h4">{props.characterName}</Typography>
+                </MuiThemeProvider>
                 <StatusLabel
                   labelText="Body"
                   labelParameter={bodyLabelParameter}
@@ -139,6 +155,7 @@ const PlayerCard = props => {
               </Grid>
             </Grid>
           </Grid>
+
           <StatusModifier
             labelText={"Body"}
             defaultValue={1}

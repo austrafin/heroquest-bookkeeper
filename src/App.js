@@ -81,59 +81,57 @@ function App() {
   }
 
   return (
-    <Grid container>
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="simple tabs example"
-          >
-            <Tab label="Game" {...a11yProps(0)} />
-            <Tab label="Armory" {...a11yProps(1)} />
-            <Tab label="Potions" {...a11yProps(2)} />
-          </Tabs>
-        </AppBar>
-        <TabPanel value={value} index={0}>
-          <Grid container spacing={4}>
-            <Grid item xs>
-              <PlayerCard
-                imagePath={imageFiles[0]}
-                characterName={"Barbarian"}
-                cardId={cardIds[0]}
-              />
-            </Grid>
-            <Grid item xs>
-              <PlayerCard
-                imagePath={imageFiles[1]}
-                characterName={"Dwarf"}
-                cardId={cardIds[1]}
-              />
-            </Grid>
-            <Grid item xs>
-              <PlayerCard
-                imagePath={imageFiles[2]}
-                characterName={"Elf"}
-                cardId={cardIds[2]}
-              />
-            </Grid>
-            <Grid item xs>
-              <PlayerCard
-                imagePath={imageFiles[3]}
-                characterName={"Wizard"}
-                cardId={cardIds[3]}
-              />
-            </Grid>
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="simple tabs example"
+        >
+          <Tab label="Game" {...a11yProps(0)} />
+          <Tab label="Armory" {...a11yProps(1)} />
+          <Tab label="Potions" {...a11yProps(2)} />
+        </Tabs>
+      </AppBar>
+      <TabPanel value={value} index={0}>
+        <Grid container spacing={4}>
+          <Grid item xs>
+            <PlayerCard
+              imagePath={imageFiles[0]}
+              characterName={"Barbarian"}
+              cardId={cardIds[0]}
+            />
           </Grid>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          Armory
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          Potions
-        </TabPanel>
-      </div>
-    </Grid>
+          <Grid item xs>
+            <PlayerCard
+              imagePath={imageFiles[1]}
+              characterName={"Dwarf"}
+              cardId={cardIds[1]}
+            />
+          </Grid>
+          <Grid item xs>
+            <PlayerCard
+              imagePath={imageFiles[2]}
+              characterName={"Elf"}
+              cardId={cardIds[2]}
+            />
+          </Grid>
+          <Grid item xs>
+            <PlayerCard
+              imagePath={imageFiles[3]}
+              characterName={"Wizard"}
+              cardId={cardIds[3]}
+            />
+          </Grid>
+        </Grid>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Armory
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        Potions
+      </TabPanel>
+    </div>
   );
 }
 
