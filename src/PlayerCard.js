@@ -39,13 +39,16 @@ const PlayerCard = props => {
   const movementLabelParameter = "movementPoints";
   const goldLabelParameter = "gold";
   const [selectedFile, setSelectedFile] = useState(null);
+  const browseImageId = "browse-image-" + props.cardId;
   let imageUploadInputs = null;
 
   if (selectedFile !== null) {
+    const uploadId = "upload-image-" + props.cardId;
+    const cancelId = "cancel-image-" + props.cardId;
     imageUploadInputs = (
       <>
         <input
-          id="upload-image"
+          id={uploadId}
           className={styles.uploadbutton}
           onClick={event => {
             if (selectedFile !== null) {
@@ -72,7 +75,7 @@ const PlayerCard = props => {
             }
           }}
         />
-        <label htmlFor="upload-image">
+        <label htmlFor={uploadId}>
           <IconButton
             className={styles.uploadbutton}
             aria-label="upload picture"
@@ -83,13 +86,13 @@ const PlayerCard = props => {
         </label>
 
         <input
-          id="cancel-image"
+          id={cancelId}
           className={styles.uploadbutton}
           onClick={event => {
             setSelectedFile(null);
           }}
         />
-        <label htmlFor="cancel-image">
+        <label htmlFor={cancelId}>
           <IconButton
             className={styles.uploadbutton}
             aria-label="upload picture"
@@ -117,7 +120,7 @@ const PlayerCard = props => {
                 />
 
                 <input
-                  id="browse-image"
+                  id={browseImageId}
                   className={styles.button}
                   type="file"
                   accept="image/*"
@@ -136,7 +139,7 @@ const PlayerCard = props => {
                   }}
                 />
 
-                <label htmlFor="browse-image">
+                <label htmlFor={browseImageId}>
                   <IconButton
                     className={styles.button}
                     color="primary"
