@@ -10,6 +10,8 @@ import SecurityIcon from "@material-ui/icons/Security";
 import EuroIcon from "@material-ui/icons/Euro";
 import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import CancelIcon from "@material-ui/icons/Cancel";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import {
   Grid,
@@ -37,28 +39,71 @@ const PlayerCard = props => {
   const movementLabelParameter = "movementPoints";
   const goldLabelParameter = "gold";
   const [selectedFile, setSelectedFile] = useState(null);
+  let imageUploadInputs = null;
+
+  if (selectedFile !== null) {
+    imageUploadInputs = (
+      <>
+        <input
+          id="upload-image"
+          className={styles.uploadbutton}
+          onClick={event => {
+            if (selectedFile !== null) {
+              const formData = new FormData();
+              formData.append(
+                "characterImage",
+                selectedFile,
+                selectedFile.name
+              );
+              axios
+                .post(
+                  "http://localhost:5000/player_cards/upload_image/" +
+                    props.cardId,
+                  formData
+                )
+                .then(response => {
+                  if (response.status === 200) {
+                    setSelectedFile(null);
+                  }
+                })
+                .catch(error => {
+                  console.log(error);
+                });
+            }
+          }}
+        />
+        <label htmlFor="upload-image">
+          <IconButton
+            className={styles.uploadbutton}
+            aria-label="upload picture"
+            component="span"
+          >
+            <CheckCircleIcon style={{ fill: "green" }} />
+          </IconButton>
+        </label>
+
+        <input
+          id="cancel-image"
+          className={styles.uploadbutton}
+          onClick={event => {
+            setSelectedFile(null);
+          }}
+        />
+        <label htmlFor="cancel-image">
+          <IconButton
+            className={styles.uploadbutton}
+            aria-label="upload picture"
+            component="span"
+          >
+            <CancelIcon style={{ fill: "red" }} />
+          </IconButton>
+        </label>
+      </>
+    );
+  }
 
   return (
     <>
-      <button
-        onClick={event => {
-          if (selectedFile !== null) {
-            const formData = new FormData();
-            formData.append("characterImage", selectedFile, selectedFile.name);
-            axios
-              .post(
-                "http://localhost:5000/player_cards/upload_image/" +
-                  props.cardId,
-                formData
-              )
-              .catch(error => {
-                console.log(error);
-              });
-          }
-        }}
-      >
-        Upload!
-      </button>
       <Card raised={true} className={styles.root}>
         <Grid container justify="center" direction="column">
           <Grid container direction="row">
@@ -72,7 +117,7 @@ const PlayerCard = props => {
                 />
 
                 <input
-                  id="icon-button-file"
+                  id="browse-image"
                   className={styles.button}
                   type="file"
                   accept="image/*"
@@ -86,13 +131,12 @@ const PlayerCard = props => {
                       // Avoid stupid Visual studio formatting bug when using '!'
                       console.log("Error: file type is not image.");
                     } else {
-                      console.log(file);
-                      setSelectedFile(event.target.files[0]);
+                      setSelectedFile(file);
                     }
                   }}
                 />
 
-                <label htmlFor="icon-button-file">
+                <label htmlFor="browse-image">
                   <IconButton
                     className={styles.button}
                     color="primary"
@@ -102,6 +146,8 @@ const PlayerCard = props => {
                     <PhotoCamera />
                   </IconButton>
                 </label>
+
+                {imageUploadInputs}
               </div>
             </Grid>
 

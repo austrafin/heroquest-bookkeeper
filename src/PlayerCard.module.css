@@ -24,6 +24,10 @@ img {
   transition: opacity 0.35s ease;
 }
 
+.uploadbutton {
+  display: none;
+}
+
 .container:hover .button {
   opacity: 1;
 }
