@@ -3,15 +3,6 @@ import StatusModifier from "./StatusModifier";
 import axios from "axios";
 import styles from "./PlayerCard.module.css";
 import StatusLabel from "./StatusLabel";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import SchoolIcon from "@material-ui/icons/School";
-import GavelIcon from "@material-ui/icons/Gavel";
-import SecurityIcon from "@material-ui/icons/Security";
-import EuroIcon from "@material-ui/icons/Euro";
-import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import CancelIcon from "@material-ui/icons/Cancel";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import {
   Grid,
@@ -20,6 +11,17 @@ import {
   Typography,
   IconButton
 } from "@material-ui/core";
+import {
+  Favorite,
+  School,
+  Gavel,
+  Security,
+  Euro,
+  DirectionsRun,
+  PhotoCamera,
+  CheckCircle,
+  Cancel
+} from "@material-ui/icons";
 
 const theme = createMuiTheme({
   overrides: {
@@ -82,7 +84,7 @@ const PlayerCard = props => {
             aria-label="upload picture"
             component="span"
           >
-            <CheckCircleIcon style={{ fill: "green" }} />
+            <CheckCircle style={{ fill: "green" }} />
           </IconButton>
         </label>
 
@@ -100,7 +102,7 @@ const PlayerCard = props => {
             aria-label="upload picture"
             component="span"
           >
-            <CancelIcon style={{ fill: "red" }} />
+            <Cancel style={{ fill: "red" }} />
           </IconButton>
         </label>
       </>
@@ -172,42 +174,42 @@ const PlayerCard = props => {
                   labelParameter={bodyLabelParameter}
                   cardId={props.cardId}
                 >
-                  <FavoriteIcon style={{ fill: "red" }} />
+                  <Favorite style={{ fill: "red" }} />
                 </StatusLabel>
                 <StatusLabel
                   labelText="Mind"
                   labelParameter={mindLabelParameter}
                   cardId={props.cardId}
                 >
-                  <SchoolIcon style={{ fill: "purple" }} />
+                  <School style={{ fill: "purple" }} />
                 </StatusLabel>
                 <StatusLabel
                   labelText="Attack"
                   labelParameter={attackLabelParameter}
                   cardId={props.cardId}
                 >
-                  <GavelIcon style={{ fill: "black" }} />
+                  <Gavel style={{ fill: "black" }} />
                 </StatusLabel>
                 <StatusLabel
                   labelText="Defence"
                   labelParameter={defenceLabelParameter}
                   cardId={props.cardId}
                 >
-                  <SecurityIcon style={{ fill: "blue" }} />
+                  <Security style={{ fill: "blue" }} />
                 </StatusLabel>
                 <StatusLabel
                   labelText="Movement"
                   labelParameter={movementLabelParameter}
                   cardId={props.cardId}
                 >
-                  <DirectionsRunIcon style={{ fill: "green" }} />
+                  <DirectionsRun style={{ fill: "green" }} />
                 </StatusLabel>
                 <StatusLabel
                   labelText="Gold"
                   labelParameter={goldLabelParameter}
                   cardId={props.cardId}
                 >
-                  <EuroIcon style={{ fill: "gold" }} />
+                  <Euro style={{ fill: "gold" }} />
                 </StatusLabel>
               </Grid>
             </Grid>

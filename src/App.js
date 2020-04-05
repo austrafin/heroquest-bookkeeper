@@ -1,14 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import PlayerCard from "./PlayerCard";
 import TabPanel from "./TabPanel";
-import { Grid } from "@material-ui/core";
+import { Grid, AppBar, Tabs, Tab } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
 import { useDispatch } from "react-redux";
 import { initialise } from "./actions/statusPoints";
 import axios from "axios";
+import ArmoryItem from "./ArmoryItem";
 
 function a11yProps(index) {
   return {
@@ -126,7 +124,7 @@ function App() {
         </Grid>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Armory
+        <ArmoryItem />
       </TabPanel>
       <TabPanel value={value} index={2}>
         Potions

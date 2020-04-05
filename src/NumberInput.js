@@ -1,29 +1,15 @@
 import React from "react";
-import { TextField } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
-import { setInputValue } from "./actions/inputValue";
+import TextField from "@material-ui/core/TextField";
 
 const NumberInput = ({
   labelText,
   maxValue = 100,
   step = 1,
   defaultValue,
-  labelParameter,
-  cardId
+  onChange
 }) => {
-  const dispatch = useDispatch();
-  const inputValue = useSelector(state => state.inputValue);
-
-  if (
-    inputValue[cardId] === undefined ||
-    inputValue[cardId][labelParameter] === undefined
-  ) {
-    dispatch(setInputValue(defaultValue, labelParameter, cardId));
-  }
-
   return (
     <TextField
-      id="standard-basic"
       label={labelText}
       type="number"
       defaultValue={defaultValue}
@@ -50,11 +36,7 @@ const NumberInput = ({
           evt.preventDefault();
         }
       }}
-      onChange={evt => {
-        dispatch(
-          setInputValue(Number(evt.target.value), labelParameter, cardId)
-        );
-      }}
+      onChange={onChange}
     />
   );
 };

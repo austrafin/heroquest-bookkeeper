@@ -1,5 +1,5 @@
 import React from "react";
-import NumberInput from "./NumberInput";
+import CardNumberInput from "./CardNumberInput";
 import { Button, ButtonGroup, Grid } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { increment, decrement } from "./actions/statusPoints";
@@ -11,7 +11,7 @@ const StatusModifier = props => {
   return (
     <Grid container spacing={1}>
       <Grid item xs>
-        <NumberInput
+        <CardNumberInput
           labelText={props.labelText}
           maxValue={props.maxValue}
           step={props.step}

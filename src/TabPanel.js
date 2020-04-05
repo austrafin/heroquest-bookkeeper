@@ -1,6 +1,5 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
+import { Typography, Box } from "@material-ui/core";
 import PropTypes from "prop-types";
 
 function TabPanel(props) {
