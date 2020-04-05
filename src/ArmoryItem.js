@@ -3,15 +3,29 @@ import Collapsible from "react-collapsible";
 import ArmoryItemModifier from "./ArmoryItemModifier";
 import { Grid, TextField } from "@material-ui/core";
 import styles from "./ArmoryItem.module.css";
+import CollapsibleTriggerLabel from "./CollapsibleTriggerLabel";
+import { ArrowDropDown, ArrowDropUp } from "@material-ui/icons";
 
 const ArmoryItem = props => {
   return (
     <Collapsible
-      trigger="Armory item"
+      trigger={
+        <CollapsibleTriggerLabel
+          labelText="Armory item"
+          icon={<ArrowDropDown />}
+        />
+      }
+      triggerWhenOpen={
+        <CollapsibleTriggerLabel
+          labelText="Armory item"
+          icon={<ArrowDropUp />}
+        />
+      }
       className={styles.collabsibleOpened}
       openedClassName={styles.collabsibleOpened}
       triggerClassName={styles.collabsibleLabel}
       triggerOpenedClassName={styles.collabsibleLabel}
+      transitionTime={150}
     >
       <Grid container direction="column">
         <TextField

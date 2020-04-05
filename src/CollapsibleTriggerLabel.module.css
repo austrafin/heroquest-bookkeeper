@@ -1,0 +1,10 @@
+.label {
+  padding-left: 10px;
+  line-height: 3;
+}
+
+.icon {
+  float: right;
+  padding-right: 10px;
+  padding-top: 12px;
+}
