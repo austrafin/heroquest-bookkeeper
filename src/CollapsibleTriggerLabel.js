@@ -1,8 +1,7 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
 import styles from "./CollapsibleTriggerLabel.module.css";
 
-const CollapsibleTriggerLabel = props => {
+const CollapsibleTriggerLabel = (props) => {
   return (
     <>
       <span className={styles.label}>{props.labelText}</span>

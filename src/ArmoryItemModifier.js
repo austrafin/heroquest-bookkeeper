@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import styles from "./ArmoryItemModifier.module.css";
 import NumberInput from "./NumberInput";
-import { setArmoryItem } from "./actions/armoryItems";
 import {
   Radio,
   RadioGroup,

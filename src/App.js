@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import PlayerCard from "./PlayerCard";
 import ArmoryPage from "./ArmoryPage";
 import TabPanel from "./TabPanel";
-import { Grid, AppBar, Tabs, Tab, Button } from "@material-ui/core";
+import { Grid, AppBar, Tabs, Tab } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
 import { initialise } from "./actions/statusPoints";
@@ -16,7 +16,7 @@ function a11yProps(index) {
 }
 
 function App() {
-  const [value, setValue] = useState(0);
+  const [tabIndex, setTabIndex] = useState(0);
   const [hasLoaded, setLoaded] = useState(null);
   const [cardIds, setCardIds] = useState(null);
   const [imageFiles, setImageFiles] = useState(null);
@@ -30,10 +30,6 @@ function App() {
         backgroundColor: "rgba(148, 133, 0, 0.603)",
       },
     }));
-  };
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
   };
 
   useEffect(() => {
@@ -82,8 +78,10 @@ function App() {
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs
-          value={value}
-          onChange={handleChange}
+          value={tabIndex}
+          onChange={(event, newIndex) => {
+            setTabIndex(newIndex);
+          }}
           aria-label="simple tabs example"
         >
           <Tab label="Game" {...a11yProps(0)} />
@@ -91,7 +89,7 @@ function App() {
           <Tab label="Potions" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={tabIndex} index={0}>
         <Grid container spacing={4}>
           <Grid item xs>
             <PlayerCard
@@ -123,10 +121,10 @@ function App() {
           </Grid>
         </Grid>
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={tabIndex} index={1}>
         <ArmoryPage />
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel value={tabIndex} index={2}>
         Potions
       </TabPanel>
     </div>
