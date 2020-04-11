@@ -12,9 +12,6 @@ import {
 } from "@material-ui/core";
 
 const ArmoryItemModifier = (props) => {
-  const dispatch = useDispatch();
-  const [value, setValue] = useState(props.operatorValue || "=");
-
   return (
     <FormControl component="fieldset" className={styles.root}>
       <Grid container spacing={4}>
@@ -23,12 +20,7 @@ const ArmoryItemModifier = (props) => {
             style={{ display: "block ruby" }}
             aria-label="operator"
             name="operator"
-            value={value}
-            onChange={(evt) => {
-              dispatch(
-                setArmoryItem(evt.target.value, props.operatorKey, "123")
-              );
-            }}
+            defaultValue={props.operatorValue || "="}
           >
             <FormControlLabel value="=" control={<Radio />} label="=" />
             <FormControlLabel value="+" control={<Radio />} label="+" />
@@ -36,15 +28,7 @@ const ArmoryItemModifier = (props) => {
           </RadioGroup>
         </Grid>
         <Grid item xs>
-          <NumberInput
-            labelText={props.labelText}
-            defaultValue={props.value}
-            onChange={(evt) => {
-              dispatch(
-                setArmoryItem(Number(evt.target.value), props.valueKey, "123")
-              );
-            }}
-          />
+          <NumberInput labelText={props.labelText} defaultValue={props.value} />
         </Grid>
       </Grid>
     </FormControl>

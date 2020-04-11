@@ -1,4 +1,4 @@
-import { takeLatest, delay, all } from "redux-saga/effects";
+import { takeLatest, delay } from "redux-saga/effects";
 import { INCREMENT, DECREMENT } from "../actions/statusPoints";
 import axios from "axios";
 import store from "../store";

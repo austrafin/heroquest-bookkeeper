@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import PlayerCard from "./PlayerCard";
+import ArmoryPage from "./ArmoryPage";
 import TabPanel from "./TabPanel";
 import { Grid, AppBar, Tabs, Tab, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
 import { initialise } from "./actions/statusPoints";
 import axios from "axios";
-import ArmoryItem from "./ArmoryItem";
 
 function a11yProps(index) {
   return {
@@ -18,9 +18,7 @@ function a11yProps(index) {
 function App() {
   const [value, setValue] = useState(0);
   const [hasLoaded, setLoaded] = useState(null);
-  const [hasArmoryLoaded, setArmoryLoaded] = useState(null);
   const [cardIds, setCardIds] = useState(null);
-  const [armoryIds, setArmoryIds] = useState(null);
   const [imageFiles, setImageFiles] = useState(null);
   const dispatch = useDispatch();
   const stableDispatch = useCallback(dispatch, []);
@@ -74,20 +72,9 @@ function App() {
       .catch((error) => {
         console.log(error);
       });
-
-    axios
-      .get("http://localhost:5000/armory_items/get_ids")
-      .then((response) => {
-        //stableDispatch(initialise(initialValues));
-        setArmoryIds(response.data);
-        setArmoryLoaded(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }, [stableDispatch]);
 
-  if (!hasLoaded || !hasArmoryLoaded) {
+  if (!hasLoaded) {
     return "Loading...";
   }
 
@@ -137,8 +124,7 @@ function App() {
         </Grid>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <ArmoryItem id={armoryIds[0]} />
-        <ArmoryItem id={armoryIds[1]} />
+        <ArmoryPage />
       </TabPanel>
       <TabPanel value={value} index={2}>
         Potions

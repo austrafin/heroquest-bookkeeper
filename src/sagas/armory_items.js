@@ -1,5 +1,4 @@
-import { takeLatest, delay, all } from "redux-saga/effects";
-import { INCREMENT, DECREMENT } from "../actions/statusPoints";
+import { takeLatest, delay } from "redux-saga/effects";
 import axios from "axios";
 import store from "../store";
 
@@ -15,4 +14,4 @@ function* updateDatabase() {
     });
 }
 
-export const aromryItemSagas = [takeLatest(INCREMENT, updateDatabase)];
+export const armoryItemSagas = [takeLatest(INCREMENT, updateDatabase)];
