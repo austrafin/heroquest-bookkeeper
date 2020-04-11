@@ -1,4 +1,4 @@
-import { SET } from "../actions/armoryItems";
+import { SET, UPDATE } from "../actions/armoryItems";
 
 function armoryItemsReducer(state = {}, action) {
   switch (action.type) {
@@ -10,6 +10,13 @@ function armoryItemsReducer(state = {}, action) {
           [action.key]: action.value,
         },
       };
+    case UPDATE:
+      return Object.keys(state)
+        .filter((key) => key !== action.id)
+        .reduce((result, current) => {
+          result[current] = state[current];
+          return result;
+        }, {});
     default:
       return state;
   }

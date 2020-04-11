@@ -75,14 +75,12 @@ router.route("/add").post((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/update").post((req, res) => {
-  for (var id in req.body) {
-    ArmoryItem.findOneAndUpdate({ _id: id }, req.body[id]).catch((err) =>
-      res.status(400).json("Error: " + err)
-    );
-  }
+router.route("/update/:id").post((req, res) => {
+  ArmoryItem.findOneAndUpdate({ _id: req.params.id }, req.body).catch((err) =>
+    res.status(400).json("Error: " + err)
+  );
 
-  res.json("Player cards updated");
+  res.json("Armory item updated");
 });
 
 router.route("/:id").get((req, res) => {
