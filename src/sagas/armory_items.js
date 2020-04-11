@@ -7,7 +7,7 @@ function* updateDatabase() {
   yield delay(1000);
   yield axios
     .post(
-      "http://localhost:5000/player_cards/update",
+      "http://localhost:5000/armory_items/update",
       store.getState().statusPoints
     )
     .catch((error) => {
@@ -15,7 +15,4 @@ function* updateDatabase() {
     });
 }
 
-export const statusPointSagas = [
-  takeLatest(INCREMENT, updateDatabase),
-  takeLatest(DECREMENT, updateDatabase),
-];
+export const aromryItemSagas = [takeLatest(INCREMENT, updateDatabase)];

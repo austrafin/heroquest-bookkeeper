@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import PlayerCard from "./PlayerCard";
 import TabPanel from "./TabPanel";
-import { Grid, AppBar, Tabs, Tab } from "@material-ui/core";
+import { Grid, AppBar, Tabs, Tab, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
 import { initialise } from "./actions/statusPoints";
@@ -11,24 +11,26 @@ import ArmoryItem from "./ArmoryItem";
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
 function App() {
   const [value, setValue] = useState(0);
   const [hasLoaded, setLoaded] = useState(null);
+  const [hasArmoryLoaded, setArmoryLoaded] = useState(null);
   const [cardIds, setCardIds] = useState(null);
+  const [armoryIds, setArmoryIds] = useState(null);
   const [imageFiles, setImageFiles] = useState(null);
   const dispatch = useDispatch();
   const stableDispatch = useCallback(dispatch, []);
 
   const classes = () => {
-    return makeStyles(theme => ({
+    return makeStyles((theme) => ({
       root: {
         flexGrow: 1,
-        backgroundColor: "rgba(148, 133, 0, 0.603)"
-      }
+        backgroundColor: "rgba(148, 133, 0, 0.603)",
+      },
     }));
   };
 
@@ -42,8 +44,8 @@ function App() {
     const img = [];
     axios
       .get("http://localhost:5000/player_cards")
-      .then(response => {
-        response.data.forEach(card => {
+      .then((response) => {
+        response.data.forEach((card) => {
           const values = {};
           values["bodyPoints"] = card.bodyPoints;
           values["mindPoints"] = card.mindPoints;
@@ -69,12 +71,23 @@ function App() {
         stableDispatch(initialise(initialValues));
         setLoaded(true);
       })
-      .catch(error => {
+      .catch((error) => {
+        console.log(error);
+      });
+
+    axios
+      .get("http://localhost:5000/armory_items/get_ids")
+      .then((response) => {
+        //stableDispatch(initialise(initialValues));
+        setArmoryIds(response.data);
+        setArmoryLoaded(true);
+      })
+      .catch((error) => {
         console.log(error);
       });
   }, [stableDispatch]);
 
-  if (!hasLoaded) {
+  if (!hasLoaded || !hasArmoryLoaded) {
     return "Loading...";
   }
 
@@ -124,7 +137,8 @@ function App() {
         </Grid>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <ArmoryItem />
+        <ArmoryItem id={armoryIds[0]} />
+        <ArmoryItem id={armoryIds[1]} />
       </TabPanel>
       <TabPanel value={value} index={2}>
         Potions

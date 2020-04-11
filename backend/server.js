@@ -20,8 +20,10 @@ connection.once("open", () => {
 });
 
 const playerCardRouter = require("./routes/player_cards");
+const armoryItemsRouter = require("./routes/armory_items");
 
 app.use("/player_cards", playerCardRouter);
+app.use("/armory_items", armoryItemsRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
