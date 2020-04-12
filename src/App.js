@@ -18,8 +18,7 @@ function a11yProps(index) {
 function App() {
   const [tabIndex, setTabIndex] = useState(0);
   const [hasLoaded, setLoaded] = useState(null);
-  const [cardIds, setCardIds] = useState(null);
-  const [imageFiles, setImageFiles] = useState(null);
+  const [cards, setCards] = useState(null);
   const dispatch = useDispatch();
   const stableDispatch = useCallback(dispatch, []);
 
@@ -34,8 +33,8 @@ function App() {
 
   useEffect(() => {
     const initialValues = {};
-    const ids = [];
-    const img = [];
+    const cardsArr = [];
+
     axios
       .get("http://localhost:5000/player_cards")
       .then((response) => {
@@ -57,13 +56,20 @@ function App() {
             )
           );
 
-          img.push("data:image/png;base64," + base64);
-          ids.push(card._id);
+          cardsArr.push(
+            <Grid item xs key={card._id}>
+              <PlayerCard
+                imagePath={"data:image/png;base64," + base64}
+                characterName={card.characterName}
+                cardId={card._id}
+              />
+            </Grid>
+          );
         });
-        setCardIds(ids);
-        setImageFiles(img);
+
         stableDispatch(initialise(initialValues));
         setLoaded(true);
+        setCards(cardsArr);
       })
       .catch((error) => {
         console.log(error);
@@ -91,34 +97,7 @@ function App() {
       </AppBar>
       <TabPanel value={tabIndex} index={0}>
         <Grid container spacing={4}>
-          <Grid item xs>
-            <PlayerCard
-              imagePath={imageFiles[0]}
-              characterName={"Barbarian"}
-              cardId={cardIds[0]}
-            />
-          </Grid>
-          <Grid item xs>
-            <PlayerCard
-              imagePath={imageFiles[1]}
-              characterName={"Dwarf"}
-              cardId={cardIds[1]}
-            />
-          </Grid>
-          <Grid item xs>
-            <PlayerCard
-              imagePath={imageFiles[2]}
-              characterName={"Elf"}
-              cardId={cardIds[2]}
-            />
-          </Grid>
-          <Grid item xs>
-            <PlayerCard
-              imagePath={imageFiles[3]}
-              characterName={"Wizard"}
-              cardId={cardIds[3]}
-            />
-          </Grid>
+          {cards}
         </Grid>
       </TabPanel>
       <TabPanel value={tabIndex} index={1}>
