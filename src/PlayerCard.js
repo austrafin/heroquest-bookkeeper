@@ -1,15 +1,19 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import StatusModifier from "./StatusModifier";
 import axios from "axios";
 import styles from "./PlayerCard.module.css";
 import StatusLabel from "./StatusLabel";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import Collapsible from "react-collapsible";
+import CollapsibleTriggerLabel from "./CollapsibleTriggerLabel";
+import { ArrowDropDown, ArrowDropUp } from "@material-ui/icons";
 import {
   Grid,
   Card,
   CardMedia,
   Typography,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
 import {
   Favorite,
@@ -20,20 +24,23 @@ import {
   DirectionsRun,
   PhotoCamera,
   CheckCircle,
-  Cancel
+  Cancel,
 } from "@material-ui/icons";
 
 const theme = createMuiTheme({
   overrides: {
     MuiTypography: {
       h4: {
-        fontSize: 30
-      }
-    }
-  }
+        fontSize: 30,
+      },
+    },
+  },
 });
 
-const PlayerCard = props => {
+const PlayerCard = (props) => {
+  const armoryItems = useSelector(
+    (state) => state.statusPoints[props.cardId].armoryItems
+  );
   const bodyLabelParameter = "bodyPoints";
   const mindLabelParameter = "mindPoints";
   const attackLabelParameter = "attackPoints";
@@ -44,6 +51,7 @@ const PlayerCard = props => {
   const [imageFile, setImageFile] = useState(props.imagePath);
   const browseImageId = "browse-image-" + props.cardId;
   let imageUploadInputs = null;
+  let armoryItemListItems = [];
 
   if (selectedFile !== null) {
     const uploadId = "upload-image-" + props.cardId;
@@ -53,7 +61,7 @@ const PlayerCard = props => {
         <input
           id={uploadId}
           className={styles.uploadbutton}
-          onClick={event => {
+          onClick={(event) => {
             if (selectedFile !== null) {
               const formData = new FormData();
               formData.append(
@@ -67,12 +75,12 @@ const PlayerCard = props => {
                     props.cardId,
                   formData
                 )
-                .then(response => {
+                .then((response) => {
                   if (response.status === 200) {
                     setSelectedFile(null);
                   }
                 })
-                .catch(error => {
+                .catch((error) => {
                   console.log(error);
                 });
             }
@@ -91,7 +99,7 @@ const PlayerCard = props => {
         <input
           id={cancelId}
           className={styles.uploadbutton}
-          onClick={event => {
+          onClick={(event) => {
             setSelectedFile(null);
             setImageFile(props.imagePath);
           }}
@@ -107,6 +115,10 @@ const PlayerCard = props => {
         </label>
       </>
     );
+  }
+
+  if (armoryItems !== undefined) {
+    armoryItemListItems = armoryItems.map((item, key) => item.name);
   }
 
   return (
@@ -128,7 +140,7 @@ const PlayerCard = props => {
                   className={styles.button}
                   type="file"
                   accept="image/*"
-                  onChange={event => {
+                  onChange={(event) => {
                     const file = event.target.files[0];
                     if (file === undefined || file === null) {
                       console.log("Error: selected file null");
@@ -236,6 +248,26 @@ const PlayerCard = props => {
             cardId={props.cardId}
           />
         </Grid>
+
+        <Collapsible
+          trigger={
+            <CollapsibleTriggerLabel
+              labelText={"Armory items"}
+              icon={<ArrowDropDown />}
+            />
+          }
+          triggerWhenOpen={
+            <CollapsibleTriggerLabel
+              labelText={"Armory items"}
+              icon={<ArrowDropUp />}
+            />
+          }
+          className={styles.collabsibleOpened}
+          openedClassName={styles.collabsibleOpened}
+          transitionTime={150}
+        >
+          {armoryItemListItems}
+        </Collapsible>
       </Card>
     </>
   );

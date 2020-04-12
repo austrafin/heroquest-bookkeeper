@@ -46,6 +46,7 @@ function App() {
           values["defencePoints"] = card.defencePoints;
           values["movementPoints"] = card.movementPoints;
           values["gold"] = card.gold;
+          values["armoryItems"] = card.armoryItems;
 
           initialValues[card._id] = values;
 

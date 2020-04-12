@@ -28,8 +28,6 @@ const ArmoryItem = (props) => {
         }
         className={styles.collabsibleOpened}
         openedClassName={styles.collabsibleOpened}
-        triggerClassName={styles.collabsibleLabel}
-        triggerOpenedClassName={styles.collabsibleLabel}
         transitionTime={150}
       >
         <Grid container direction="column">
