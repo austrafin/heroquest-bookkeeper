@@ -7,10 +7,14 @@ const ArmoryPage = (props) => {
   const [armoryItems, setArmoryItems] = useState(null);
 
   useEffect(() => {
+    const armoryArr = [];
     axios
       .get("http://localhost:5000/armory_items")
       .then((response) => {
-        setArmoryItems(response.data);
+        response.data.forEach((item) => {
+          armoryArr.push(<ArmoryItem data={item} key={item._id} />);
+        });
+        setArmoryItems(armoryArr);
         setLoaded(true);
       })
       .catch((error) => {
@@ -22,12 +26,7 @@ const ArmoryPage = (props) => {
     return "Loading...";
   }
 
-  return (
-    <>
-      <ArmoryItem data={armoryItems[0]} />
-      <ArmoryItem data={armoryItems[1]} />
-    </>
-  );
+  return <>{armoryItems}</>;
 };
 
 export default ArmoryPage;
