@@ -9,23 +9,23 @@ import Collapsible from "react-collapsible";
 import CollapsibleTriggerLabel from "./CollapsibleTriggerLabel";
 import { ArrowDropDown, ArrowDropUp } from "@material-ui/icons";
 import {
+  GiHighShot,
+  GiGladius,
+  GiHearts,
+  GiScrollUnfurled,
+  GiArrowhead,
+  GiWalkingBoot,
+  GiCheckedShield,
+  GiCoins,
+} from "react-icons/gi";
+import {
   Grid,
   Card,
   CardMedia,
   Typography,
   IconButton,
 } from "@material-ui/core";
-import {
-  Favorite,
-  School,
-  Gavel,
-  Security,
-  Euro,
-  DirectionsRun,
-  PhotoCamera,
-  CheckCircle,
-  Cancel,
-} from "@material-ui/icons";
+import { PhotoCamera, CheckCircle, Cancel } from "@material-ui/icons";
 
 const theme = createMuiTheme({
   overrides: {
@@ -188,56 +188,59 @@ const PlayerCard = (props) => {
                   labelParameter={bodyLabelParameter}
                   cardId={props.cardId}
                 >
-                  <Favorite style={{ fill: "red" }} />
+                  <GiHearts color="red" className={styles.icon} />
                 </StatusLabel>
                 <StatusLabel
                   labelText="Mind"
                   labelParameter={mindLabelParameter}
                   cardId={props.cardId}
                 >
-                  <School style={{ fill: "purple" }} />
+                  <GiScrollUnfurled color="purple" className={styles.icon} />
                 </StatusLabel>
                 <StatusLabel
                   labelText="Melee"
                   labelParameter={meleeLabelParameter}
                   cardId={props.cardId}
                 >
-                  <Gavel style={{ fill: "black" }} />
+                  <GiGladius color="navy" className={styles.icon} />
                 </StatusLabel>
                 <StatusLabel
                   labelText="Ranged"
                   labelParameter={rangedLabelParameter}
                   cardId={props.cardId}
                 >
-                  <Gavel style={{ fill: "black" }} />
+                  <GiHighShot color="darkgreen" className={styles.icon} />
                 </StatusLabel>
                 <StatusLabel
                   labelText="Diagonal"
                   labelParameter={diagonalLabelParameter}
                   cardId={props.cardId}
                 >
-                  <Gavel style={{ fill: "black" }} />
+                  <GiArrowhead color="black" className={styles.icon} />
                 </StatusLabel>
                 <StatusLabel
                   labelText="Defence"
                   labelParameter={defenceLabelParameter}
                   cardId={props.cardId}
                 >
-                  <Security style={{ fill: "blue" }} />
+                  <GiCheckedShield
+                    color="darkslateblue"
+                    className={styles.icon}
+                  />
                 </StatusLabel>
                 <StatusLabel
                   labelText="Movement"
                   labelParameter={movementLabelParameter}
                   cardId={props.cardId}
                 >
-                  <DirectionsRun style={{ fill: "green" }} />
+                  <GiWalkingBoot color="brown" className={styles.icon} />
                 </StatusLabel>
                 <StatusLabel
                   labelText="Gold"
                   labelParameter={goldLabelParameter}
                   cardId={props.cardId}
                 >
-                  <Euro style={{ fill: "gold" }} />
+                  <GiCoins color="darkgoldenrod" className={styles.icon} />
                 </StatusLabel>
               </Grid>
             </Grid>
