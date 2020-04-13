@@ -1,5 +1,6 @@
 export const SET = "armoryItems/SET";
 export const UPDATE = "armoryItems/UPDATE";
+export const UPDATE_AFTER = "armoryItems/UPDATE_AFTER";
 
 export function setArmoryItem(value, key, id) {
   return {

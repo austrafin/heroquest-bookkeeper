@@ -39,10 +39,13 @@ function App() {
       .get("http://localhost:5000/player_cards")
       .then((response) => {
         response.data.forEach((card) => {
+          let image = "./no_image.webp";
           const values = {};
           values["bodyPoints"] = card.bodyPoints;
           values["mindPoints"] = card.mindPoints;
-          values["attackPoints"] = card.attackPoints;
+          values["meleePoints"] = card.meleePoints;
+          values["rangedPoints"] = card.rangedPoints;
+          values["diagonalPoints"] = card.diagonalPoints;
           values["defencePoints"] = card.defencePoints;
           values["movementPoints"] = card.movementPoints;
           values["gold"] = card.gold;
@@ -50,17 +53,21 @@ function App() {
 
           initialValues[card._id] = values;
 
-          const base64 = btoa(
-            new Uint8Array(card.imageFile.data).reduce(
-              (data, byte) => data + String.fromCharCode(byte),
-              ""
-            )
-          );
+          if (card.imagePath !== undefined) {
+            const base64 = btoa(
+              new Uint8Array(card.imageFile.data).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                ""
+              )
+            );
+
+            image = "data:image/png;base64," + base64;
+          }
 
           cardsArr.push(
             <Grid item xs key={card._id}>
               <PlayerCard
-                imagePath={"data:image/png;base64," + base64}
+                imagePath={image}
                 characterName={card.characterName}
                 cardId={card._id}
               />

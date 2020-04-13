@@ -43,7 +43,9 @@ const PlayerCard = (props) => {
   );
   const bodyLabelParameter = "bodyPoints";
   const mindLabelParameter = "mindPoints";
-  const attackLabelParameter = "attackPoints";
+  const meleeLabelParameter = "meleePoints";
+  const rangedLabelParameter = "rangedPoints";
+  const diagonalLabelParameter = "diagonalPoints";
   const defenceLabelParameter = "defencePoints";
   const movementLabelParameter = "movementPoints";
   const goldLabelParameter = "gold";
@@ -196,8 +198,22 @@ const PlayerCard = (props) => {
                   <School style={{ fill: "purple" }} />
                 </StatusLabel>
                 <StatusLabel
-                  labelText="Attack"
-                  labelParameter={attackLabelParameter}
+                  labelText="Melee"
+                  labelParameter={meleeLabelParameter}
+                  cardId={props.cardId}
+                >
+                  <Gavel style={{ fill: "black" }} />
+                </StatusLabel>
+                <StatusLabel
+                  labelText="Ranged"
+                  labelParameter={rangedLabelParameter}
+                  cardId={props.cardId}
+                >
+                  <Gavel style={{ fill: "black" }} />
+                </StatusLabel>
+                <StatusLabel
+                  labelText="Diagonal"
+                  labelParameter={diagonalLabelParameter}
                   cardId={props.cardId}
                 >
                   <Gavel style={{ fill: "black" }} />

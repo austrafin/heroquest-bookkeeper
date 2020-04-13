@@ -1,5 +1,5 @@
-import { takeLatest, delay } from "redux-saga/effects";
-import { UPDATE } from "../actions/armoryItems";
+import { takeLatest, delay, put } from "redux-saga/effects";
+import { UPDATE, UPDATE_AFTER } from "../actions/armoryItems";
 import axios from "axios";
 import store from "../store";
 
@@ -13,6 +13,7 @@ function* updateDatabase(action) {
     .catch((error) => {
       console.log(error);
     });
+  yield put({ type: UPDATE_AFTER, action });
 }
 
 export const armoryItemSagas = [takeLatest(UPDATE, updateDatabase)];
