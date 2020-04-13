@@ -17,3 +17,10 @@ export function updateArmoryItem(id) {
     id: id,
   };
 }
+
+export function updateArmoryItemAfter(id) {
+  return {
+    type: UPDATE_AFTER,
+    id: id,
+  };
+}
