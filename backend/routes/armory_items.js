@@ -81,86 +81,39 @@ router.route("/update/:id").post((req, res) => {
     session = _session;
     session.startTransaction();
 
-    ArmoryItem.findOneAndUpdate({ _id: req.params.id }, req.body)
+    ArmoryItem.findOneAndUpdate({ _id: req.params.id }, req.body, {
+      new: true,
+    })
       .session(session)
       .then((item) => {
         PlayerCard.find({
-          armoryItems: { $elemMatch: { id: req.params.id } },
+          armoryItems: { $elemMatch: { _id: item._id } },
         }).then((playerCards) => {
           playerCards.forEach((card) => {
-            const values = {
-              addMelee: 0,
-              meleeTotal: card.baseMeleePoints,
-              addDiagonal: 0,
-              diagonalTotal: card.baseDiagonalPoints,
-              addRanged: 0,
-              rangedTotal: card.baseRangedPoints,
-              addDefence: 0,
-              defenceTotal: card.baseDefencePoints,
-              addMovement: 0,
-              movementTotal: card.baseMovementPoints,
-            };
+            PlayerCard.findOneAndUpdate(
+              { _id: card._id, "armoryItems._id": item._id },
 
-            const newValues = {};
-
-            card.armoryItems.forEach((cardArmoryItem) => {
-              ArmoryItem.findOne({ _id: cardArmoryItem.id })
-                .then((ai) => {
-                  calculateValue(
-                    ai,
-                    values,
-                    newValues,
-                    "meleePoints",
-                    "addMelee",
-                    "meleeTotal",
-                    "meleeOperator"
-                  );
-                  calculateValue(
-                    ai,
-                    values,
-                    newValues,
-                    "rangedPoints",
-                    "addRanged",
-                    "rangedTotal",
-                    "rangedOperator"
-                  );
-                  calculateValue(
-                    ai,
-                    values,
-                    newValues,
-                    "diagonalPoints",
-                    "addDiagonal",
-                    "diagonalTotal",
-                    "diagonalOperator"
-                  );
-                  calculateValue(
-                    ai,
-                    values,
-                    newValues,
-                    "defencePoints",
-                    "addDefence",
-                    "defenceTotal",
-                    "defenceOperator"
-                  );
-                  calculateValue(
-                    ai,
-                    values,
-                    newValues,
-                    "movementPoints",
-                    "addMovement",
-                    "movementTotal",
-                    "movementOperator"
-                  );
-                })
-                .then(() => {
-                  PlayerCard.findOneAndUpdate({ _id: card._id }, newValues)
-                    .session(session)
-                    .then(() => {
-                      session.commitTransaction();
-                      res.json("Armory item updated");
-                    });
-                });
-            });
+              {
+                $set: {
+                  "armoryItems.$.name": item.name,
+                  "armoryItems.$.meleePoints": item.meleePoints,
+                  "armoryItems.$.meleeOperator": item.meleeOperator,
+                  "armoryItems.$.rangedPoints": item.rangedPoints,
+                  "armoryItems.$.rangedOperator": item.rangedOperator,
+                  "armoryItems.$.diagonalPoints": item.diagonalPoints,
+                  "armoryItems.$.diagonalOperator": item.diagonalOperator,
+                  "armoryItems.$.defencePoints": item.defencePoints,
+                  "armoryItems.$.defenceOperator": item.defenceOperator,
+                  "armoryItems.$.movementPoints": item.movementPoints,
+                  "armoryItems.$.movementOperator": item.movementOperator,
+                },
+              }
+            )
+              .session(session)
+              .then(() => {
+                session.commitTransaction();
+                res.json("Armory item updated");
+              });
           });
         });
       })

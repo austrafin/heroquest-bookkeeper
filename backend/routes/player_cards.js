@@ -22,15 +22,10 @@ router.route("/add").post((req, res) => {
   const baseMindPoints = Number(req.body.baseMindPoints);
   const mindPoints = Number(req.body.mindPoints);
   const baseMeleePoints = Number(req.body.baseMeleePoints);
-  const meleePoints = Number(req.body.meleePoints);
   const baseDiagonalPoints = Number(req.body.baseDiagonalPoints);
-  const diagonalPoints = Number(req.body.diagonalPoints);
   const baseRangedPoints = Number(req.body.baseRangedPoints);
-  const rangedPoints = Number(req.body.rangedPoints);
   const baseDefencePoints = Number(req.body.baseDefencePoints);
-  const defencePoints = Number(req.body.defencePoints);
   const baseMovementPoints = Number(req.body.baseMovementPoints);
-  const movementPoints = Number(req.body.movementPoints);
   const gold = Number(req.body.gold);
 
   const newPlayerCard = new PlayerCard({
@@ -40,15 +35,10 @@ router.route("/add").post((req, res) => {
     baseMindPoints,
     mindPoints,
     baseMeleePoints,
-    meleePoints,
     baseDiagonalPoints,
-    diagonalPoints,
     baseRangedPoints,
-    rangedPoints,
     baseDefencePoints,
-    defencePoints,
     baseMovementPoints,
-    movementPoints,
     gold,
   });
 
