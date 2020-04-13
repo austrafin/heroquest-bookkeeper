@@ -1,9 +1,5 @@
 import { takeLatest, delay, put } from "redux-saga/effects";
-import {
-  UPDATE,
-  UPDATE_AFTER,
-  updateArmoryItemAfter,
-} from "../actions/armoryItems";
+import { UPDATE, updateArmoryItemAfter } from "../actions/armoryItems";
 import axios from "axios";
 import store from "../store";
 
