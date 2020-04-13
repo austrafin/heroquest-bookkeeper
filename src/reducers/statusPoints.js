@@ -9,16 +9,16 @@ function statusPointsReducer(state = {}, action) {
           [action.cardId]: {
             ...state[action.cardId],
             [action.label]:
-              state[action.cardId][action.label] + action.incrementValue
-          }
+              state[action.cardId][action.label] + action.incrementValue,
+          },
         };
       }
       return {
         ...state,
         [action.cardId]: {
           ...state[action.cardId],
-          [action.label]: 0 + action.incrementValue
-        }
+          [action.label]: 0 + action.incrementValue,
+        },
       };
     case DECREMENT:
       if (action.cardId in state) {
@@ -27,21 +27,21 @@ function statusPointsReducer(state = {}, action) {
           [action.cardId]: {
             ...state[action.cardId],
             [action.label]:
-              state[action.cardId][action.label] - action.incrementValue
-          }
+              state[action.cardId][action.label] - action.incrementValue,
+          },
         };
       }
       return {
         ...state,
         [action.cardId]: {
           ...state[action.cardId],
-          [action.label]: 0 - action.incrementValue
-        }
+          [action.label]: 0 - action.incrementValue,
+        },
       };
     case INITIALISE:
       return {
         ...state,
-        ...action.data
+        ...action.data,
       };
     default:
       return state;

@@ -15,6 +15,19 @@ function a11yProps(index) {
   };
 }
 
+function calculateStatusPoints(item, values, pointsKey, operatorKey) {
+  let add = 0;
+  if (item[pointsKey] > values[pointsKey] && item[operatorKey] === "=") {
+    values[pointsKey] = item[pointsKey];
+  } else if (item[operatorKey] === "+") {
+    add += item[pointsKey];
+  } else if (item[operatorKey] === "-") {
+    add -= item[pointsKey];
+  }
+
+  values[pointsKey] += add;
+}
+
 function App() {
   const [tabIndex, setTabIndex] = useState(0);
   const [hasLoaded, setLoaded] = useState(null);
@@ -43,13 +56,41 @@ function App() {
           const values = {};
           values["bodyPoints"] = card.bodyPoints;
           values["mindPoints"] = card.mindPoints;
-          values["meleePoints"] = card.meleePoints;
-          values["rangedPoints"] = card.rangedPoints;
-          values["diagonalPoints"] = card.diagonalPoints;
-          values["defencePoints"] = card.defencePoints;
-          values["movementPoints"] = card.movementPoints;
+          values["meleePoints"] = card.baseMeleePoints;
+          values["rangedPoints"] = card.baseRangedPoints;
+          values["diagonalPoints"] = card.baseDiagonalPoints;
+          values["defencePoints"] = card.baseDefencePoints;
+          values["movementPoints"] = card.baseMovementPoints;
           values["gold"] = card.gold;
           values["armoryItems"] = card.armoryItems;
+
+          card.armoryItems.forEach((item) => {
+            calculateStatusPoints(item, values, "meleePoints", "meleeOperator");
+            calculateStatusPoints(
+              item,
+              values,
+              "rangedPoints",
+              "rangedOperator"
+            );
+            calculateStatusPoints(
+              item,
+              values,
+              "diagonalPoints",
+              "diagonalOperator"
+            );
+            calculateStatusPoints(
+              item,
+              values,
+              "defencePoints",
+              "defenceOperator"
+            );
+            calculateStatusPoints(
+              item,
+              values,
+              "movementPoints",
+              "movementOperator"
+            );
+          });
 
           initialValues[card._id] = values;
 

@@ -3,7 +3,44 @@ const PlayerCard = require("../models/player_card.model");
 
 router.route("").get((req, res) => {
   PlayerCard.find()
-    .then((playerCards) => res.json(playerCards))
+    .then((playerCards) => {
+      const response = [];
+      playerCards.forEach((card) => {
+        const cardsResponse = {};
+        cardsResponse["_id"] = card._id;
+        cardsResponse["characterName"] = card.characterName;
+        cardsResponse["baseBodyPoints"] = card.baseBodyPoints;
+        cardsResponse["bodyPoints"] = card.bodyPoints;
+        cardsResponse["baseMindPoints"] = card.baseMindPoints;
+        cardsResponse["mindPoints"] = card.mindPoints;
+        cardsResponse["baseMeleePoints"] = card.baseMeleePoints;
+        cardsResponse["baseDiagonalPoints"] = card.baseDiagonalPoints;
+        cardsResponse["baseRangedPoints"] = card.baseRangedPoints;
+        cardsResponse["baseDefencePoints"] = card.baseDefencePoints;
+        cardsResponse["baseMovementPoints"] = card.baseMovementPoints;
+        cardsResponse["gold"] = card.gold;
+
+        const armoryItems = [];
+
+        card.armoryItems.forEach((item) => {
+          armoryItemRes = {};
+          armoryItemRes["defenceOperator"] = item.defenceOperator;
+          armoryItemRes["defencePoints"] = item.defencePoints;
+          armoryItemRes["diagonalPoints"] = item.diagonalPoints;
+          armoryItemRes["meleeOperator"] = item.meleeOperator;
+          armoryItemRes["meleePoints"] = item.meleePoints;
+          armoryItemRes["movementOperator"] = item.movementOperator;
+          armoryItemRes["movementPoints"] = item.movementPoints;
+          armoryItemRes["name"] = item.name;
+          armoryItemRes["rangedOperator"] = item.rangedOperator;
+          armoryItemRes["rangedPoints"] = item.rangedPoints;
+          armoryItems.push(armoryItemRes);
+        });
+        cardsResponse["armoryItems"] = armoryItems;
+        response.push(cardsResponse);
+      });
+      res.json(response);
+    })
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
