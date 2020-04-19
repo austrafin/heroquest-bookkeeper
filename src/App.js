@@ -5,24 +5,23 @@ import { AppBar, Tabs, Tab } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import GamePage from "./GamePage";
 
-function a11yProps(index) {
+const a11yProps = (index) => {
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
-}
+};
 
-function App() {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: "rgba(148, 133, 0, 0.603)",
+  },
+}));
+
+const App = () => {
+  const classes = useStyles();
   const [tabIndex, setTabIndex] = useState(0);
-
-  const classes = () => {
-    return makeStyles((theme) => ({
-      root: {
-        flexGrow: 1,
-        backgroundColor: "rgba(148, 133, 0, 0.603)",
-      },
-    }));
-  };
 
   return (
     <div className={classes.root}>
@@ -50,6 +49,6 @@ function App() {
       </TabPanel>
     </div>
   );
-}
+};
 
 export default App;

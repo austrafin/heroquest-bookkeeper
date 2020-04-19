@@ -60,6 +60,50 @@ const PlayerCard = (props) => {
   let imageUploadInputs = null;
   let armoryItemListItems = [];
 
+  const handleCancel = () => {
+    setSelectedFile(null);
+    setImageFile(props.imagePath);
+  };
+
+  const uploadImage = () => {
+    if (selectedFile !== null) {
+      const formData = new FormData();
+      formData.append("characterImage", selectedFile, selectedFile.name);
+      axios
+        .post(
+          "http://localhost:5000/player_cards/upload_image/" + props.cardId,
+          formData
+        )
+        .then((response) => {
+          if (response.status === 200) {
+            setSelectedFile(null);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
+  const handleImageBrowse = (event) => {
+    const file = event.target.files[0];
+    if (file === undefined || file === null) {
+      console.log("Error: selected file null");
+    } else if (file.size > 17825792) {
+      console.log("Error: Selected file is too large.");
+    } else if (!/^image[/]/.test(file.type)) {
+      console.log("Error: file type is not image.");
+    } else {
+      let reader = new FileReader();
+      reader.onloadend = () => {
+        setImageFile(reader.result);
+      };
+
+      reader.readAsDataURL(file);
+      setSelectedFile(file);
+    }
+  };
+
   if (selectedFile !== null) {
     const uploadId = "upload-image-" + props.cardId;
     const cancelId = "cancel-image-" + props.cardId;
@@ -68,30 +112,7 @@ const PlayerCard = (props) => {
         <input
           id={uploadId}
           className={styles.uploadbutton}
-          onClick={(event) => {
-            if (selectedFile !== null) {
-              const formData = new FormData();
-              formData.append(
-                "characterImage",
-                selectedFile,
-                selectedFile.name
-              );
-              axios
-                .post(
-                  "http://localhost:5000/player_cards/upload_image/" +
-                    props.cardId,
-                  formData
-                )
-                .then((response) => {
-                  if (response.status === 200) {
-                    setSelectedFile(null);
-                  }
-                })
-                .catch((error) => {
-                  console.log(error);
-                });
-            }
-          }}
+          onClick={uploadImage}
         />
         <label htmlFor={uploadId}>
           <IconButton
@@ -106,10 +127,7 @@ const PlayerCard = (props) => {
         <input
           id={cancelId}
           className={styles.uploadbutton}
-          onClick={(event) => {
-            setSelectedFile(null);
-            setImageFile(props.imagePath);
-          }}
+          onClick={handleCancel}
         />
         <label htmlFor={cancelId}>
           <IconButton
@@ -147,25 +165,7 @@ const PlayerCard = (props) => {
                   className={styles.button}
                   type="file"
                   accept="image/*"
-                  onChange={(event) => {
-                    const file = event.target.files[0];
-                    if (file === undefined || file === null) {
-                      console.log("Error: selected file null");
-                    } else if (file.size > 17825792) {
-                      console.log("Error: Selected file is too large.");
-                    } else if (/^image[/]/.test(file.type) === false) {
-                      // Avoid stupid Visual studio formatting bug when using '!'
-                      console.log("Error: file type is not image.");
-                    } else {
-                      let reader = new FileReader();
-                      reader.onloadend = () => {
-                        setImageFile(reader.result);
-                      };
-
-                      reader.readAsDataURL(file);
-                      setSelectedFile(file);
-                    }
-                  }}
+                  onChange={handleImageBrowse}
                 />
 
                 <label htmlFor={browseImageId}>

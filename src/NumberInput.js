@@ -39,7 +39,7 @@ const NumberInput = (props) => {
         max: maxValue,
         step: step,
       }}
-      onKeyPress={(evt) => handleKeyPress(evt)}
+      onKeyPress={handleKeyPress}
       onChange={props.onChange}
     />
   );

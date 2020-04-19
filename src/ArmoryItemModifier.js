@@ -13,6 +13,9 @@ import {
 
 const ArmoryItemModifier = (props) => {
   const dispatch = useDispatch();
+  const handleInputChange = (value, key) => {
+    dispatch(setArmoryItem(value, key, props.id));
+  };
 
   return (
     <FormControl component="fieldset" className={styles.root}>
@@ -24,9 +27,7 @@ const ArmoryItemModifier = (props) => {
             name="operator"
             defaultValue={props.operatorValue || "="}
             onChange={(evt) =>
-              dispatch(
-                setArmoryItem(evt.target.value, props.operatorKey, props.id)
-              )
+              handleInputChange(evt.target.value, props.operatorKey)
             }
           >
             <FormControlLabel value="=" control={<Radio />} label="=" />
@@ -39,9 +40,7 @@ const ArmoryItemModifier = (props) => {
             labelText={props.labelText}
             defaultValue={props.value}
             onChange={(evt) =>
-              dispatch(
-                setArmoryItem(evt.target.value, props.valueKey, props.id)
-              )
+              handleInputChange(evt.target.value, props.valueKey)
             }
           />
         </Grid>

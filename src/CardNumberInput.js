@@ -9,14 +9,15 @@ const CardNumberInput = (props) => {
   const minValue = props.minValue || 1;
   const maxValue = props.maxValue || 100;
   const step = props.step || 1;
+  const handleInputChange = (value) => {
+    dispatch(setInputValue(Number(value), props.labelParameter, props.cardId));
+  };
 
   if (
     inputValue[props.cardId] === undefined ||
     inputValue[props.cardId][props.labelParameter] === undefined
   ) {
-    dispatch(
-      setInputValue(props.defaultValue, props.labelParameter, props.cardId)
-    );
+    handleInputChange(props.defaultValue);
   }
 
   return (
@@ -26,15 +27,7 @@ const CardNumberInput = (props) => {
       minValue={minValue}
       maxValue={maxValue}
       step={step}
-      onChange={(evt) => {
-        dispatch(
-          setInputValue(
-            Number(evt.target.value),
-            props.labelParameter,
-            props.cardId
-          )
-        );
-      }}
+      onChange={(evt) => handleInputChange(evt.target.value)}
     />
   );
 };
