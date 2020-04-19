@@ -12,14 +12,14 @@ const a11yProps = (index) => {
   };
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     backgroundColor: "rgba(148, 133, 0, 0.603)",
   },
 }));
 
-const App = () => {
+export default () => {
   const classes = useStyles();
   const [tabIndex, setTabIndex] = useState(0);
 
@@ -50,5 +50,3 @@ const App = () => {
     </div>
   );
 };
-
-export default App;

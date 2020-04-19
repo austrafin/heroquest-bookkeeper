@@ -2,7 +2,7 @@ import React from "react";
 import { Typography, Box } from "@material-ui/core";
 import PropTypes from "prop-types";
 
-function TabPanel(props) {
+export default (props) => {
   const { children, value, index, ...other } = props;
 
   return (
@@ -17,12 +17,10 @@ function TabPanel(props) {
       {value === index && <Box p={3}>{children}</Box>}
     </Typography>
   );
-}
+};
 
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired
+  value: PropTypes.any.isRequired,
 };
-
-export default TabPanel;

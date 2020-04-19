@@ -32,7 +32,7 @@ import {
   IconButton,
 } from "@material-ui/core";
 
-const PlayerCard = (props) => {
+export default (props) => {
   const theme = createMuiTheme({
     overrides: {
       MuiTypography: {
@@ -301,5 +301,3 @@ const PlayerCard = (props) => {
     </>
   );
 };
-
-export default PlayerCard;

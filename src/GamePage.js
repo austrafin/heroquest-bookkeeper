@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import styles from "./GamePage.module.css";
 import NumberInput from "./NumberInput";
 
-const calculateStatusPoints = (item, values, pointsKey, operatorKey) => {
+export default (item, values, pointsKey, operatorKey) => {
   let add = 0;
   if (item[pointsKey] > values[pointsKey] && item[operatorKey] === "=") {
     values[pointsKey] = item[pointsKey];
@@ -188,5 +188,3 @@ const GamePage = (props) => {
     </>
   );
 };
-
-export default GamePage;

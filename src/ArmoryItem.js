@@ -8,7 +8,7 @@ import { ArrowDropDown, ArrowDropUp } from "@material-ui/icons";
 import { useDispatch } from "react-redux";
 import { updateArmoryItem } from "./actions/armoryItems";
 
-const ArmoryItem = (props) => {
+export default (props) => {
   const dispatch = useDispatch();
 
   return (
@@ -89,5 +89,3 @@ const ArmoryItem = (props) => {
     </>
   );
 };
-
-export default ArmoryItem;

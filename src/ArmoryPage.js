@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ArmoryItem from "./ArmoryItem";
 
-const ArmoryPage = (props) => {
+export default (props) => {
   const [hasLoaded, setLoaded] = useState(null);
   const [armoryItems, setArmoryItems] = useState(null);
 
@@ -28,5 +28,3 @@ const ArmoryPage = (props) => {
 
   return <>{armoryItems}</>;
 };
-
-export default ArmoryPage;

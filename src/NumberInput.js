@@ -1,7 +1,7 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 
-const NumberInput = (props) => {
+export default (props) => {
   const minValue = props.minValue || 0;
   const maxValue = props.maxValue || 100;
   const step = props.step || 1;
@@ -44,5 +44,3 @@ const NumberInput = (props) => {
     />
   );
 };
-
-export default NumberInput;

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./CollapsibleTriggerLabel.module.css";
 
-const CollapsibleTriggerLabel = (props) => {
+export default (props) => {
   return (
     <>
       <span className={styles.label}>{props.labelText}</span>
@@ -9,5 +9,3 @@ const CollapsibleTriggerLabel = (props) => {
     </>
   );
 };
-
-export default CollapsibleTriggerLabel;

@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@material-ui/core/Box";
 import { useSelector } from "react-redux";
 
-const StatusLabel = (props) => {
+export default (props) => {
   const statusPoints = useSelector((state) => state.statusPoints[props.cardId]);
 
   return (
@@ -15,5 +15,3 @@ const StatusLabel = (props) => {
     </Box>
   );
 };
-
-export default StatusLabel;

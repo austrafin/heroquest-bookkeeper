@@ -11,7 +11,7 @@ import {
   FormControl,
 } from "@material-ui/core";
 
-const ArmoryItemModifier = (props) => {
+export default (props) => {
   const dispatch = useDispatch();
   const handleInputChange = (value, key) => {
     dispatch(setArmoryItem(value, key, props.id));
@@ -48,5 +48,3 @@ const ArmoryItemModifier = (props) => {
     </FormControl>
   );
 };
-
-export default ArmoryItemModifier;

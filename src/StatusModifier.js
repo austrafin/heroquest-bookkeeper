@@ -4,7 +4,7 @@ import { Button, ButtonGroup, Grid } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { increment, decrement } from "./actions/statusPoints";
 
-const StatusModifier = (props) => {
+export default (props) => {
   const dispatch = useDispatch();
   const inputValue = useSelector((state) => state.inputValue[props.cardId]);
 
@@ -45,5 +45,3 @@ const StatusModifier = (props) => {
     </Grid>
   );
 };
-
-export default StatusModifier;
