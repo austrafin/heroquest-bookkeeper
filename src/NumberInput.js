@@ -1,42 +1,46 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 
-const NumberInput = ({
-  labelText,
-  maxValue = 100,
-  step = 1,
-  defaultValue,
-  onChange
-}) => {
+const NumberInput = (props) => {
+  const minValue = props.minValue || 0;
+  const maxValue = props.maxValue || 100;
+  const step = props.step || 1;
+
+  const handleKeyPress = (evt) => {
+    const enteredCharCode = evt.which ? evt.which : evt.keyCode;
+    const newValue = evt.target.value + evt.key;
+
+    if (
+      enteredCharCode <= 47 ||
+      enteredCharCode >= 58 ||
+      newValue < minValue ||
+      newValue > maxValue
+    ) {
+      evt.preventDefault();
+      return;
+    }
+
+    if (evt.target.value[0] === "0") {
+      /* Prevent input if the first character is zero and the entered character is also zero.
+           else remove the first zero. */
+      enteredCharCode === 48
+        ? evt.preventDefault()
+        : (evt.target.value = evt.target.value.slice(1));
+    }
+  };
+
   return (
     <TextField
-      label={labelText}
+      label={props.labelText}
       type="number"
-      defaultValue={defaultValue}
+      defaultValue={props.defaultValue}
       inputProps={{
-        min: 0,
+        min: minValue,
         max: maxValue,
-        step: step
+        step: step,
       }}
-      onKeyPress={(evt, value = maxValue) => {
-        var charCode = evt.which ? evt.which : evt.keyCode;
-        if (
-          charCode > 47 &&
-          charCode < 58 &&
-          evt.target.value + evt.key <= value
-        ) {
-          if (evt.target.value[0] === "0") {
-            if (charCode === 48) {
-              evt.preventDefault();
-            } else {
-              evt.target.value = evt.target.value.slice(1);
-            }
-          }
-        } else {
-          evt.preventDefault();
-        }
-      }}
-      onChange={onChange}
+      onKeyPress={(evt) => handleKeyPress(evt)}
+      onChange={props.onChange}
     />
   );
 };
