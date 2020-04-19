@@ -4,15 +4,16 @@ import { Button, ButtonGroup, Grid } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { increment, decrement } from "./actions/statusPoints";
 
-const StatusModifier = props => {
+const StatusModifier = (props) => {
   const dispatch = useDispatch();
-  const inputValue = useSelector(state => state.inputValue[props.cardId]);
+  const inputValue = useSelector((state) => state.inputValue[props.cardId]);
 
   return (
     <Grid container spacing={1}>
       <Grid item xs>
         <CardNumberInput
           labelText={props.labelText}
+          minValue={1}
           maxValue={props.maxValue}
           step={props.step}
           defaultValue={props.defaultValue}
