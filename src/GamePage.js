@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { Grid } from "@material-ui/core";
+import { Grid, Button, Modal } from "@material-ui/core";
 import { initialise } from "./actions/statusPoints";
 import PlayerCard from "./PlayerCard";
+import { makeStyles } from "@material-ui/core/styles";
+import styles from "./GamePage.module.css";
 
 function calculateStatusPoints(item, values, pointsKey, operatorKey) {
   let add = 0;
@@ -18,11 +20,26 @@ function calculateStatusPoints(item, values, pointsKey, operatorKey) {
   values[pointsKey] += add;
 }
 
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    marginTop: "100px",
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+}));
+
 const GamePage = (props) => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const stableDispatch = useCallback(dispatch, []);
   const [hasLoaded, setLoaded] = useState(null);
   const [cards, setCards] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const initialValues = {};
@@ -86,7 +103,7 @@ const GamePage = (props) => {
           }
 
           cardsArr.push(
-            <Grid item xs key={card._id}>
+            <Grid item xs key={card._id} className={styles.root}>
               <PlayerCard
                 imagePath={image}
                 characterName={card.characterName}
@@ -109,10 +126,45 @@ const GamePage = (props) => {
     return "Loading...";
   }
 
+  const handleOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
+  };
+
+  const body = (
+    <div className={classes.paper}>
+      <h2 id="simple-modal-title">Text in a modal</h2>
+      <p id="simple-modal-description">
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+      </p>
+    </div>
+  );
+
   return (
-    <Grid container spacing={4}>
-      {cards}
-    </Grid>
+    <>
+      <Button
+        style={{ backgroundColor: "blue", marginBottom: "10px" }}
+        onClick={handleOpen}
+      >
+        Add character
+      </Button>
+
+      <Modal
+        open={modalOpen}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {body}
+      </Modal>
+
+      <Grid container spacing={4}>
+        {cards}
+      </Grid>
+    </>
   );
 };
 

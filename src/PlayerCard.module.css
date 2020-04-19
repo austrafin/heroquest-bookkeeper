@@ -1,6 +1,5 @@
 .root {
   padding: 15px;
-  max-width: 25%;
   background-color: seashell !important;
 }
 
@@ -14,6 +13,7 @@ h4 {
 
 .container {
   position: relative;
+  width: 100%;
 }
 
 img {
@@ -36,12 +36,10 @@ img {
 
 .collabsibleOpened {
   background-color: grey;
-  width: 25%;
   border: 1px solid black;
 }
 .collabsibleOpened {
   background-color: silver;
-  width: 100%;
   margin-top: 10px;
   border: 1px solid black;
 }

@@ -183,65 +183,70 @@ const PlayerCard = (props) => {
                 <MuiThemeProvider theme={theme}>
                   <Typography variant="h4">{props.characterName}</Typography>
                 </MuiThemeProvider>
-                <StatusLabel
-                  labelText="Body"
-                  labelParameter={bodyLabelParameter}
-                  cardId={props.cardId}
-                >
-                  <GiHearts color="red" className={styles.icon} />
-                </StatusLabel>
-                <StatusLabel
-                  labelText="Mind"
-                  labelParameter={mindLabelParameter}
-                  cardId={props.cardId}
-                >
-                  <GiScrollUnfurled color="purple" className={styles.icon} />
-                </StatusLabel>
-                <StatusLabel
-                  labelText="Melee"
-                  labelParameter={meleeLabelParameter}
-                  cardId={props.cardId}
-                >
-                  <GiGladius color="navy" className={styles.icon} />
-                </StatusLabel>
-                <StatusLabel
-                  labelText="Ranged"
-                  labelParameter={rangedLabelParameter}
-                  cardId={props.cardId}
-                >
-                  <GiHighShot color="darkgreen" className={styles.icon} />
-                </StatusLabel>
-                <StatusLabel
-                  labelText="Diagonal"
-                  labelParameter={diagonalLabelParameter}
-                  cardId={props.cardId}
-                >
-                  <GiArrowhead color="black" className={styles.icon} />
-                </StatusLabel>
-                <StatusLabel
-                  labelText="Defence"
-                  labelParameter={defenceLabelParameter}
-                  cardId={props.cardId}
-                >
-                  <GiCheckedShield
-                    color="darkslateblue"
-                    className={styles.icon}
-                  />
-                </StatusLabel>
-                <StatusLabel
-                  labelText="Movement"
-                  labelParameter={movementLabelParameter}
-                  cardId={props.cardId}
-                >
-                  <GiWalkingBoot color="brown" className={styles.icon} />
-                </StatusLabel>
-                <StatusLabel
-                  labelText="Gold"
-                  labelParameter={goldLabelParameter}
-                  cardId={props.cardId}
-                >
-                  <GiCoins color="darkgoldenrod" className={styles.icon} />
-                </StatusLabel>
+
+                <Grid container justify="center" direction="row">
+                  <Grid item xs>
+                    <StatusLabel
+                      labelParameter={bodyLabelParameter}
+                      cardId={props.cardId}
+                    >
+                      <GiHearts color="red" className={styles.icon} />
+                    </StatusLabel>
+
+                    <StatusLabel
+                      labelParameter={mindLabelParameter}
+                      cardId={props.cardId}
+                    >
+                      <GiScrollUnfurled
+                        color="purple"
+                        className={styles.icon}
+                      />
+                    </StatusLabel>
+
+                    <StatusLabel
+                      labelParameter={goldLabelParameter}
+                      cardId={props.cardId}
+                    >
+                      <GiCoins color="darkgoldenrod" className={styles.icon} />
+                    </StatusLabel>
+                  </Grid>
+
+                  <Grid item xs style={{ marginLeft: 15 }}>
+                    <StatusLabel
+                      labelParameter={meleeLabelParameter}
+                      cardId={props.cardId}
+                    >
+                      <GiGladius color="navy" className={styles.icon} />
+                    </StatusLabel>
+                    <StatusLabel
+                      labelParameter={rangedLabelParameter}
+                      cardId={props.cardId}
+                    >
+                      <GiHighShot color="darkgreen" className={styles.icon} />
+                    </StatusLabel>
+                    <StatusLabel
+                      labelParameter={diagonalLabelParameter}
+                      cardId={props.cardId}
+                    >
+                      <GiArrowhead color="black" className={styles.icon} />
+                    </StatusLabel>
+                    <StatusLabel
+                      labelParameter={defenceLabelParameter}
+                      cardId={props.cardId}
+                    >
+                      <GiCheckedShield
+                        color="darkslateblue"
+                        className={styles.icon}
+                      />
+                    </StatusLabel>
+                    <StatusLabel
+                      labelParameter={movementLabelParameter}
+                      cardId={props.cardId}
+                    >
+                      <GiWalkingBoot color="brown" className={styles.icon} />
+                    </StatusLabel>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>

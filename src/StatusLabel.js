@@ -8,10 +8,10 @@ const StatusLabel = (props) => {
   return (
     <Box component="span" display="flex" style={{ marginBottom: 2 }}>
       {props.children}
-      <label style={{ fontSize: 20, flex: 1, marginLeft: 5 }}>
-        {props.labelText}
-      </label>
-      <span style={{ fontSize: 20 }}>{statusPoints[props.labelParameter]}</span>
+      <label style={{ fontSize: 20, marginLeft: 5 }}>{props.labelText}</label>
+      <span style={{ fontSize: 20, marginRight: 10 }}>
+        {statusPoints[props.labelParameter]}
+      </span>
     </Box>
   );
 };
