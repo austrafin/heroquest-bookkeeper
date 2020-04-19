@@ -19,6 +19,7 @@ router.route("").get((req, res) => {
         cardsResponse["baseDefencePoints"] = card.baseDefencePoints;
         cardsResponse["baseMovementPoints"] = card.baseMovementPoints;
         cardsResponse["gold"] = card.gold;
+        cardsResponse["imageFile"] = card.imageFile;
 
         const armoryItems = [];
 

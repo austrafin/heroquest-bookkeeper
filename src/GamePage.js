@@ -91,14 +91,13 @@ const GamePage = (props) => {
 
           initialValues[card._id] = values;
 
-          if (card.imagePath !== undefined) {
+          if (card.imageFile !== undefined) {
             const base64 = btoa(
               new Uint8Array(card.imageFile.data).reduce(
                 (data, byte) => data + String.fromCharCode(byte),
                 ""
               )
             );
-
             image = "data:image/png;base64," + base64;
           }
 
