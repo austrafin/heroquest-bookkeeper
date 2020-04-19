@@ -8,6 +8,16 @@ const StatusModifier = (props) => {
   const dispatch = useDispatch();
   const inputValue = useSelector((state) => state.inputValue[props.cardId]);
 
+  const handleButtonClick = (dispatchFunction) => {
+    dispatch(
+      dispatchFunction(
+        inputValue[props.labelParameter],
+        props.labelParameter,
+        props.cardId
+      )
+    );
+  };
+
   return (
     <Grid container spacing={1}>
       <Grid item xs>
@@ -28,32 +38,8 @@ const StatusModifier = (props) => {
           fullWidth={true}
           style={{ marginTop: 12 }}
         >
-          <Button
-            onClick={() =>
-              dispatch(
-                increment(
-                  inputValue[props.labelParameter],
-                  props.labelParameter,
-                  props.cardId
-                )
-              )
-            }
-          >
-            +
-          </Button>
-          <Button
-            onClick={() =>
-              dispatch(
-                decrement(
-                  inputValue[props.labelParameter],
-                  props.labelParameter,
-                  props.cardId
-                )
-              )
-            }
-          >
-            -
-          </Button>
+          <Button onClick={() => handleButtonClick(increment)}>+</Button>
+          <Button onClick={() => handleButtonClick(decrement)}>-</Button>
         </ButtonGroup>
       </Grid>
     </Grid>

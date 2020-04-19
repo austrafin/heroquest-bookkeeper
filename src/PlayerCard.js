@@ -7,7 +7,13 @@ import StatusLabel from "./StatusLabel";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Collapsible from "react-collapsible";
 import CollapsibleTriggerLabel from "./CollapsibleTriggerLabel";
-import { ArrowDropDown, ArrowDropUp } from "@material-ui/icons";
+import {
+  ArrowDropDown,
+  ArrowDropUp,
+  PhotoCamera,
+  CheckCircle,
+  Cancel,
+} from "@material-ui/icons";
 import {
   GiHighShot,
   GiGladius,
@@ -25,19 +31,18 @@ import {
   Typography,
   IconButton,
 } from "@material-ui/core";
-import { PhotoCamera, CheckCircle, Cancel } from "@material-ui/icons";
-
-const theme = createMuiTheme({
-  overrides: {
-    MuiTypography: {
-      h4: {
-        fontSize: 30,
-      },
-    },
-  },
-});
 
 const PlayerCard = (props) => {
+  const theme = createMuiTheme({
+    overrides: {
+      MuiTypography: {
+        h4: {
+          fontSize: 30,
+        },
+      },
+    },
+  });
+
   const armoryItems = useSelector(
     (state) => state.statusPoints[props.cardId].armoryItems
   );
