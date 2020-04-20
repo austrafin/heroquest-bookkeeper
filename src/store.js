@@ -2,6 +2,7 @@ import { combineReducers, createStore, applyMiddleware, compose } from "redux";
 import statusPointsReducer from "./reducers/statusPoints";
 import inputValueReducer from "./reducers/inputValue";
 import armoryItemsReducer from "./reducers/armoryItems";
+import playerCardReducer from "./reducers/playerCards";
 import createSagaMiddleware from "redux-saga";
 import { rootSaga } from "./sagas/rootSaga";
 
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   statusPoints: statusPointsReducer,
   inputValue: inputValueReducer,
   armoryItems: armoryItemsReducer,
+  playerCards: playerCardReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

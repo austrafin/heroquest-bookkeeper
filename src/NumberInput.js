@@ -31,6 +31,7 @@ export default (props) => {
 
   return (
     <TextField
+      name={props.name}
       label={props.labelText}
       type="number"
       defaultValue={props.defaultValue}

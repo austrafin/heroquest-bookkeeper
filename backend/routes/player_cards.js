@@ -56,15 +56,17 @@ router.route("/update_armory_points").post((req, res) => {
 router.route("/add").post((req, res) => {
   const characterName = req.body.characterName;
   const baseBodyPoints = Number(req.body.baseBodyPoints);
-  const bodyPoints = Number(req.body.bodyPoints);
+  const bodyPoints =
+    Number(req.body.bodyPoints) || Number(req.body.baseBodyPoints);
   const baseMindPoints = Number(req.body.baseMindPoints);
-  const mindPoints = Number(req.body.mindPoints);
+  const mindPoints =
+    Number(req.body.mindPoints) || Number(req.body.baseMindPoints);
   const baseMeleePoints = Number(req.body.baseMeleePoints);
   const baseDiagonalPoints = Number(req.body.baseDiagonalPoints);
   const baseRangedPoints = Number(req.body.baseRangedPoints);
   const baseDefencePoints = Number(req.body.baseDefencePoints);
   const baseMovementPoints = Number(req.body.baseMovementPoints);
-  const gold = Number(req.body.gold);
+  const gold = Number(req.body.gold) || 0;
 
   const newPlayerCard = new PlayerCard({
     characterName,

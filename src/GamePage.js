@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { Grid, Button, Modal, TextField } from "@material-ui/core";
 import { initialise } from "./actions/statusPoints";
+import { addPlayerCard } from "./actions/playerCards";
 import PlayerCard from "./PlayerCard";
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "./GamePage.module.css";
@@ -34,15 +35,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default (props) => {
+export default () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const newCardUploading = useSelector(
+    (state) => state.playerCards.newCardUploading
+  );
   const stableDispatch = useCallback(dispatch, []);
-  const [hasLoaded, setLoaded] = useState(null);
+  const [hasLoaded, setLoaded] = useState(false);
   const [cards, setCards] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
+    if (newCardUploading) {
+      return;
+    }
+
     const initialValues = {};
     const cardsArr = [];
 
@@ -120,9 +128,9 @@ export default (props) => {
       .catch((error) => {
         console.log(error);
       });
-  }, [stableDispatch]);
+  }, [stableDispatch, newCardUploading]);
 
-  if (!hasLoaded) {
+  if (!hasLoaded || newCardUploading) {
     return "Loading...";
   }
 
@@ -135,23 +143,45 @@ export default (props) => {
   };
 
   const submit = (event) => {
+    const data = {};
+
+    [...event.target].forEach((input) => {
+      if (input.name !== "") data[input.name] = input.value;
+    });
+
+    dispatch(addPlayerCard(data));
+    handleClose();
     event.preventDefault();
-    console.log("asdfg");
   };
 
   const body = (
     <div className={classes.paper}>
       <h2 id="simple-modal-title">Add new character</h2>
-      <form onSubmit={submit}>
+      <form onSubmit={submit} method="POST">
         <Grid container direction="column">
-          <TextField label="Name" required />
-          <NumberInput labelText={"Base body points"} />
-          <NumberInput labelText={"Base mind points"} />
-          <NumberInput labelText={"Base melee attack points"} />
-          <NumberInput labelText={"Base ranged attack points"} />
-          <NumberInput labelText={"Base diagonal attack points"} />
-          <NumberInput labelText={"Base defence points"} />
-          <NumberInput labelText={"Base movement points"} />
+          <TextField name="characterName" label="Name" required />
+          <NumberInput name="baseBodyPoints" labelText={"Base body points"} />
+          <NumberInput name="baseMindPoints" labelText={"Base mind points"} />
+          <NumberInput
+            name="baseMeleePoints"
+            labelText={"Base melee attack points"}
+          />
+          <NumberInput
+            name="baseRangedPoints"
+            labelText={"Base ranged attack points"}
+          />
+          <NumberInput
+            name="baseDiagonalPoints"
+            labelText={"Base diagonal attack points"}
+          />
+          <NumberInput
+            name="baseDefencePoints"
+            labelText={"Base defence points"}
+          />
+          <NumberInput
+            name="baseMovementPoints"
+            labelText={"Base movement points"}
+          />
         </Grid>
 
         <Button
