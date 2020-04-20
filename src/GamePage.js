@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import styles from "./GamePage.module.css";
 import NumberInput from "./NumberInput";
 
-export default (item, values, pointsKey, operatorKey) => {
+const calculateStatusPoints = (item, values, pointsKey, operatorKey) => {
   let add = 0;
   if (item[pointsKey] > values[pointsKey] && item[operatorKey] === "=") {
     values[pointsKey] = item[pointsKey];
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GamePage = (props) => {
+export default (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const stableDispatch = useCallback(dispatch, []);
