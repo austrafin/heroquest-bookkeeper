@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 export default (props) => {
   const statusPoints = useSelector(
-    (state) => state.playerCardData[props.cardId]
+    (state) => state.playerCards.cardData[props.cardId]
   );
 
   return (

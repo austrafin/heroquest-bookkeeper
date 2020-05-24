@@ -1,5 +1,4 @@
 import { combineReducers, createStore, applyMiddleware, compose } from "redux";
-import playerCardDataReducer from "./reducers/playerCardData";
 import inputValueReducer from "./reducers/inputValue";
 import armoryItemsReducer from "./reducers/armoryItems";
 import playerCardReducer from "./reducers/playerCards";
@@ -8,7 +7,6 @@ import { rootSaga } from "./sagas/rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();
 const rootReducer = combineReducers({
-  playerCardData: playerCardDataReducer,
   inputValue: inputValueReducer,
   armoryItems: armoryItemsReducer,
   playerCards: playerCardReducer,

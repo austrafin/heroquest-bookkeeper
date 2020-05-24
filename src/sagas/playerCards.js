@@ -1,7 +1,15 @@
-import { takeLatest, put } from "redux-saga/effects";
-import { ADD, ADD_AFTER, LOAD, CARDS_LOADED } from "../actions/playerCards";
+import { takeLatest, put, delay } from "redux-saga/effects";
+import {
+  ADD,
+  ADD_AFTER,
+  LOAD,
+  CARDS_LOADED,
+  INITIALISE,
+  INCREMENT,
+  DECREMENT,
+} from "../actions/playerCards";
 import axios from "axios";
-import { initialise } from "../actions/playerCardData";
+import store from "../store";
 
 const calculateStatusPoints = (item, values, pointsKey, operatorKey) => {
   let add = 0;
@@ -77,7 +85,7 @@ function* loadPlayerCardData() {
     .catch((error) => {
       console.log(error);
     });
-  yield put(initialise(initialValues));
+  yield put({ type: INITIALISE, data: initialValues });
   yield put({ type: CARDS_LOADED });
 }
 
@@ -90,7 +98,24 @@ function* addPlayerCard(action) {
   yield put({ type: ADD_AFTER });
 }
 
+function* updateDatabase(action) {
+  yield delay(200);
+  yield axios
+    .post("http://localhost:5000/player_cards/update", {
+      [action.cardId]: {
+        [action.label]: store.getState().playerCards.cardData[action.cardId][
+          action.label
+        ],
+      },
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
 export const playerCardsSagas = [
   takeLatest(ADD, addPlayerCard),
   takeLatest(LOAD, loadPlayerCardData),
+  takeLatest(INCREMENT, updateDatabase),
+  takeLatest(DECREMENT, updateDatabase),
 ];

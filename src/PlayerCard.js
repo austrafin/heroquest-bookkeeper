@@ -44,7 +44,7 @@ export default (props) => {
   });
 
   const armoryItems = useSelector(
-    (state) => state.playerCardData[props.cardId].armoryItems
+    (state) => state.playerCards.cardData[props.cardId].armoryItems
   );
   const bodyLabelParameter = "bodyPoints";
   const mindLabelParameter = "mindPoints";

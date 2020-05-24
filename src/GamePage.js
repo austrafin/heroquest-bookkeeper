@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 export default () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const playerCardData = useSelector((state) => state.playerCardData);
+  const playerCardData = useSelector((state) => state.playerCards.cardData);
   const hasLoaded = useSelector((state) => state.playerCards.cardsLoaded);
   const newCardUploading = useSelector(
     (state) => state.playerCards.newCardUploading
