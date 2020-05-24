@@ -1,4 +1,9 @@
-import { SET, UPDATE_AFTER } from "../actions/armoryItems";
+import {
+  SET,
+  UPDATE_AFTER,
+  ARMORY_ITEMS_LOADED,
+  INITIALISE_AFTER,
+} from "../actions/armoryItems";
 
 function armoryItemsReducer(state = {}, action) {
   switch (action.type) {
@@ -17,6 +22,13 @@ function armoryItemsReducer(state = {}, action) {
           result[current] = state[current];
           return result;
         }, {});
+    case INITIALISE_AFTER:
+      return {
+        ...state,
+        items: action.data,
+      };
+    case ARMORY_ITEMS_LOADED:
+      return { ...state, armoryItemsLoaded: true };
     default:
       return state;
   }

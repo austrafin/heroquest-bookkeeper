@@ -1,30 +1,26 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ArmoryItem from "./ArmoryItem";
+import { initialiseArmoryItems } from "./actions/armoryItems";
 
 export default (props) => {
-  const [hasLoaded, setLoaded] = useState(null);
-  const [armoryItems, setArmoryItems] = useState(null);
+  const dispatch = useDispatch();
+  const stableDispatch = useCallback(dispatch, []);
+  const armoryItemsData = useSelector((state) => state.armoryItems);
 
   useEffect(() => {
-    const armoryArr = [];
-    axios
-      .get("http://localhost:5000/armory_items")
-      .then((response) => {
-        response.data.forEach((item) => {
-          armoryArr.push(<ArmoryItem data={item} key={item._id} />);
-        });
-        setArmoryItems(armoryArr);
-        setLoaded(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+    stableDispatch(initialiseArmoryItems());
+  }, [stableDispatch]);
 
-  if (!hasLoaded) {
+  if (!armoryItemsData.armoryItemsLoaded) {
     return "Loading...";
   }
+
+  const armoryItems = [];
+
+  armoryItemsData.items.map((item) =>
+    armoryItems.push(<ArmoryItem data={item} key={item._id} />)
+  );
 
   return <>{armoryItems}</>;
 };
