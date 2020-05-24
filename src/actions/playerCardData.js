@@ -5,7 +5,7 @@ export const INITIALISE = "statusPoints/INITIALISE";
 export function initialise(data) {
   return {
     type: INITIALISE,
-    data: data
+    data: data,
   };
 }
 
@@ -14,7 +14,7 @@ export function increment(value, label, cardId) {
     type: INCREMENT,
     incrementValue: value,
     label: label,
-    cardId: cardId
+    cardId: cardId,
   };
 }
 
@@ -23,6 +23,6 @@ export function decrement(value, label, cardId) {
     type: DECREMENT,
     incrementValue: value,
     label: label,
-    cardId: cardId
+    cardId: cardId,
   };
 }

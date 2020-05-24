@@ -1,4 +1,4 @@
-import { ADD, ADD_AFTER } from "../actions/playerCards";
+import { ADD, ADD_AFTER, CARDS_LOADED } from "../actions/playerCards";
 
 export default (state = {}, action) => {
   switch (action.type) {
@@ -6,6 +6,8 @@ export default (state = {}, action) => {
       return { ...state, newCardUploading: true };
     case ADD_AFTER:
       return { ...state, newCardUploading: false };
+    case CARDS_LOADED:
+      return { ...state, cardsLoaded: true };
     default:
       return state;
   }

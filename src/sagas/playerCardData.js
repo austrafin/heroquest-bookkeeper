@@ -1,5 +1,5 @@
 import { takeLatest, delay } from "redux-saga/effects";
-import { INCREMENT, DECREMENT } from "../actions/statusPoints";
+import { INCREMENT, DECREMENT } from "../actions/playerCardData";
 import axios from "axios";
 import store from "../store";
 

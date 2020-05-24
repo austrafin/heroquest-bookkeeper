@@ -3,7 +3,9 @@ import Box from "@material-ui/core/Box";
 import { useSelector } from "react-redux";
 
 export default (props) => {
-  const statusPoints = useSelector((state) => state.statusPoints[props.cardId]);
+  const statusPoints = useSelector(
+    (state) => state.playerCardData[props.cardId]
+  );
 
   return (
     <Box component="span" display="flex" style={{ marginBottom: 2 }}>

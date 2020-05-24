@@ -1,4 +1,4 @@
-import { INCREMENT, DECREMENT, INITIALISE } from "../actions/statusPoints";
+import { INCREMENT, DECREMENT, INITIALISE } from "../actions/playerCardData";
 
 function statusPointsReducer(state = {}, action) {
   switch (action.type) {

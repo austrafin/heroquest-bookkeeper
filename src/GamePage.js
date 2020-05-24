@@ -1,26 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { Grid, Button, Modal, TextField } from "@material-ui/core";
-import { initialise } from "./actions/statusPoints";
-import { addPlayerCard } from "./actions/playerCards";
+import { addPlayerCard, loadPlayerCards } from "./actions/playerCards";
 import PlayerCard from "./PlayerCard";
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "./GamePage.module.css";
 import NumberInput from "./NumberInput";
-
-const calculateStatusPoints = (item, values, pointsKey, operatorKey) => {
-  let add = 0;
-  if (item[pointsKey] > values[pointsKey] && item[operatorKey] === "=") {
-    values[pointsKey] = item[pointsKey];
-  } else if (item[operatorKey] === "+") {
-    add += item[pointsKey];
-  } else if (item[operatorKey] === "-") {
-    add -= item[pointsKey];
-  }
-
-  values[pointsKey] += add;
-};
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,101 +23,38 @@ const useStyles = makeStyles((theme) => ({
 export default () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const playerCardData = useSelector((state) => state.playerCardData);
+  const hasLoaded = useSelector((state) => state.playerCards.cardsLoaded);
   const newCardUploading = useSelector(
     (state) => state.playerCards.newCardUploading
   );
   const stableDispatch = useCallback(dispatch, []);
-  const [hasLoaded, setLoaded] = useState(false);
-  const [cards, setCards] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     if (newCardUploading) {
       return;
     }
-
-    const initialValues = {};
-    const cardsArr = [];
-
-    axios
-      .get("http://localhost:5000/player_cards")
-      .then((response) => {
-        response.data.forEach((card) => {
-          let image = "./no_image.webp";
-          const values = {};
-          values["bodyPoints"] = card.bodyPoints;
-          values["mindPoints"] = card.mindPoints;
-          values["meleePoints"] = card.baseMeleePoints;
-          values["rangedPoints"] = card.baseRangedPoints;
-          values["diagonalPoints"] = card.baseDiagonalPoints;
-          values["defencePoints"] = card.baseDefencePoints;
-          values["movementPoints"] = card.baseMovementPoints;
-          values["gold"] = card.gold;
-          values["armoryItems"] = card.armoryItems;
-
-          card.armoryItems.forEach((item) => {
-            calculateStatusPoints(item, values, "meleePoints", "meleeOperator");
-            calculateStatusPoints(
-              item,
-              values,
-              "rangedPoints",
-              "rangedOperator"
-            );
-            calculateStatusPoints(
-              item,
-              values,
-              "diagonalPoints",
-              "diagonalOperator"
-            );
-            calculateStatusPoints(
-              item,
-              values,
-              "defencePoints",
-              "defenceOperator"
-            );
-            calculateStatusPoints(
-              item,
-              values,
-              "movementPoints",
-              "movementOperator"
-            );
-          });
-
-          initialValues[card._id] = values;
-
-          if (card.imageFile !== undefined) {
-            const base64 = btoa(
-              new Uint8Array(card.imageFile.data).reduce(
-                (data, byte) => data + String.fromCharCode(byte),
-                ""
-              )
-            );
-            image = "data:image/png;base64," + base64;
-          }
-
-          cardsArr.push(
-            <Grid item xs key={card._id} className={styles.root}>
-              <PlayerCard
-                imagePath={image}
-                characterName={card.characterName}
-                cardId={card._id}
-              />
-            </Grid>
-          );
-        });
-
-        stableDispatch(initialise(initialValues));
-        setLoaded(true);
-        setCards(cardsArr);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    stableDispatch(loadPlayerCards());
   }, [stableDispatch, newCardUploading]);
 
   if (!hasLoaded || newCardUploading) {
     return "Loading...";
   }
+
+  const cards = [];
+
+  Object.entries(playerCardData).map(([cardId, values]) => {
+    cards.push(
+      <Grid item xs key={cardId} className={styles.root}>
+        <PlayerCard
+          imagePath={values.image}
+          characterName={values.characterName}
+          cardId={cardId}
+        />
+      </Grid>
+    );
+  });
 
   const handleOpen = () => {
     setModalOpen(true);
