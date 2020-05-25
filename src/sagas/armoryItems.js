@@ -4,7 +4,7 @@ import {
   INITIALISE,
   INITIALISE_AFTER,
   ARMORY_ITEMS_LOADED,
-  updateArmoryItemAfter,
+  UPDATE_AFTER,
 } from "../actions/armoryItems";
 import axios from "axios";
 import store from "../store";
@@ -35,7 +35,8 @@ function* updateDatabase(action) {
     .catch((error) => {
       console.log(error);
     });
-  yield put(updateArmoryItemAfter(action.id));
+
+  yield put({ type: UPDATE_AFTER, id: action.id });
 }
 
 export const armoryItemSagas = [

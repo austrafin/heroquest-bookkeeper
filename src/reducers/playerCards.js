@@ -5,6 +5,7 @@ import {
   INCREMENT,
   DECREMENT,
   INITIALISE,
+  SET_SELECTED_IMAGE,
 } from "../actions/playerCards";
 
 function difference(state, action, decrement) {
@@ -58,6 +59,17 @@ export default (state = {}, action) => {
       return { ...state, newCardUploading: false };
     case CARDS_LOADED:
       return { ...state, cardsLoaded: true };
+    case SET_SELECTED_IMAGE:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          [action.cardId]: {
+            ...state.cardData[action.cardId],
+            selectedImageFile: action.selectedFile,
+          },
+        },
+      };
     default:
       return state;
   }

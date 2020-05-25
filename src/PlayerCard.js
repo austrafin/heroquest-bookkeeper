@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import StatusModifier from "./StatusModifier";
-import axios from "axios";
 import styles from "./PlayerCard.module.css";
 import StatusLabel from "./StatusLabel";
+import { uploadImage, setSelectedImageFile } from "./actions/playerCards";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Collapsible from "react-collapsible";
 import CollapsibleTriggerLabel from "./CollapsibleTriggerLabel";
@@ -54,35 +54,22 @@ export default (props) => {
   const defenceLabelParameter = "defencePoints";
   const movementLabelParameter = "movementPoints";
   const goldLabelParameter = "gold";
-  const [selectedFile, setSelectedFile] = useState(null);
   const [imageFile, setImageFile] = useState(props.imagePath);
+  const dispatch = useDispatch();
+  const selectedFile = useSelector(
+    (state) => state.playerCards.cardData[props.cardId].selectedImageFile
+  );
   const browseImageId = "browse-image-" + props.cardId;
   let imageUploadInputs = null;
   let armoryItemListItems = [];
 
   const handleCancel = () => {
-    setSelectedFile(null);
+    dispatch(setSelectedImageFile(null, props.cardId));
     setImageFile(props.imagePath);
   };
 
-  const uploadImage = () => {
-    if (selectedFile !== null) {
-      const formData = new FormData();
-      formData.append("characterImage", selectedFile, selectedFile.name);
-      axios
-        .post(
-          "http://localhost:5000/player_cards/upload_image/" + props.cardId,
-          formData
-        )
-        .then((response) => {
-          if (response.status === 200) {
-            setSelectedFile(null);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+  const handleImageUpload = () => {
+    dispatch(uploadImage(selectedFile, props.cardId));
   };
 
   const handleImageBrowse = (event) => {
@@ -100,11 +87,11 @@ export default (props) => {
       };
 
       reader.readAsDataURL(file);
-      setSelectedFile(file);
+      dispatch(setSelectedImageFile(file, props.cardId));
     }
   };
 
-  if (selectedFile !== null) {
+  if (selectedFile && selectedFile !== null) {
     const uploadId = "upload-image-" + props.cardId;
     const cancelId = "cancel-image-" + props.cardId;
     imageUploadInputs = (
@@ -112,7 +99,7 @@ export default (props) => {
         <input
           id={uploadId}
           className={styles.uploadbutton}
-          onClick={uploadImage}
+          onClick={handleImageUpload}
         />
         <label htmlFor={uploadId}>
           <IconButton
