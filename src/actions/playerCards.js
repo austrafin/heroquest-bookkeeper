@@ -9,7 +9,6 @@ export const INITIALISE = "playerCards/INITIALISE";
 export const SET_SELECTED_IMAGE = "playerCards/SET_SELECTED_IMAGE";
 export const UPLOAD_IMAGE = "playerCards/UPLOAD_IMAGE";
 export const ADD_ARMORY_ITEM = "playerCards/ADD_ARMORY_ITEM";
-export const ARMORY_ITEM_ADDED = "playerCards/ARMORY_ITEM_ADDED";
 
 export function addPlayerCard(values) {
   return {

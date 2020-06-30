@@ -10,7 +10,6 @@ import {
   UPLOAD_IMAGE,
   SET_SELECTED_IMAGE,
   ADD_ARMORY_ITEM,
-  ARMORY_ITEM_ADDED,
 } from "../actions/playerCards";
 import axios from "axios";
 import store from "../store";
@@ -77,7 +76,6 @@ function* addPlayerCard(action) {
 }
 
 function* addArmoryItem(action) {
-  yield put({ type: CARDS_LOADED, value: false });
   const body = { itemId: action.itemId };
   try {
     let responseStatus = null;
@@ -92,16 +90,11 @@ function* addArmoryItem(action) {
       });
 
     if (responseStatus === 200) {
-      yield put({
-        type: ARMORY_ITEM_ADDED,
-        armoryItemAdded: true,
-        cardId: action.cardId,
-      });
+      yield put({ type: LOAD });
     }
   } catch (error) {
     console.log(error);
   }
-  yield put({ type: CARDS_LOADED, value: true });
 }
 
 function* updateDatabase(action) {

@@ -115,20 +115,18 @@ router.route("/add_armory_item/:id").post((req, res) => {
 
   ArmoryItem.findById(req.body.itemId, function (err, item) {
     if (item) {
-      PlayerCard.find({ armoryItems: req.body.itemId })
-        .then((val) => {
-          if (val.length > 0) {
-            return res
-              .status(400)
-              .json("Error: Player card already contains the armory item.");
-          }
+      PlayerCard.findById(req.params.id, function (err, card) {
+        if (card.armoryItems.includes(req.body.itemId)) {
+          return res
+            .status(400)
+            .json("Error: Player card already contains the armory item.");
+        }
 
-          PlayerCard.findOneAndUpdate(
-            { _id: req.params.id },
-            { $push: { armoryItems: req.body.itemId } }
-          ).then(() => res.json("Armory item added"));
-        })
-        .catch((err) => res.status(400).json("Error: " + err));
+        PlayerCard.findOneAndUpdate(
+          { _id: req.params.id },
+          { $push: { armoryItems: req.body.itemId } }
+        ).then(() => res.json("Armory item added"));
+      }).catch((err) => res.status(400).json("Error: " + err));
     } else {
       res.status(400).json("Error: Armory item does not exist.");
     }
