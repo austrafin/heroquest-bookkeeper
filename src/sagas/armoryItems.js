@@ -10,6 +10,7 @@ import axios from "axios";
 import store from "../store";
 
 function* loadArmoryItems() {
+  yield put({ type: ARMORY_ITEMS_LOADED, value: false });
   const armoryArr = {};
   yield axios
     .get("http://localhost:5000/armory_items")
@@ -22,10 +23,11 @@ function* loadArmoryItems() {
       console.log(error);
     });
   yield put({ type: INITIALISE_AFTER, data: armoryArr });
-  yield put({ type: ARMORY_ITEMS_LOADED });
+  yield put({ type: ARMORY_ITEMS_LOADED, value: true });
 }
 
 function* updateDatabase(action) {
+  yield put({ type: ARMORY_ITEMS_LOADED, value: false });
   yield delay(1000);
   yield axios
     .post(

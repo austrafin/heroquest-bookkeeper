@@ -10,24 +10,13 @@ import {
   UPLOAD_IMAGE,
   SET_SELECTED_IMAGE,
   ADD_ARMORY_ITEM,
+  ARMORY_ITEM_ADDED,
 } from "../actions/playerCards";
 import axios from "axios";
 import store from "../store";
 
-const calculateStatusPoints = (item, values, pointsKey, operatorKey) => {
-  let add = 0;
-  if (item[pointsKey] > values[pointsKey] && item[operatorKey] === "=") {
-    values[pointsKey] = item[pointsKey];
-  } else if (item[operatorKey] === "+") {
-    add += item[pointsKey];
-  } else if (item[operatorKey] === "-") {
-    add -= item[pointsKey];
-  }
-
-  values[pointsKey] += add;
-};
-
 function* loadPlayerCardData() {
+  yield put({ type: CARDS_LOADED, value: false });
   const initialValues = {};
 
   yield axios
@@ -39,41 +28,18 @@ function* loadPlayerCardData() {
           values["characterName"] = card.characterName;
           values["bodyPoints"] = card.bodyPoints;
           values["mindPoints"] = card.mindPoints;
+          values["baseMeleePoints"] = card.baseMeleePoints;
           values["meleePoints"] = card.baseMeleePoints;
+          values["baseRangedPoints"] = card.baseRangedPoints;
           values["rangedPoints"] = card.baseRangedPoints;
+          values["baseDiagonalPoints"] = card.baseDiagonalPoints;
           values["diagonalPoints"] = card.baseDiagonalPoints;
+          values["baseDefencePoints"] = card.baseDefencePoints;
           values["defencePoints"] = card.baseDefencePoints;
+          values["baseMovementPoints"] = card.baseMovementPoints;
           values["movementPoints"] = card.baseMovementPoints;
           values["gold"] = card.gold;
           values["armoryItems"] = card.armoryItems;
-
-          card.armoryItems.forEach((item) => {
-            calculateStatusPoints(item, values, "meleePoints", "meleeOperator");
-            calculateStatusPoints(
-              item,
-              values,
-              "rangedPoints",
-              "rangedOperator"
-            );
-            calculateStatusPoints(
-              item,
-              values,
-              "diagonalPoints",
-              "diagonalOperator"
-            );
-            calculateStatusPoints(
-              item,
-              values,
-              "defencePoints",
-              "defenceOperator"
-            );
-            calculateStatusPoints(
-              item,
-              values,
-              "movementPoints",
-              "movementOperator"
-            );
-          });
 
           if (card.imageFile !== undefined) {
             const base64 = btoa(
@@ -96,31 +62,50 @@ function* loadPlayerCardData() {
       console.log(error);
     });
   yield put({ type: INITIALISE, data: initialValues });
-  yield put({ type: CARDS_LOADED });
+  yield put({ type: CARDS_LOADED, value: true });
 }
 
 function* addPlayerCard(action) {
+  yield put({ type: CARDS_LOADED, value: false });
   yield axios
     .post("http://localhost:5000/player_cards/add", action.values)
     .catch((error) => {
       console.log(error);
     });
   yield put({ type: ADD_AFTER });
+  yield put({ type: CARDS_LOADED, value: true });
 }
 
 function* addArmoryItem(action) {
+  yield put({ type: CARDS_LOADED, value: false });
   const body = { itemId: action.itemId };
-  yield axios
-    .post(
-      "http://localhost:5000/player_cards/add_armory_item/" + action.cardId,
-      body
-    )
-    .catch((error) => {
-      console.log(error);
-    });
+  try {
+    let responseStatus = null;
+
+    yield axios
+      .post(
+        "http://localhost:5000/player_cards/add_armory_item/" + action.cardId,
+        body
+      )
+      .then((response) => {
+        responseStatus = response.status;
+      });
+
+    if (responseStatus === 200) {
+      yield put({
+        type: ARMORY_ITEM_ADDED,
+        armoryItemAdded: true,
+        cardId: action.cardId,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  yield put({ type: CARDS_LOADED, value: true });
 }
 
 function* updateDatabase(action) {
+  yield put({ type: CARDS_LOADED, value: false });
   yield delay(200);
   yield axios
     .post("http://localhost:5000/player_cards/update", {
@@ -133,9 +118,11 @@ function* updateDatabase(action) {
     .catch((error) => {
       console.log(error);
     });
+  yield put({ type: CARDS_LOADED, value: true });
 }
 
 function* uploadImage(action) {
+  yield put({ type: CARDS_LOADED, value: false });
   if (action.selectedFile !== null) {
     const formData = new FormData();
     formData.append(
@@ -165,6 +152,7 @@ function* uploadImage(action) {
       console.log(error);
     }
   }
+  yield put({ type: CARDS_LOADED, value: true });
 }
 
 export const playerCardsSagas = [

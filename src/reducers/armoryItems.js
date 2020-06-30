@@ -28,7 +28,7 @@ function armoryItemsReducer(state = {}, action) {
         items: action.data,
       };
     case ARMORY_ITEMS_LOADED:
-      return { ...state, armoryItemsLoaded: true };
+      return { ...state, armoryItemsLoaded: action.value };
     default:
       return state;
   }
