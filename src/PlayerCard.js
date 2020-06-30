@@ -3,7 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import StatusModifier from "./StatusModifier";
 import styles from "./PlayerCard.module.css";
 import StatusLabel from "./StatusLabel";
-import { uploadImage, setSelectedImageFile } from "./actions/playerCards";
+import {
+  uploadImage,
+  setSelectedImageFile,
+  addArmoryItem,
+} from "./actions/playerCards";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Collapsible from "react-collapsible";
 import CollapsibleTriggerLabel from "./CollapsibleTriggerLabel";
@@ -13,6 +17,7 @@ import {
   PhotoCamera,
   CheckCircle,
   Cancel,
+  AddBox,
 } from "@material-ui/icons";
 import {
   GiHighShot,
@@ -30,7 +35,12 @@ import {
   CardMedia,
   Typography,
   IconButton,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 export default (props) => {
   const theme = createMuiTheme({
@@ -42,6 +52,15 @@ export default (props) => {
       },
     },
   });
+
+  const useStyles = makeStyles((theme) => ({
+    formControl: {
+      margin: theme.spacing(1),
+      width: "70%",
+    },
+  }));
+
+  const classes = useStyles();
 
   const armoryItems = useSelector(
     (state) => state.playerCards.cardData[props.cardId].armoryItems
@@ -55,13 +74,16 @@ export default (props) => {
   const movementLabelParameter = "movementPoints";
   const goldLabelParameter = "gold";
   const [imageFile, setImageFile] = useState(props.imagePath);
+  const [armoryItemSelection, setArmoryItemSelection] = useState("");
   const dispatch = useDispatch();
   const selectedFile = useSelector(
     (state) => state.playerCards.cardData[props.cardId].selectedImageFile
   );
+  const armoryItemsData = useSelector((state) => state.armoryItems);
   const browseImageId = "browse-image-" + props.cardId;
   let imageUploadInputs = null;
   let armoryItemListItems = [];
+  let armoryItemsSelectList = [];
 
   const handleCancel = () => {
     dispatch(setSelectedImageFile(null, props.cardId));
@@ -89,6 +111,14 @@ export default (props) => {
       reader.readAsDataURL(file);
       dispatch(setSelectedImageFile(file, props.cardId));
     }
+  };
+
+  const handleArmoryItemSelectionChange = (event) => {
+    setArmoryItemSelection(event.target.value);
+  };
+
+  const handleArmoryItemButtonClick = () => {
+    dispatch(addArmoryItem(props.cardId, armoryItemSelection));
   };
 
   if (selectedFile && selectedFile !== null) {
@@ -130,8 +160,49 @@ export default (props) => {
   }
 
   if (armoryItems !== undefined) {
-    armoryItemListItems = armoryItems.map((item, key) => item.name);
+    armoryItemListItems = armoryItems.map((item, key) => (
+      <CollapsibleTriggerLabel
+        key={key}
+        labelText={armoryItemsData.items[item].name}
+      />
+    ));
   }
+
+  if (armoryItemsData !== undefined) {
+    armoryItemsSelectList = Object.entries(armoryItemsData.items).map(
+      ([key, item]) => (
+        <MenuItem key={key} value={item._id}>
+          {item.name}
+        </MenuItem>
+      )
+    );
+  }
+
+  armoryItemListItems.push(
+    <CollapsibleTriggerLabel
+      key={"add_armory_item"}
+      labelText={
+        <>
+          <IconButton
+            style={{ marginTop: 15 }}
+            onClick={handleArmoryItemButtonClick}
+            color="primary"
+          >
+            <AddBox />
+          </IconButton>
+          <FormControl className={classes.formControl}>
+            <InputLabel>Artifact</InputLabel>
+            <Select
+              value={armoryItemSelection}
+              onChange={handleArmoryItemSelectionChange}
+            >
+              {armoryItemsSelectList}
+            </Select>
+          </FormControl>
+        </>
+      }
+    />
+  );
 
   return (
     <>

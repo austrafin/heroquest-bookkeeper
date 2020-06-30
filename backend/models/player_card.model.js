@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const ArmoryItem = require("../models/armory_item.model").schema;
 mongoose.set("useFindAndModify", false);
 
 const Schema = mongoose.Schema;
@@ -17,7 +16,7 @@ const playerCardSchema = new Schema(
     baseDefencePoints: { type: Number, required: true },
     baseMovementPoints: { type: Number, required: true },
     gold: { type: Number, required: true },
-    armoryItems: [ArmoryItem],
+    armoryItems: [{ type: mongoose.ObjectId }],
     imageFile: { type: Buffer, required: false },
   },
   {

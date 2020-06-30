@@ -6,6 +6,7 @@ import PlayerCard from "./PlayerCard";
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "./GamePage.module.css";
 import NumberInput from "./NumberInput";
+import { initialiseArmoryItems } from "./actions/armoryItems";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -25,6 +26,9 @@ export default () => {
   const dispatch = useDispatch();
   const playerCardData = useSelector((state) => state.playerCards.cardData);
   const hasLoaded = useSelector((state) => state.playerCards.cardsLoaded);
+  const hasLoadedArmoryItems = useSelector(
+    (state) => state.armoryItems.armoryItemsLoaded
+  );
   const newCardUploading = useSelector(
     (state) => state.playerCards.newCardUploading
   );
@@ -38,7 +42,11 @@ export default () => {
     stableDispatch(loadPlayerCards());
   }, [stableDispatch, newCardUploading]);
 
-  if (!hasLoaded || newCardUploading) {
+  useEffect(() => {
+    stableDispatch(initialiseArmoryItems());
+  }, [stableDispatch]);
+
+  if (!hasLoaded || !hasLoadedArmoryItems || newCardUploading) {
     return "Loading...";
   }
 
@@ -54,6 +62,7 @@ export default () => {
         />
       </Grid>
     );
+    return cards;
   });
 
   const handleOpen = () => {

@@ -18,8 +18,8 @@ export default (props) => {
 
   const armoryItems = [];
 
-  armoryItemsData.items.map((item) =>
-    armoryItems.push(<ArmoryItem data={item} key={item._id} />)
+  Object.entries(armoryItemsData.items).map(([key, item]) =>
+    armoryItems.push(<ArmoryItem data={item} key={key} />)
   );
 
   return <>{armoryItems}</>;

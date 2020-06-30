@@ -10,12 +10,12 @@ import axios from "axios";
 import store from "../store";
 
 function* loadArmoryItems() {
-  const armoryArr = [];
+  const armoryArr = {};
   yield axios
     .get("http://localhost:5000/armory_items")
     .then((response) => {
       response.data.forEach((item) => {
-        armoryArr.push(item);
+        armoryArr[item._id] = item;
       });
     })
     .catch((error) => {

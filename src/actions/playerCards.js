@@ -7,6 +7,7 @@ export const DECREMENT = "playerCards/DECREMENT";
 export const INITIALISE = "playerCards/INITIALISE";
 export const SET_SELECTED_IMAGE = "playerCards/SET_SELECTED_IMAGE";
 export const UPLOAD_IMAGE = "playerCards/UPLOAD_IMAGE";
+export const ADD_ARMORY_ITEM = "playerCards/ADD_ARMORY_ITEM";
 
 export function addPlayerCard(values) {
   return {
@@ -52,5 +53,13 @@ export function uploadImage(selectedFile, cardId) {
     type: UPLOAD_IMAGE,
     selectedFile: selectedFile,
     cardId: cardId,
+  };
+}
+
+export function addArmoryItem(cardId, itemId) {
+  return {
+    type: ADD_ARMORY_ITEM,
+    cardId: cardId,
+    itemId: itemId,
   };
 }

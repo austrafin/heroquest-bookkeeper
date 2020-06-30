@@ -136,25 +136,4 @@ router.route("/:id").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-function calculateValue(
-  obj,
-  values,
-  newValues,
-  pointsKey,
-  addKey,
-  totalKey,
-  operatorKey
-) {
-  if (obj[operatorKey] === "=" && obj[pointsKey] > values[totalKey]) {
-    values[totalKey] = obj[pointsKey];
-  } else if (obj[pointsKey] !== null) {
-    if (obj[operatorKey] === "+") {
-      values[addKey] += obj[pointsKey];
-    } else if (obj[operatorKey] === "-") {
-      values[addKey] -= obj[pointsKey];
-    }
-  }
-  newValues[pointsKey] = values[totalKey] + values[addKey];
-}
-
 module.exports = router;

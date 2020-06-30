@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const PlayerCard = require("../models/player_card.model");
+const ArmoryItem = require("../models/armory_item.model");
 
 router.route("").get((req, res) => {
   PlayerCard.find()
@@ -20,24 +21,8 @@ router.route("").get((req, res) => {
         cardsResponse["baseMovementPoints"] = card.baseMovementPoints;
         cardsResponse["gold"] = card.gold;
         cardsResponse["imageFile"] = card.imageFile;
+        cardsResponse["armoryItems"] = card.armoryItems;
 
-        const armoryItems = [];
-
-        card.armoryItems.forEach((item) => {
-          armoryItemRes = {};
-          armoryItemRes["defenceOperator"] = item.defenceOperator;
-          armoryItemRes["defencePoints"] = item.defencePoints;
-          armoryItemRes["diagonalPoints"] = item.diagonalPoints;
-          armoryItemRes["meleeOperator"] = item.meleeOperator;
-          armoryItemRes["meleePoints"] = item.meleePoints;
-          armoryItemRes["movementOperator"] = item.movementOperator;
-          armoryItemRes["movementPoints"] = item.movementPoints;
-          armoryItemRes["name"] = item.name;
-          armoryItemRes["rangedOperator"] = item.rangedOperator;
-          armoryItemRes["rangedPoints"] = item.rangedPoints;
-          armoryItems.push(armoryItemRes);
-        });
-        cardsResponse["armoryItems"] = armoryItems;
         response.push(cardsResponse);
       });
       res.json(response);
@@ -122,6 +107,32 @@ router.route("/upload_image/:id").post((req, res) => {
   )
     .then(() => res.json("Character image uploaded."))
     .catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.route("/add_armory_item/:id").post((req, res) => {
+  if (req.body.itemId === null || req.body.itemId === "")
+    return res.status(400).json("Error: Missing Armory Item ID");
+
+  ArmoryItem.findById(req.body.itemId, function (err, item) {
+    if (item) {
+      PlayerCard.find({ armoryItems: req.body.itemId })
+        .then((val) => {
+          if (val.length > 0) {
+            return res
+              .status(400)
+              .json("Error: Player card already contains the armory item.");
+          }
+
+          PlayerCard.findOneAndUpdate(
+            { _id: req.params.id },
+            { $push: { armoryItems: req.body.itemId } }
+          ).then(() => res.json("Armory item added"));
+        })
+        .catch((err) => res.status(400).json("Error: " + err));
+    } else {
+      res.status(400).json("Error: Armory item does not exist.");
+    }
+  });
 });
 
 /*

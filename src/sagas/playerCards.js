@@ -9,6 +9,7 @@ import {
   DECREMENT,
   UPLOAD_IMAGE,
   SET_SELECTED_IMAGE,
+  ADD_ARMORY_ITEM,
 } from "../actions/playerCards";
 import axios from "axios";
 import store from "../store";
@@ -107,6 +108,18 @@ function* addPlayerCard(action) {
   yield put({ type: ADD_AFTER });
 }
 
+function* addArmoryItem(action) {
+  const body = { itemId: action.itemId };
+  yield axios
+    .post(
+      "http://localhost:5000/player_cards/add_armory_item/" + action.cardId,
+      body
+    )
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
 function* updateDatabase(action) {
   yield delay(200);
   yield axios
@@ -160,4 +173,5 @@ export const playerCardsSagas = [
   takeLatest(INCREMENT, updateDatabase),
   takeLatest(DECREMENT, updateDatabase),
   takeLatest(UPLOAD_IMAGE, uploadImage),
+  takeLatest(ADD_ARMORY_ITEM, addArmoryItem),
 ];
