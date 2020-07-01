@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import StatusModifier from "./StatusModifier";
 import styles from "./PlayerCard.module.css";
 import StatusLabel from "./StatusLabel";
+import PlayerCardForm from "./PlayerCardForm";
 import {
   uploadImage,
   setSelectedImageFile,
@@ -18,6 +19,7 @@ import {
   CheckCircle,
   Cancel,
   AddBox,
+  Settings,
 } from "@material-ui/icons";
 import {
   GiHighShot,
@@ -75,12 +77,14 @@ export default (props) => {
   const goldLabelParameter = "gold";
   const [imageFile, setImageFile] = useState(props.imagePath);
   const [armoryItemSelection, setArmoryItemSelection] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
   const dispatch = useDispatch();
   const selectedFile = useSelector(
     (state) => state.playerCards.cardData[props.cardId].selectedImageFile
   );
   const armoryItemsData = useSelector((state) => state.armoryItems);
   const browseImageId = "browse-image-" + props.cardId;
+  const settingsId = "settings-" + props.cardId;
   let imageUploadInputs = null;
   let armoryItemListItems = [];
   let armoryItemsSelectList = [];
@@ -120,6 +124,12 @@ export default (props) => {
   const handleArmoryItemButtonClick = () => {
     dispatch(addArmoryItem(props.cardId, armoryItemSelection));
   };
+
+  const handleCardSettingsButtonClick = () => {
+    setModalOpen(true);
+  };
+
+  const submit = (event) => {};
 
   if (selectedFile && selectedFile !== null) {
     const uploadId = "upload-image-" + props.cardId;
@@ -243,9 +253,35 @@ export default (props) => {
 
             <Grid item xs style={{ marginLeft: 10 }}>
               <Grid container justify="center" direction="column">
-                <MuiThemeProvider theme={theme}>
-                  <Typography variant="h4">{props.characterName}</Typography>
-                </MuiThemeProvider>
+                <Grid container direction="row">
+                  <Grid item xs>
+                    <MuiThemeProvider theme={theme}>
+                      <Typography variant="h4">
+                        {props.characterName}
+                      </Typography>
+                    </MuiThemeProvider>
+                  </Grid>
+                  <Grid item xs>
+                    <div className={styles.container}>
+                      <input
+                        id={settingsId}
+                        className={styles.settingsbutton}
+                        type="button"
+                        onClick={handleCardSettingsButtonClick}
+                      />
+
+                      <label htmlFor={settingsId}>
+                        <IconButton
+                          className={styles.settingsbutton}
+                          color="primary"
+                          component="span"
+                        >
+                          <Settings />
+                        </IconButton>
+                      </label>
+                    </div>
+                  </Grid>
+                </Grid>
 
                 <Grid container justify="center" direction="row">
                   <Grid item xs>
@@ -356,6 +392,13 @@ export default (props) => {
           {armoryItemListItems}
         </Collapsible>
       </Card>
+
+      <PlayerCardForm
+        title="Modify Player Card"
+        submitFunction={submit}
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+      />
     </>
   );
 };

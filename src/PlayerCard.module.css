@@ -26,11 +26,22 @@ img {
   transition: opacity 0.35s ease;
 }
 
+.settingsbutton {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  float: right;
+}
+
 .uploadbutton {
   display: none;
 }
 
 .container:hover .button {
+  opacity: 1;
+}
+
+.container:hover .settingsbutton {
   opacity: 1;
 }
 
@@ -47,8 +58,4 @@ img {
 .icon {
   font-size: 1.5rem;
   margin-top: 3px;
-}
-
-.button {
-  margin-top: 10;
 }

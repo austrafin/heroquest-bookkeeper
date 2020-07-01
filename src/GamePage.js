@@ -1,15 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Grid, Button, Modal, TextField } from "@material-ui/core";
-import {
-  addPlayerCard,
-  loadPlayerCards,
-  setValue,
-} from "./actions/playerCards";
+import { Grid, Button } from "@material-ui/core";
+import { loadPlayerCards, addPlayerCard } from "./actions/playerCards";
 import PlayerCard from "./PlayerCard";
-import { makeStyles } from "@material-ui/core/styles";
+import PlayerCardForm from "./PlayerCardForm";
 import styles from "./GamePage.module.css";
-import NumberInput from "./NumberInput";
 import { initialiseArmoryItems } from "./actions/armoryItems";
 
 const calculateStatusPoints = (item, currentValue, pointsKey, operatorKey) => {
@@ -29,21 +24,7 @@ const calculateStatusPoints = (item, currentValue, pointsKey, operatorKey) => {
   return newValue;
 };
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-    marginTop: "100px",
-    marginLeft: "auto",
-    marginRight: "auto",
-  },
-}));
-
 export default () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const playerCardData = useSelector((state) => state.playerCards.cardData);
   const armoryItemsData = useSelector((state) => state.armoryItems);
@@ -145,10 +126,6 @@ export default () => {
     setModalOpen(true);
   };
 
-  const handleClose = () => {
-    setModalOpen(false);
-  };
-
   const submit = (event) => {
     const data = {};
 
@@ -157,49 +134,7 @@ export default () => {
     });
 
     dispatch(addPlayerCard(data));
-    handleClose();
-    event.preventDefault();
   };
-
-  const body = (
-    <div className={classes.paper}>
-      <h2 id="simple-modal-title">Add new character</h2>
-      <form onSubmit={submit} method="POST">
-        <Grid container direction="column">
-          <TextField name="characterName" label="Name" required />
-          <NumberInput name="baseBodyPoints" labelText={"Base body points"} />
-          <NumberInput name="baseMindPoints" labelText={"Base mind points"} />
-          <NumberInput
-            name="baseMeleePoints"
-            labelText={"Base melee attack points"}
-          />
-          <NumberInput
-            name="baseRangedPoints"
-            labelText={"Base ranged attack points"}
-          />
-          <NumberInput
-            name="baseDiagonalPoints"
-            labelText={"Base diagonal attack points"}
-          />
-          <NumberInput
-            name="baseDefencePoints"
-            labelText={"Base defence points"}
-          />
-          <NumberInput
-            name="baseMovementPoints"
-            labelText={"Base movement points"}
-          />
-        </Grid>
-
-        <Button
-          type="submit"
-          style={{ backgroundColor: "blue", marginTop: "10px" }}
-        >
-          Submit
-        </Button>
-      </form>
-    </div>
-  );
 
   return (
     <>
@@ -210,14 +145,12 @@ export default () => {
         Add character
       </Button>
 
-      <Modal
-        open={modalOpen}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        {body}
-      </Modal>
+      <PlayerCardForm
+        title="Add new character"
+        submitFunction={submit}
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+      />
 
       <Grid container spacing={4}>
         {cards}
