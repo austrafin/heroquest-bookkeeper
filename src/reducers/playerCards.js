@@ -87,7 +87,6 @@ export default (state = {}, action) => {
         },
       };
     case UPDATE_BASE_VALUES:
-      console.log(action);
       return {
         ...state,
         cardData: {

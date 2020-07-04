@@ -9,14 +9,14 @@ import { initialiseArmoryItems } from "./actions/armoryItems";
 
 const calculateStatusPoints = (item, currentValue, pointsKey, operatorKey) => {
   let add = 0;
-  let newValue = currentValue;
+  let newValue = Number(currentValue);
 
   if (item[pointsKey] > currentValue && item[operatorKey] === "=") {
-    newValue = item[pointsKey];
+    newValue = Number(item[pointsKey]);
   } else if (item[operatorKey] === "+") {
-    add += item[pointsKey];
+    add += Number(item[pointsKey]);
   } else if (item[operatorKey] === "-") {
-    add -= item[pointsKey];
+    add -= Number(item[pointsKey]);
   }
 
   newValue += add;
