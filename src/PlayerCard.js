@@ -64,6 +64,9 @@ export default (props) => {
 
   const classes = useStyles();
 
+  const cardData = useSelector(
+    (state) => state.playerCards.cardData[props.cardId]
+  );
   const armoryItems = useSelector(
     (state) => state.playerCards.cardData[props.cardId].armoryItems
   );
@@ -225,7 +228,7 @@ export default (props) => {
                   className={styles.media}
                   src={imageFile}
                   component="img"
-                  title={props.characterName}
+                  title={cardData.characterName}
                 />
 
                 <input
@@ -257,7 +260,7 @@ export default (props) => {
                   <Grid item xs>
                     <MuiThemeProvider theme={theme}>
                       <Typography variant="h4">
-                        {props.characterName}
+                        {cardData.characterName}
                       </Typography>
                     </MuiThemeProvider>
                   </Grid>
@@ -398,6 +401,14 @@ export default (props) => {
         submitFunction={submit}
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
+        characterName={cardData.characterName}
+        baseBodyPoints={cardData.baseBodyPoints}
+        baseMindPoints={cardData.baseMindPoints}
+        baseMeleePoints={cardData.baseMeleePoints}
+        baseRangedPoints={cardData.baseRangedPoints}
+        baseDiagonalPoints={cardData.baseDiagonalPoints}
+        baseDefencePoints={cardData.baseDefencePoints}
+        baseMovementPoints={cardData.baseMovementPoints}
       />
     </>
   );

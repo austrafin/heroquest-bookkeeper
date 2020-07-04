@@ -38,28 +38,46 @@ export default (props) => {
         <h2>{props.title}</h2>
         <form onSubmit={submit} method="POST">
           <Grid container direction="column">
-            <TextField name="characterName" label="Name" required />
-            <NumberInput name="baseBodyPoints" labelText={"Base body points"} />
-            <NumberInput name="baseMindPoints" labelText={"Base mind points"} />
+            <TextField
+              name="characterName"
+              label="Name"
+              required
+              value={props.characterName}
+            />
+            <NumberInput
+              name="baseBodyPoints"
+              labelText={"Base body points"}
+              defaultValue={props.baseBodyPoints}
+            />
+            <NumberInput
+              name="baseMindPoints"
+              labelText={"Base mind points"}
+              defaultValue={props.baseMindPoints}
+            />
             <NumberInput
               name="baseMeleePoints"
               labelText={"Base melee attack points"}
+              defaultValue={props.baseMeleePoints}
             />
             <NumberInput
               name="baseRangedPoints"
               labelText={"Base ranged attack points"}
+              defaultValue={props.baseRangedPoints}
             />
             <NumberInput
               name="baseDiagonalPoints"
               labelText={"Base diagonal attack points"}
+              defaultValue={props.baseDiagonalPoints}
             />
             <NumberInput
               name="baseDefencePoints"
               labelText={"Base defence points"}
+              defaultValue={props.baseDefencePoints}
             />
             <NumberInput
               name="baseMovementPoints"
               labelText={"Base movement points"}
+              defaultValue={props.baseMovementPoints}
             />
           </Grid>
 

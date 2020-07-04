@@ -25,7 +25,9 @@ function* loadPlayerCardData() {
         response.data.forEach((card) => {
           const values = {};
           values["characterName"] = card.characterName;
+          values["baseBodyPoints"] = card.baseBodyPoints;
           values["bodyPoints"] = card.bodyPoints;
+          values["baseMindPoints"] = card.baseMindPoints;
           values["mindPoints"] = card.mindPoints;
           values["baseMeleePoints"] = card.baseMeleePoints;
           values["meleePoints"] = card.baseMeleePoints;

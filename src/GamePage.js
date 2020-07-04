@@ -111,11 +111,7 @@ export default () => {
 
     cards.push(
       <Grid item xs key={cardId} className={styles.root}>
-        <PlayerCard
-          imagePath={values.image}
-          characterName={values.characterName}
-          cardId={cardId}
-        />
+        <PlayerCard imagePath={values.image} cardId={cardId} />
       </Grid>
     );
 
