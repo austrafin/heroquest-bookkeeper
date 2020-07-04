@@ -7,6 +7,7 @@ import {
   DECREMENT,
   INITIALISE,
   SET_SELECTED_IMAGE,
+  UPDATE_BASE_VALUES,
 } from "../actions/playerCards";
 
 function difference(state, action, decrement) {
@@ -82,6 +83,24 @@ export default (state = {}, action) => {
           [action.cardId]: {
             ...state.cardData[action.cardId],
             selectedImageFile: action.selectedFile,
+          },
+        },
+      };
+    case UPDATE_BASE_VALUES:
+      console.log(action);
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          [action.cardId]: {
+            ...state.cardData[action.cardId],
+            baseBodyPoints: action.values.baseBodyPoints,
+            baseMindPoints: action.values.baseMindPoints,
+            baseMeleePoints: action.values.baseMeleePoints,
+            baseRangedPoints: action.values.baseRangedPoints,
+            baseDiagonalPoints: action.values.baseDiagonalPoints,
+            baseDefencePoints: action.values.baseDefencePoints,
+            baseMovementPoints: action.values.baseMovementPoints,
           },
         },
       };

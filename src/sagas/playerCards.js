@@ -10,6 +10,7 @@ import {
   UPLOAD_IMAGE,
   SET_SELECTED_IMAGE,
   ADD_ARMORY_ITEM,
+  UPDATE_BASE_VALUES,
 } from "../actions/playerCards";
 import axios from "axios";
 import store from "../store";
@@ -116,6 +117,27 @@ function* updateDatabase(action) {
   yield put({ type: CARDS_LOADED, value: true });
 }
 
+function* updateBaseValues(action) {
+  yield put({ type: CARDS_LOADED, value: false });
+  yield delay(200);
+  yield axios
+    .post("http://localhost:5000/player_cards/update", {
+      [action.cardId]: {
+        baseBodyPoints: action.values.baseBodyPoints,
+        baseMindPoints: action.values.baseMindPoints,
+        baseMeleePoints: action.values.baseMeleePoints,
+        baseRangedPoints: action.values.baseRangedPoints,
+        baseDiagonalPoints: action.values.baseDiagonalPoints,
+        baseDefencePoints: action.values.baseDefencePoints,
+        baseMovementPoints: action.values.baseMovementPoints,
+      },
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  yield put({ type: CARDS_LOADED, value: true });
+}
+
 function* uploadImage(action) {
   yield put({ type: CARDS_LOADED, value: false });
   if (action.selectedFile !== null) {
@@ -155,6 +177,7 @@ export const playerCardsSagas = [
   takeLatest(LOAD, loadPlayerCardData),
   takeLatest(INCREMENT, updateDatabase),
   takeLatest(DECREMENT, updateDatabase),
+  takeLatest(UPDATE_BASE_VALUES, updateBaseValues),
   takeLatest(UPLOAD_IMAGE, uploadImage),
   takeLatest(ADD_ARMORY_ITEM, addArmoryItem),
 ];

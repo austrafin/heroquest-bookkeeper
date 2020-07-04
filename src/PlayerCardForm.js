@@ -24,8 +24,6 @@ export default (props) => {
   };
 
   const submit = (event) => {
-    console.log("asd");
-    console.log(props);
     props.submitFunction(event);
 
     handleClose();

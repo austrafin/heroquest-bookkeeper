@@ -1,5 +1,6 @@
 export const ADD = "playerCards/ADD";
 export const ADD_AFTER = "playerCards/ADD_AFTER";
+export const UPDATE_BASE_VALUES = "playerCards/UPDATE_BASE_VALUES";
 export const LOAD = "playerCards/LOAD";
 export const CARDS_LOADED = "playerCards/CARDS_LOADED";
 export const SET_VALUE = "playerCards/SET_VALUE";
@@ -13,6 +14,14 @@ export const ADD_ARMORY_ITEM = "playerCards/ADD_ARMORY_ITEM";
 export function addPlayerCard(values) {
   return {
     type: ADD,
+    values: values,
+  };
+}
+
+export function updateBaseValues(values, cardId) {
+  return {
+    type: UPDATE_BASE_VALUES,
+    cardId: cardId,
     values: values,
   };
 }

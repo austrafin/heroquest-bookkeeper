@@ -8,6 +8,7 @@ import {
   uploadImage,
   setSelectedImageFile,
   addArmoryItem,
+  updateBaseValues,
 } from "./actions/playerCards";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Collapsible from "react-collapsible";
@@ -132,7 +133,15 @@ export default (props) => {
     setModalOpen(true);
   };
 
-  const submit = (event) => {};
+  const submit = (event) => {
+    const data = {};
+
+    [...event.target].forEach((input) => {
+      if (input.name !== "") data[input.name] = input.value;
+    });
+
+    dispatch(updateBaseValues(data, props.cardId));
+  };
 
   if (selectedFile && selectedFile !== null) {
     const uploadId = "upload-image-" + props.cardId;
