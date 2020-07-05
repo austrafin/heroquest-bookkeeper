@@ -1,6 +1,4 @@
-export const SET = "armoryItems/SET";
 export const UPDATE = "armoryItems/UPDATE";
-export const UPDATE_AFTER = "armoryItems/UPDATE_AFTER";
 export const ARMORY_ITEMS_LOADED = "armoryItems/ARMORY_ITEMS_LOADED";
 export const INITIALISE = "armoryItems/INITIALISE";
 export const INITIALISE_AFTER = "armoryItems/INITIALISE_AFTER";
@@ -11,18 +9,10 @@ export function initialiseArmoryItems() {
   };
 }
 
-export function setArmoryItem(value, key, id) {
-  return {
-    type: SET,
-    key: key,
-    id: id,
-    value: value,
-  };
-}
-
-export function updateArmoryItem(id) {
+export function updateArmoryItem(id, data) {
   return {
     type: UPDATE,
     id: id,
+    data: data,
   };
 }

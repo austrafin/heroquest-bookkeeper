@@ -4,10 +4,8 @@ import {
   INITIALISE,
   INITIALISE_AFTER,
   ARMORY_ITEMS_LOADED,
-  UPDATE_AFTER,
 } from "../actions/armoryItems";
 import axios from "axios";
-import store from "../store";
 
 function* loadArmoryItems() {
   yield put({ type: ARMORY_ITEMS_LOADED, value: false });
@@ -30,15 +28,10 @@ function* updateDatabase(action) {
   yield put({ type: ARMORY_ITEMS_LOADED, value: false });
   yield delay(1000);
   yield axios
-    .post(
-      "http://localhost:5000/armory_items/update/" + action.id,
-      store.getState().armoryItems[action.id]
-    )
+    .post("http://localhost:5000/armory_items/update/" + action.id, action.data)
     .catch((error) => {
       console.log(error);
     });
-
-  yield put({ type: UPDATE_AFTER, id: action.id });
 }
 
 export const armoryItemSagas = [
