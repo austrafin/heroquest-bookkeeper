@@ -43,14 +43,14 @@ export default () => {
       return;
     }
     stableDispatch(loadPlayerCards());
-  }, [stableDispatch, newCardUploading]);
+  }, [stableDispatch, newCardUploading, hasLoaded]);
 
   useEffect(() => {
     if (hasLoadedArmoryItems) {
       return;
     }
     stableDispatch(initialiseArmoryItems());
-  }, [stableDispatch]);
+  }, [stableDispatch, hasLoadedArmoryItems]);
 
   if (!hasLoaded || !hasLoadedArmoryItems || newCardUploading) {
     return "Loading...";
