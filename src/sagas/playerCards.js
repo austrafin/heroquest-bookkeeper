@@ -114,7 +114,6 @@ function* addArmoryItem(action) {
 }
 
 function* updateDatabase(action) {
-  yield put({ type: CARDS_LOADED, value: false });
   yield delay(200);
   yield axios
     .post("http://localhost:5000/player_cards/update", {
@@ -127,7 +126,6 @@ function* updateDatabase(action) {
     .catch((error) => {
       console.log(error);
     });
-  yield put({ type: CARDS_LOADED, value: true });
 }
 
 function* updateBaseValues(action) {
