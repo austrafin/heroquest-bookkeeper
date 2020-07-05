@@ -150,7 +150,6 @@ function* updateBaseValues(action) {
 }
 
 function* uploadImage(action) {
-  yield put({ type: CARDS_LOADED, value: false });
   if (action.selectedFile !== null) {
     const formData = new FormData();
     formData.append(
@@ -180,7 +179,6 @@ function* uploadImage(action) {
       console.log(error);
     }
   }
-  yield put({ type: CARDS_LOADED, value: true });
 }
 
 export const playerCardsSagas = [
