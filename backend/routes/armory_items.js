@@ -4,7 +4,7 @@ const ArmoryItem = require("../models/armory_item.model");
 router.route("").get((req, res) => {
   ArmoryItem.find()
     .then((armoryItems) => res.json(armoryItems))
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(500).json("Error: " + err));
 });
 
 router.route("/get_ids").get((req, res) => {
@@ -16,7 +16,7 @@ router.route("/get_ids").get((req, res) => {
       });
       res.json(ids);
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(500).json("Error: " + err));
 });
 
 router.route("/get_names").get((req, res) => {
@@ -28,7 +28,7 @@ router.route("/get_names").get((req, res) => {
       });
       res.json(names);
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(500).json("Error: " + err));
 });
 
 router.route("/add").post((req, res) => {
@@ -69,23 +69,24 @@ router.route("/add").post((req, res) => {
 
   newArmoryItem
     .save()
-    .then(() => res.json("Armory item added"))
-    .catch((err) => res.status(400).json("Error: " + err));
+    .then(() => res.status(201).json("Armory item added"))
+    .catch((err) => res.status(500).json("Error: " + err));
 });
 
 router.route("/update/:id").post((req, res) => {
   ArmoryItem.findOneAndUpdate({ _id: req.params.id }, req.body, {
     new: true,
-  }).catch((err) => {
-    session.abortTransaction();
-    res.status(400).json("Error: " + err);
-  });
+  })
+    .then(() => res.json("Armory item updated"))
+    .catch((err) => {
+      res.status(500).json("Error: " + err);
+    });
 });
 
 router.route("/:id").get((req, res) => {
   ArmoryItem.find({ _id: req.params.id })
     .then((armoryItem) => res.json(armoryItem))
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(500).json("Error: " + err));
 });
 
 module.exports = router;

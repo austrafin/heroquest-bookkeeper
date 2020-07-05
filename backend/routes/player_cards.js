@@ -27,15 +27,7 @@ router.route("").get((req, res) => {
       });
       res.json(response);
     })
-    .catch((err) => res.status(400).json("Error: " + err));
-});
-
-router.route("/update_armory_points").post((req, res) => {
-  PlayerCard.find({
-    armoryItems: { $elemMatch: { id: req.body.id } },
-  })
-    .then((playerCards) => res.json(playerCards.length))
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(500).json("Error: " + err));
 });
 
 router.route("/add").post((req, res) => {
@@ -69,14 +61,14 @@ router.route("/add").post((req, res) => {
 
   newPlayerCard
     .save()
-    .then(() => res.json("Player card added"))
-    .catch((err) => res.status(400).json("Error: " + err));
+    .then(() => res.status(201).json("Player card added"))
+    .catch((err) => res.status(500).json("Error: " + err));
 });
 
 router.route("/update").post((req, res) => {
   for (var id in req.body) {
     PlayerCard.findOneAndUpdate({ _id: id }, req.body[id]).catch((err) =>
-      res.status(400).json("Error: " + err)
+      res.status(500).json("Error: " + err)
     );
   }
 
@@ -85,15 +77,15 @@ router.route("/update").post((req, res) => {
 
 router.route("/upload_image/:id").post((req, res) => {
   if (req.files == null) {
-    return res.status(400).json({ msg: "No file uploaded" });
+    return res.status(422).json({ msg: "No file uploaded" });
   }
 
   if (req.files.characterImage.size > 17825792) {
-    return res.status(400).json({ msg: "File size too large." });
+    return res.status(413).json({ msg: "File size too large." });
   }
 
   if (!/^image[/]/.test(req.files.characterImage.mimetype)) {
-    return res.status(400).json({ msg: "Error: file type is not image." });
+    return res.status(415).json({ msg: "Error: file type is not image." });
   }
 
   PlayerCard.findOneAndUpdate(
@@ -106,19 +98,19 @@ router.route("/upload_image/:id").post((req, res) => {
     }
   )
     .then(() => res.json("Character image uploaded."))
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(500).json("Error: " + err));
 });
 
 router.route("/add_armory_item/:id").post((req, res) => {
   if (req.body.itemId === null || req.body.itemId === "")
-    return res.status(400).json("Error: Missing Armory Item ID");
+    return res.status(422).json("Error: Missing Armory Item ID");
 
   ArmoryItem.findById(req.body.itemId, function (err, item) {
     if (item) {
       PlayerCard.findById(req.params.id, function (err, card) {
         if (card.armoryItems.includes(req.body.itemId)) {
           return res
-            .status(400)
+            .status(409)
             .json("Error: Player card already contains the armory item.");
         }
 
@@ -126,9 +118,9 @@ router.route("/add_armory_item/:id").post((req, res) => {
           { _id: req.params.id },
           { $push: { armoryItems: req.body.itemId } }
         ).then(() => res.json("Armory item added"));
-      }).catch((err) => res.status(400).json("Error: " + err));
+      }).catch((err) => res.status(500).json("Error: " + err));
     } else {
-      res.status(400).json("Error: Armory item does not exist.");
+      res.status(404).json("Error: Armory item does not exist.");
     }
   });
 });
@@ -137,15 +129,7 @@ router.route("/:id").delete((req, res) => {
   console.log("req.params");
   PlayerCard.findByIdAndDelete(req.params.id)
     .then(() => res.json("PlayerCard deleted."))
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(500).json("Error: " + err));
 });
-
-/*
-router.route("/:characterName").get((req, res) => {
-  PlayerCard.find({ characterName: req.params.characterName })
-    .then(playerCard => res.json(playerCard))
-    .catch(err => res.status(400).json("Error: " + err));
-});
-*/
 
 module.exports = router;
