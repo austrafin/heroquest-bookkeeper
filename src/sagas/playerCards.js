@@ -2,6 +2,8 @@ import { takeLatest, put, delay } from "redux-saga/effects";
 import {
   ADD,
   ADD_AFTER,
+  DELETE,
+  DELETE_AFTER,
   LOAD,
   CARDS_LOADED,
   INITIALISE,
@@ -75,6 +77,17 @@ function* addPlayerCard(action) {
       console.log(error);
     });
   yield put({ type: ADD_AFTER });
+  yield put({ type: CARDS_LOADED, value: true });
+}
+
+function* deletePlayerCard(action) {
+  yield put({ type: CARDS_LOADED, value: false });
+  yield axios
+    .delete("http://localhost:5000/player_cards/" + action.cardId)
+    .catch((error) => {
+      console.log(error);
+    });
+  yield put({ type: DELETE_AFTER, cardId: action.cardId });
   yield put({ type: CARDS_LOADED, value: true });
 }
 
@@ -175,6 +188,7 @@ function* uploadImage(action) {
 export const playerCardsSagas = [
   takeLatest(ADD, addPlayerCard),
   takeLatest(LOAD, loadPlayerCardData),
+  takeLatest(DELETE, deletePlayerCard),
   takeLatest(INCREMENT, updateDatabase),
   takeLatest(DECREMENT, updateDatabase),
   takeLatest(UPDATE_BASE_VALUES, updateBaseValues),

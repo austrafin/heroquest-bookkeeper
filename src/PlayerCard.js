@@ -406,10 +406,12 @@ export default (props) => {
       </Card>
 
       <PlayerCardForm
+        cardId={props.cardId}
         title="Modify Player Card"
         submitFunction={submit}
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
+        delete={true}
         characterName={cardData.characterName}
         baseBodyPoints={cardData.baseBodyPoints}
         baseMindPoints={cardData.baseMindPoints}

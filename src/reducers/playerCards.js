@@ -1,6 +1,7 @@
 import {
   ADD,
   ADD_AFTER,
+  DELETE_AFTER,
   CARDS_LOADED,
   SET_VALUE,
   INCREMENT,
@@ -73,6 +74,10 @@ export default (state = {}, action) => {
       return { ...state, newCardUploading: true };
     case ADD_AFTER:
       return { ...state, newCardUploading: false };
+    case DELETE_AFTER:
+      const newState = { ...state };
+      delete newState.cardData[action.cardId];
+      return newState;
     case CARDS_LOADED:
       return { ...state, cardsLoaded: action.value };
     case SET_SELECTED_IMAGE:

@@ -133,16 +133,17 @@ router.route("/add_armory_item/:id").post((req, res) => {
   });
 });
 
+router.route("/:id").delete((req, res) => {
+  console.log("req.params");
+  PlayerCard.findByIdAndDelete(req.params.id)
+    .then(() => res.json("PlayerCard deleted."))
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
 /*
 router.route("/:characterName").get((req, res) => {
   PlayerCard.find({ characterName: req.params.characterName })
     .then(playerCard => res.json(playerCard))
-    .catch(err => res.status(400).json("Error: " + err));
-});
-
-router.route("/:id").delete((req, res) => {
-  PlayerCard.findByIdAndDelete(req.params.id)
-    .then(() => res.json("PlayerCard deleted."))
     .catch(err => res.status(400).json("Error: " + err));
 });
 */

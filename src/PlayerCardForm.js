@@ -1,7 +1,9 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import NumberInput from "./NumberInput";
 import { Grid, Button, Modal, TextField } from "@material-ui/core";
+import { deletePlayerCard } from "./actions/playerCards";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -17,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default (props) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
 
   const handleClose = () => {
@@ -29,6 +32,24 @@ export default (props) => {
     handleClose();
     event.preventDefault();
   };
+
+  let deleteButton = null;
+
+  if (props.delete)
+    deleteButton = (
+      <Button
+        style={{
+          backgroundColor: "red",
+          marginTop: "10px",
+          marginLeft: "10px",
+        }}
+        onClick={() => {
+          dispatch(deletePlayerCard(props.cardId));
+        }}
+      >
+        Delete character
+      </Button>
+    );
 
   return (
     <Modal open={props.modalOpen} onClose={handleClose}>
@@ -85,6 +106,7 @@ export default (props) => {
           >
             Submit
           </Button>
+          {deleteButton}
         </form>
       </div>
     </Modal>

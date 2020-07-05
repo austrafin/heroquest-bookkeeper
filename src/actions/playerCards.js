@@ -1,5 +1,7 @@
 export const ADD = "playerCards/ADD";
 export const ADD_AFTER = "playerCards/ADD_AFTER";
+export const DELETE = "playerCards/DELETE";
+export const DELETE_AFTER = "playerCards/DELETE_AFTER";
 export const UPDATE_BASE_VALUES = "playerCards/UPDATE_BASE_VALUES";
 export const LOAD = "playerCards/LOAD";
 export const CARDS_LOADED = "playerCards/CARDS_LOADED";
@@ -15,6 +17,13 @@ export function addPlayerCard(values) {
   return {
     type: ADD,
     values: values,
+  };
+}
+
+export function deletePlayerCard(cardId) {
+  return {
+    type: DELETE,
+    cardId: cardId,
   };
 }
 
