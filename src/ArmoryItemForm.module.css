@@ -1,0 +1,10 @@
+.name {
+  background-color: white;
+  padding: 10px !important;
+  display: flex !important;
+}
+
+.name label {
+  padding-left: 15px;
+  padding-top: 10px;
+}

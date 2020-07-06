@@ -1,5 +1,6 @@
 import { takeLatest, delay, put } from "redux-saga/effects";
 import {
+  ADD,
   UPDATE,
   INITIALISE,
   INITIALISE_AFTER,
@@ -24,6 +25,15 @@ function* loadArmoryItems() {
   yield put({ type: ARMORY_ITEMS_LOADED, value: true });
 }
 
+function* addArmoryItem(action) {
+  yield axios
+    .post("http://localhost:5000/armory_items/add", action.data)
+    .catch((error) => {
+      console.log(error);
+    });
+  yield put({ type: ARMORY_ITEMS_LOADED, value: false });
+}
+
 function* updateDatabase(action) {
   yield put({ type: ARMORY_ITEMS_LOADED, value: false });
   yield delay(1000);
@@ -35,6 +45,7 @@ function* updateDatabase(action) {
 }
 
 export const armoryItemSagas = [
+  takeLatest(ADD, addArmoryItem),
   takeLatest(INITIALISE, loadArmoryItems),
   takeLatest(UPDATE, updateDatabase),
 ];
