@@ -1,23 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
 import ArmoryItem from "./ArmoryItem";
 import ArmoryItemForm from "./ArmoryItemForm";
+import ModalForm from "./ModalForm";
 import { initialiseArmoryItems, addArmoryItem } from "./actions/armoryItems";
-import { Button, Modal } from "@material-ui/core";
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-    marginTop: "100px",
-    marginLeft: "auto",
-    marginRight: "auto",
-  },
-}));
+import { Button } from "@material-ui/core";
 
 export default (props) => {
   const dispatch = useDispatch();
@@ -27,7 +14,6 @@ export default (props) => {
   );
   const armoryItemsData = useSelector((state) => state.armoryItems);
   const [modalOpen, setModalOpen] = useState(false);
-  const classes = useStyles();
 
   useEffect(() => {
     if (hasLoadedArmoryItems) {
@@ -80,12 +66,13 @@ export default (props) => {
       </Button>
       {armoryItems}
 
-      <Modal open={modalOpen} onClose={handleClose}>
-        <div className={classes.paper}>
-          <h2>Add armory item</h2>
-          <ArmoryItemForm submit={submit} submitButtonText={"Submit"} />
-        </div>
-      </Modal>
+      <ModalForm
+        title="Add armory item"
+        modalOpen={modalOpen}
+        handleClose={handleClose}
+      >
+        <ArmoryItemForm submit={submit} submitButtonText={"Submit"} />
+      </ModalForm>
     </>
   );
 };
