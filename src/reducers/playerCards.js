@@ -9,36 +9,33 @@ import {
   INITIALISE,
   SET_SELECTED_IMAGE,
   UPDATE_BASE_VALUES,
+  CLEAR_PENDING_CHANGES,
 } from "../actions/playerCards";
 import * as Constants from "../constants/player_card.constants";
 
 function difference(state, action, decrement) {
-  let incrementValue = action.incrementValue;
+  const newState = { ...state };
+  const newValue = decrement
+    ? newState.cardData[action.cardId][action.label] - action.incrementValue
+    : newState.cardData[action.cardId][action.label] + action.incrementValue;
 
-  if (decrement) {
-    incrementValue *= -1;
-  }
+  if (!(action.cardId in newState.pendingChanges))
+    newState.pendingChanges[action.cardId] = {};
 
-  if (action.cardId in state.cardData) {
-    return {
-      ...state,
-      cardData: {
-        ...state.cardData,
-        [action.cardId]: {
-          ...state.cardData[action.cardId],
-          [action.label]:
-            state.cardData[action.cardId][action.label] + incrementValue,
-        },
-      },
-    };
-  }
   return {
-    ...state,
+    ...newState,
     cardData: {
-      ...state.cardData,
+      ...newState.cardData,
       [action.cardId]: {
-        ...state.cardData[action.cardId],
-        [action.label]: 0 + incrementValue,
+        ...newState.cardData[action.cardId],
+        [action.label]: newValue,
+      },
+    },
+    pendingChanges: {
+      ...newState.pendingChanges,
+      [action.cardId]: {
+        ...newState.pendingChanges[action.cardId],
+        [action.label]: newValue,
       },
     },
   };
@@ -70,6 +67,7 @@ export default (state = {}, action) => {
         cardData: {
           ...action.data,
         },
+        pendingChanges: {},
       };
     case ADD:
       return { ...state, newCardUploading: true };
@@ -115,6 +113,11 @@ export default (state = {}, action) => {
               action.values[Constants.BASE_MOVEMENT_POINTS],
           },
         },
+      };
+    case CLEAR_PENDING_CHANGES:
+      return {
+        ...state,
+        pendingChanges: {},
       };
     default:
       return state;

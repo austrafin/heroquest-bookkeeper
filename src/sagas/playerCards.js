@@ -13,6 +13,7 @@ import {
   SET_SELECTED_IMAGE,
   ADD_ARMORY_ITEM,
   UPDATE_BASE_VALUES,
+  CLEAR_PENDING_CHANGES,
 } from "../actions/playerCards";
 import * as Constants from "../constants/player_card.constants";
 import axios from "axios";
@@ -114,19 +115,17 @@ function* addArmoryItem(action) {
   }
 }
 
-function* updateDatabase(action) {
-  yield delay(1000);
+function* updateDatabase() {
+  yield delay(200);
   yield axios
-    .post("http://localhost:5000/player_cards/update", {
-      [action.cardId]: {
-        [action.label]: store.getState().playerCards.cardData[action.cardId][
-          action.label
-        ],
-      },
-    })
+    .post(
+      "http://localhost:5000/player_cards/update",
+      store.getState().playerCards.pendingChanges
+    )
     .catch((error) => {
       console.log(error);
     });
+  yield put({ type: CLEAR_PENDING_CHANGES });
 }
 
 function* updateBaseValues(action) {
