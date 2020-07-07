@@ -14,6 +14,7 @@ import {
   ADD_ARMORY_ITEM,
   UPDATE_BASE_VALUES,
 } from "../actions/playerCards";
+import * as Constants from "../constants/player_card.constants";
 import axios from "axios";
 import store from "../store";
 
@@ -27,23 +28,23 @@ function* loadPlayerCardData() {
       if (response.status === 200) {
         response.data.forEach((card) => {
           const values = {};
-          values["characterName"] = card.characterName;
-          values["baseBodyPoints"] = card.baseBodyPoints;
-          values["bodyPoints"] = card.bodyPoints;
-          values["baseMindPoints"] = card.baseMindPoints;
-          values["mindPoints"] = card.mindPoints;
-          values["baseMeleePoints"] = card.baseMeleePoints;
-          values["meleePoints"] = card.baseMeleePoints;
-          values["baseRangedPoints"] = card.baseRangedPoints;
-          values["rangedPoints"] = card.baseRangedPoints;
-          values["baseDiagonalPoints"] = card.baseDiagonalPoints;
-          values["diagonalPoints"] = card.baseDiagonalPoints;
-          values["baseDefencePoints"] = card.baseDefencePoints;
-          values["defencePoints"] = card.baseDefencePoints;
-          values["baseMovementPoints"] = card.baseMovementPoints;
-          values["movementPoints"] = card.baseMovementPoints;
-          values["gold"] = card.gold;
-          values["armoryItems"] = card.armoryItems;
+          values[Constants.CHARACTER_NAME] = card.characterName;
+          values[Constants.BASE_BODY_POINTS] = card.baseBodyPoints;
+          values[Constants.BODY_POINTS] = card.bodyPoints;
+          values[Constants.BASE_MIND_POINTS] = card.baseMindPoints;
+          values[Constants.MIND_POINTS] = card.mindPoints;
+          values[Constants.BASE_MELEE_POINTS] = card.baseMeleePoints;
+          values[Constants.MELEE_POINTS] = card.baseMeleePoints;
+          values[Constants.BASE_RANGED_POINTS] = card.baseRangedPoints;
+          values[Constants.RANGED_POINTS] = card.baseRangedPoints;
+          values[Constants.BASE_DIAGONAL_POINTS] = card.baseDiagonalPoints;
+          values[Constants.DIAGONAL_POINTS] = card.baseDiagonalPoints;
+          values[Constants.BASE_DEFENCE_POINTS] = card.baseDefencePoints;
+          values[Constants.DEFENCE_POINTS] = card.baseDefencePoints;
+          values[Constants.BASE_MOVEMENT_POINTS] = card.baseMovementPoints;
+          values[Constants.MOVEMENT_POINTS] = card.baseMovementPoints;
+          values[Constants.GOLD] = card.gold;
+          values[Constants.ARMORY_ITEMS] = card.armoryItems;
 
           if (card.imageFile !== undefined) {
             const base64 = btoa(
@@ -53,9 +54,9 @@ function* loadPlayerCardData() {
               )
             );
 
-            values["image"] = "data:image/png;base64," + base64;
+            values[Constants.IMAGE] = "data:image/png;base64," + base64;
           } else {
-            values["image"] = "./no_image.webp";
+            values[Constants.IMAGE] = Constants.ALT_IMAGE_PATH;
           }
 
           initialValues[card._id] = values;
@@ -114,7 +115,7 @@ function* addArmoryItem(action) {
 }
 
 function* updateDatabase(action) {
-  yield delay(200);
+  yield delay(1000);
   yield axios
     .post("http://localhost:5000/player_cards/update", {
       [action.cardId]: {
@@ -129,24 +130,23 @@ function* updateDatabase(action) {
 }
 
 function* updateBaseValues(action) {
-  yield put({ type: CARDS_LOADED, value: false });
   yield delay(200);
   yield axios
     .post("http://localhost:5000/player_cards/update", {
       [action.cardId]: {
-        baseBodyPoints: action.values.baseBodyPoints,
-        baseMindPoints: action.values.baseMindPoints,
-        baseMeleePoints: action.values.baseMeleePoints,
-        baseRangedPoints: action.values.baseRangedPoints,
-        baseDiagonalPoints: action.values.baseDiagonalPoints,
-        baseDefencePoints: action.values.baseDefencePoints,
-        baseMovementPoints: action.values.baseMovementPoints,
+        baseBodyPoints: action.values[Constants.BASE_BODY_POINTS],
+        baseMindPoints: action.values[Constants.BASE_MIND_POINTS],
+        baseMeleePoints: action.values[Constants.BASE_MELEE_POINTS],
+        baseRangedPoints: action.values[Constants.BASE_RANGED_POINTS],
+        baseDiagonalPoints: action.values[Constants.BASE_DIAGONAL_POINTS],
+        baseDefencePoints: action.values[Constants.BASE_DEFENCE_POINTS],
+        baseMovementPoints: action.values[Constants.BASE_MOVEMENT_POINTS],
       },
     })
     .catch((error) => {
       console.log(error);
     });
-  yield put({ type: CARDS_LOADED, value: true });
+  yield put({ type: CARDS_LOADED, value: false });
 }
 
 function* uploadImage(action) {

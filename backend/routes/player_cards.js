@@ -31,35 +31,21 @@ router.route("").get((req, res) => {
 });
 
 router.route("/add").post((req, res) => {
-  const characterName = req.body.characterName;
-  const baseBodyPoints = Number(req.body.baseBodyPoints);
-  const bodyPoints =
-    Number(req.body.bodyPoints) || Number(req.body.baseBodyPoints);
-  const baseMindPoints = Number(req.body.baseMindPoints);
-  const mindPoints =
-    Number(req.body.mindPoints) || Number(req.body.baseMindPoints);
-  const baseMeleePoints = Number(req.body.baseMeleePoints);
-  const baseDiagonalPoints = Number(req.body.baseDiagonalPoints);
-  const baseRangedPoints = Number(req.body.baseRangedPoints);
-  const baseDefencePoints = Number(req.body.baseDefencePoints);
-  const baseMovementPoints = Number(req.body.baseMovementPoints);
-  const gold = Number(req.body.gold) || 0;
-
-  const newPlayerCard = new PlayerCard({
-    characterName,
-    baseBodyPoints,
-    bodyPoints,
-    baseMindPoints,
-    mindPoints,
-    baseMeleePoints,
-    baseDiagonalPoints,
-    baseRangedPoints,
-    baseDefencePoints,
-    baseMovementPoints,
-    gold,
-  });
-
-  newPlayerCard
+  new PlayerCard({
+    characterName: req.body.characterName,
+    baseBodyPoints: Number(req.body.baseBodyPoints) || 0,
+    bodyPoints:
+      Number(req.body.bodyPoints) || Number(req.body.baseBodyPoints) || 0,
+    baseMindPoints: Number(req.body.baseMindPoints) || 0,
+    mindPoints:
+      Number(req.body.mindPoints) || Number(req.body.baseMindPoints) || 0,
+    baseMeleePoints: Number(req.body.baseMeleePoints) || 0,
+    baseDiagonalPoints: Number(req.body.baseDiagonalPoints) || 0,
+    baseRangedPoints: Number(req.body.baseRangedPoints) || 0,
+    baseDefencePoints: Number(req.body.baseDefencePoints) || 0,
+    baseMovementPoints: Number(req.body.baseMovementPoints) || 0,
+    gold: Number(req.body.gold) || 0,
+  })
     .save()
     .then(() => res.status(201).json("Player card added"))
     .catch((err) => res.status(500).json("Error: " + err));

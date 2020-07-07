@@ -10,6 +10,7 @@ import {
   SET_SELECTED_IMAGE,
   UPDATE_BASE_VALUES,
 } from "../actions/playerCards";
+import * as Constants from "../constants/player_card.constants";
 
 function difference(state, action, decrement) {
   let incrementValue = action.incrementValue;
@@ -98,13 +99,20 @@ export default (state = {}, action) => {
           ...state.cardData,
           [action.cardId]: {
             ...state.cardData[action.cardId],
-            baseBodyPoints: action.values.baseBodyPoints,
-            baseMindPoints: action.values.baseMindPoints,
-            baseMeleePoints: action.values.baseMeleePoints,
-            baseRangedPoints: action.values.baseRangedPoints,
-            baseDiagonalPoints: action.values.baseDiagonalPoints,
-            baseDefencePoints: action.values.baseDefencePoints,
-            baseMovementPoints: action.values.baseMovementPoints,
+            [Constants.BASE_BODY_POINTS]:
+              action.values[Constants.BASE_BODY_POINTS],
+            [Constants.BASE_MIND_POINTS]:
+              action.values[Constants.BASE_MIND_POINTS],
+            [Constants.BASE_MELEE_POINTS]:
+              action.values[Constants.BASE_MELEE_POINTS],
+            [Constants.BASE_RANGED_POINTS]:
+              action.values[Constants.BASE_RANGED_POINTS],
+            [Constants.BASE_DIAGONAL_POINTS]:
+              action.values[Constants.BASE_DIAGONAL_POINTS],
+            [Constants.BASE_DEFENCE_POINTS]:
+              action.values[Constants.BASE_DEFENCE_POINTS],
+            [Constants.BASE_MOVEMENT_POINTS]:
+              action.values[Constants.BASE_MOVEMENT_POINTS],
           },
         },
       };

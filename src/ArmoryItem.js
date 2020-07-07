@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import * as Constants from "./constants/armory_item.constants";
 import Collapsible from "react-collapsible";
 import ArmoryItemForm from "./ArmoryItemForm";
 import styles from "./ArmoryItem.module.css";
@@ -21,7 +22,7 @@ export default (props) => {
       )
         data[input.name] = input.value;
     });
-    dispatch(updateArmoryItem(props.data._id, data));
+    dispatch(updateArmoryItem(props.data[Constants.ID], data));
   };
 
   return (
@@ -29,13 +30,13 @@ export default (props) => {
       <Collapsible
         trigger={
           <CollapsibleTriggerLabel
-            labelText={props.data.name}
+            labelText={props.data[Constants.NAME]}
             icon={<ArrowDropDown />}
           />
         }
         triggerWhenOpen={
           <CollapsibleTriggerLabel
-            labelText={props.data.name}
+            labelText={props.data[Constants.NAME]}
             icon={<ArrowDropUp />}
           />
         }
@@ -46,19 +47,19 @@ export default (props) => {
         <ArmoryItemForm
           submit={submit}
           submitButtonText="Save changes"
-          id={props.data._id}
-          name={props.data.name}
           delete={true}
-          meleeOperator={props.data.meleeOperator}
-          meleePoints={props.data.meleePoints}
-          rangedOperator={props.data.rangedOperator}
-          rangedPoints={props.data.rangedPoints}
-          diagonalOperator={props.data.diagonalOperator}
-          diagonalPoints={props.data.diagonalPoints}
-          defenceOperator={props.data.defenceOperator}
-          defencePoints={props.data.defencePoints}
-          movementOperator={props.data.movementOperator}
-          movementPoints={props.data.movementPoints}
+          id={props.data[Constants.ID]}
+          name={props.data[Constants.NAME]}
+          meleeOperator={props.data[Constants.MELEE_OPERATOR]}
+          meleePoints={props.data[Constants.MELEE_POINTS]}
+          rangedOperator={props.data[Constants.RANGED_OPERATOR]}
+          rangedPoints={props.data[Constants.RANGED_POINTS]}
+          diagonalOperator={props.data[Constants.DIAGONAL_OPERATOR]}
+          diagonalPoints={props.data[Constants.DIAGONAL_POINTS]}
+          defenceOperator={props.data[Constants.DEFENCE_OPERATOR]}
+          defencePoints={props.data[Constants.DEFENCE_POINTS]}
+          movementOperator={props.data[Constants.MOVEMENT_OPERATOR]}
+          movementPoints={props.data[Constants.MOVEMENT_POINTS]}
         />
       </Collapsible>
     </>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import * as Constants from "./constants/player_card.constants";
 import StatusModifier from "./StatusModifier";
 import styles from "./PlayerCard.module.css";
 import StatusLabel from "./StatusLabel";
@@ -85,14 +86,6 @@ export default (props) => {
 
   if (cardData === undefined) return null;
 
-  const bodyLabelParameter = "bodyPoints";
-  const mindLabelParameter = "mindPoints";
-  const meleeLabelParameter = "meleePoints";
-  const rangedLabelParameter = "rangedPoints";
-  const diagonalLabelParameter = "diagonalPoints";
-  const defenceLabelParameter = "defencePoints";
-  const movementLabelParameter = "movementPoints";
-  const goldLabelParameter = "gold";
   const browseImageId = "browse-image-" + props.cardId;
   const settingsId = "settings-" + props.cardId;
   let imageUploadInputs = null;
@@ -112,7 +105,7 @@ export default (props) => {
     const file = event.target.files[0];
     if (file === undefined || file === null) {
       console.log("Error: selected file null");
-    } else if (file.size > 17825792) {
+    } else if (file.size > Constants.MAX_IMAGE_SIZE) {
       console.log("Error: Selected file is too large.");
     } else if (!/^image[/]/.test(file.type)) {
       console.log("Error: file type is not image.");
@@ -192,7 +185,9 @@ export default (props) => {
       <CollapsibleTriggerLabel
         key={key}
         labelText={
-          armoryItemsData.items[item] ? armoryItemsData.items[item].name : "???"
+          armoryItemsData.items[item]
+            ? armoryItemsData.items[item].name
+            : Constants.ALT_ARMORY_ITEM
         }
       />
     ));
@@ -245,7 +240,7 @@ export default (props) => {
                   className={styles.media}
                   src={imageFile}
                   component="img"
-                  title={cardData.characterName}
+                  title={cardData[Constants.CHARACTER_NAME]}
                 />
 
                 <input
@@ -277,7 +272,7 @@ export default (props) => {
                   <Grid item xs>
                     <MuiThemeProvider theme={theme}>
                       <Typography variant="h4">
-                        {cardData.characterName}
+                        {cardData[Constants.CHARACTER_NAME]}
                       </Typography>
                     </MuiThemeProvider>
                   </Grid>
@@ -306,14 +301,14 @@ export default (props) => {
                 <Grid container justify="center" direction="row">
                   <Grid item xs>
                     <StatusLabel
-                      labelParameter={bodyLabelParameter}
+                      labelParameter={Constants.BODY_POINTS}
                       cardId={props.cardId}
                     >
                       <GiHearts color="red" className={styles.icon} />
                     </StatusLabel>
 
                     <StatusLabel
-                      labelParameter={mindLabelParameter}
+                      labelParameter={Constants.MIND_POINTS}
                       cardId={props.cardId}
                     >
                       <GiScrollUnfurled
@@ -323,7 +318,7 @@ export default (props) => {
                     </StatusLabel>
 
                     <StatusLabel
-                      labelParameter={goldLabelParameter}
+                      labelParameter={Constants.GOLD}
                       cardId={props.cardId}
                     >
                       <GiCoins color="darkgoldenrod" className={styles.icon} />
@@ -332,25 +327,25 @@ export default (props) => {
 
                   <Grid item xs style={{ marginLeft: 15 }}>
                     <StatusLabel
-                      labelParameter={meleeLabelParameter}
+                      labelParameter={Constants.MELEE_POINTS}
                       cardId={props.cardId}
                     >
                       <GiGladius color="navy" className={styles.icon} />
                     </StatusLabel>
                     <StatusLabel
-                      labelParameter={rangedLabelParameter}
+                      labelParameter={Constants.RANGED_POINTS}
                       cardId={props.cardId}
                     >
                       <GiHighShot color="darkgreen" className={styles.icon} />
                     </StatusLabel>
                     <StatusLabel
-                      labelParameter={diagonalLabelParameter}
+                      labelParameter={Constants.DIAGONAL_POINTS}
                       cardId={props.cardId}
                     >
                       <GiArrowhead color="black" className={styles.icon} />
                     </StatusLabel>
                     <StatusLabel
-                      labelParameter={defenceLabelParameter}
+                      labelParameter={Constants.DEFENCE_POINTS}
                       cardId={props.cardId}
                     >
                       <GiCheckedShield
@@ -359,7 +354,7 @@ export default (props) => {
                       />
                     </StatusLabel>
                     <StatusLabel
-                      labelParameter={movementLabelParameter}
+                      labelParameter={Constants.MOVEMENT_POINTS}
                       cardId={props.cardId}
                     >
                       <GiWalkingBoot color="brown" className={styles.icon} />
@@ -373,13 +368,13 @@ export default (props) => {
           <StatusModifier
             labelText={"Body"}
             defaultValue={1}
-            labelParameter={bodyLabelParameter}
+            labelParameter={Constants.BODY_POINTS}
             cardId={props.cardId}
           />
           <StatusModifier
             labelText={"Mind"}
             defaultValue={1}
-            labelParameter={mindLabelParameter}
+            labelParameter={Constants.MIND_POINTS}
             cardId={props.cardId}
           />
           <StatusModifier
@@ -387,7 +382,7 @@ export default (props) => {
             step={5}
             labelText={"Gold"}
             defaultValue={25}
-            labelParameter={goldLabelParameter}
+            labelParameter={Constants.GOLD}
             cardId={props.cardId}
           />
         </Grid>
@@ -420,14 +415,14 @@ export default (props) => {
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         delete={true}
-        characterName={cardData.characterName}
-        baseBodyPoints={cardData.baseBodyPoints}
-        baseMindPoints={cardData.baseMindPoints}
-        baseMeleePoints={cardData.baseMeleePoints}
-        baseRangedPoints={cardData.baseRangedPoints}
-        baseDiagonalPoints={cardData.baseDiagonalPoints}
-        baseDefencePoints={cardData.baseDefencePoints}
-        baseMovementPoints={cardData.baseMovementPoints}
+        characterName={cardData[Constants.CHARACTER_NAME]}
+        baseBodyPoints={cardData[Constants.BASE_BODY_POINTS]}
+        baseMindPoints={cardData[Constants.BASE_MIND_POINTS]}
+        baseMeleePoints={cardData[Constants.BASE_MELEE_POINTS]}
+        baseRangedPoints={cardData[Constants.BASE_RANGED_POINTS]}
+        baseDiagonalPoints={cardData[Constants.BASE_DIAGONAL_POINTS]}
+        baseDefencePoints={cardData[Constants.BASE_DEFENCE_POINTS]}
+        baseMovementPoints={cardData[Constants.BASE_MOVEMENT_POINTS]}
       />
     </>
   );

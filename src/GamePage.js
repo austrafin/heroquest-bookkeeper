@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import * as PlayerCardConstants from "./constants/player_card.constants";
+import * as ArmoryItemConstants from "./constants/armory_item.constants";
 import { Grid, Button } from "@material-ui/core";
 import { loadPlayerCards, addPlayerCard } from "./actions/playerCards";
 import PlayerCard from "./PlayerCard";
@@ -62,50 +64,50 @@ export default () => {
 
   Object.entries(playerCardData).map(([cardId, values]) => {
     if (values.armoryItems.length > 0) {
-      let meleePoints = values.baseMeleePoints;
-      let rangedPoints = values.baseRangedPoints;
-      let diagonalPoints = values.baseDiagonalPoints;
-      let defencePoints = values.baseDefencePoints;
-      let movementPoints = values.baseMovementPoints;
+      let meleePoints = values[PlayerCardConstants.BASE_MELEE_POINTS];
+      let rangedPoints = values[PlayerCardConstants.BASE_RANGED_POINTS];
+      let diagonalPoints = values[PlayerCardConstants.BASE_DIAGONAL_POINTS];
+      let defencePoints = values[PlayerCardConstants.BASE_DEFENCE_POINTS];
+      let movementPoints = values[PlayerCardConstants.BASE_MOVEMENT_POINTS];
 
       values.armoryItems.map((itemId) => {
         const item = armoryItemsData.items[itemId];
         meleePoints = calculateStatusPoints(
           item,
           meleePoints,
-          "meleePoints",
-          "meleeOperator"
+          ArmoryItemConstants.MELEE_POINTS,
+          ArmoryItemConstants.MELEE_OPERATOR
         );
         rangedPoints = calculateStatusPoints(
           item,
           rangedPoints,
-          "rangedPoints",
-          "rangedOperator"
+          ArmoryItemConstants.RANGED_POINTS,
+          ArmoryItemConstants.RANGED_OPERATOR
         );
         diagonalPoints = calculateStatusPoints(
           item,
           diagonalPoints,
-          "diagonalPoints",
-          "diagonalOperator"
+          ArmoryItemConstants.DIAGONAL_POINTS,
+          ArmoryItemConstants.DIAGONAL_OPERATOR
         );
         defencePoints = calculateStatusPoints(
           item,
           defencePoints,
-          "defencePoints",
-          "defenceOperator"
+          ArmoryItemConstants.DEFENCE_POINTS,
+          ArmoryItemConstants.DEFENCE_OPERATOR
         );
         movementPoints = calculateStatusPoints(
           item,
           movementPoints,
-          "movementPoints",
-          "movementOperator"
+          ArmoryItemConstants.MOVEMENT_POINTS,
+          ArmoryItemConstants.MOVEMENT_OPERATOR
         );
 
-        values["meleePoints"] = meleePoints;
-        values["rangedPoints"] = rangedPoints;
-        values["diagonalPoints"] = diagonalPoints;
-        values["defencePoints"] = defencePoints;
-        values["movementPoints"] = movementPoints;
+        values[PlayerCardConstants.MELEE_POINTS] = meleePoints;
+        values[PlayerCardConstants.RANGED_POINTS] = rangedPoints;
+        values[PlayerCardConstants.DIAGONAL_POINTS] = diagonalPoints;
+        values[PlayerCardConstants.DEFENCE_POINTS] = defencePoints;
+        values[PlayerCardConstants.MOVEMENT_POINTS] = movementPoints;
 
         return true;
       });

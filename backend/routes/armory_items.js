@@ -33,42 +33,19 @@ router.route("/get_names").get((req, res) => {
 });
 
 router.route("/add").post((req, res) => {
-  const name = req.body.name;
-  const meleePoints = "meleePoints" in req.body ? req.body.meleePoints : null;
-  const meleeOperator =
-    "meleeOperator" in req.body ? req.body.meleeOperator : null;
-  const rangedPoints =
-    "rangedPoints" in req.body ? req.body.rangedPoints : null;
-  const rangedOperator =
-    "rangedOperator" in req.body ? req.body.rangedOperator : null;
-  const diagonalPoints =
-    "diagonalPoints" in req.body ? req.body.diagonalPoints : null;
-  const diagonalOperator =
-    "diagonalOperator" in req.body ? req.body.diagonalOperators : null;
-  const defencePoints =
-    "defencePoints" in req.body ? req.body.defencePoints : null;
-  const defenceOperator =
-    "defenceOperator" in req.body ? req.body.defenceOperator : null;
-  const movementPoints =
-    "movementPoints" in req.body ? req.body.movementPoints : null;
-  const movementOperator =
-    "movementOperator" in req.body ? req.body.movementOperator : null;
-
-  const newArmoryItem = new ArmoryItem({
-    name,
-    meleePoints,
-    meleeOperator,
-    rangedPoints,
-    rangedOperator,
-    diagonalPoints,
-    diagonalOperator,
-    defencePoints,
-    defenceOperator,
-    movementPoints,
-    movementOperator,
-  });
-
-  newArmoryItem
+  new ArmoryItem({
+    name: req.body.name,
+    meleePoints: req.body.meleePoints,
+    meleeOperator: req.body.meleeOperator,
+    rangedPoints: req.body.rangedPoints,
+    rangedOperator: req.body.rangedOperator,
+    diagonalPoints: req.body.diagonalPoints,
+    diagonalOperator: req.body.diagonalOperator,
+    defencePoints: req.body.defencePoints,
+    defenceOperator: req.body.defenceOperator,
+    movementPoints: req.body.movementPoints,
+    movementOperator: req.body.movementOperator,
+  })
     .save()
     .then(() => res.status(201).json("Armory item added"))
     .catch((err) => res.status(500).json("Error: " + err));

@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import * as Constants from "./constants/player_card.constants";
 import NumberInput from "./NumberInput";
 import ModalForm from "./ModalForm";
 import { Grid, Button, TextField } from "@material-ui/core";
@@ -46,43 +47,43 @@ export default (props) => {
       <form onSubmit={submit} method="POST">
         <Grid container direction="column">
           <TextField
-            name="characterName"
+            name={Constants.CHARACTER_NAME}
             label="Name"
             required
             value={props.characterName}
           />
           <NumberInput
-            name="baseBodyPoints"
+            name={Constants.BASE_BODY_POINTS}
             labelText={"Base body points"}
             defaultValue={props.baseBodyPoints}
           />
           <NumberInput
-            name="baseMindPoints"
+            name={Constants.BASE_MIND_POINTS}
             labelText={"Base mind points"}
             defaultValue={props.baseMindPoints}
           />
           <NumberInput
-            name="baseMeleePoints"
+            name={Constants.BASE_MELEE_POINTS}
             labelText={"Base melee attack points"}
             defaultValue={props.baseMeleePoints}
           />
           <NumberInput
-            name="baseRangedPoints"
+            name={Constants.BASE_RANGED_POINTS}
             labelText={"Base ranged attack points"}
             defaultValue={props.baseRangedPoints}
           />
           <NumberInput
-            name="baseDiagonalPoints"
+            name={Constants.BASE_DIAGONAL_POINTS}
             labelText={"Base diagonal attack points"}
             defaultValue={props.baseDiagonalPoints}
           />
           <NumberInput
-            name="baseDefencePoints"
+            name={Constants.BASE_DEFENCE_POINTS}
             labelText={"Base defence points"}
             defaultValue={props.baseDefencePoints}
           />
           <NumberInput
-            name="baseMovementPoints"
+            name={Constants.BASE_MOVEMENT_POINTS}
             labelText={"Base movement points"}
             defaultValue={props.baseMovementPoints}
           />

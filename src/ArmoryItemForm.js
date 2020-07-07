@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import * as Constants from "./constants/armory_item.constants";
 import styles from "./ArmoryItemForm.module.css";
 import { Button, TextField } from "@material-ui/core";
 import ArmoryItemModifier from "./ArmoryItemModifier";
@@ -32,7 +33,7 @@ export default (props) => {
   return (
     <form onSubmit={props.submit} method="POST">
       <TextField
-        name="name"
+        name={Constants.NAME}
         className={styles.name}
         required
         label="Name"
@@ -43,8 +44,8 @@ export default (props) => {
       <ArmoryItemModifier
         id={props.id}
         labelText="Melee"
-        valueKey={"meleePoints"}
-        operatorKey={"meleeOperator"}
+        valueKey={Constants.MELEE_POINTS}
+        operatorKey={Constants.MELEE_OPERATOR}
         operatorValue={props.meleeOperator}
         value={props.meleePoints}
       />
@@ -52,8 +53,8 @@ export default (props) => {
       <ArmoryItemModifier
         id={props.id}
         labelText="Ranged"
-        valueKey={"rangedPoints"}
-        operatorKey={"rangedOperator"}
+        valueKey={Constants.RANGED_POINTS}
+        operatorKey={Constants.RANGED_OPERATOR}
         operatorValue={props.rangedOperator}
         value={props.rangedPoints}
       />
@@ -61,8 +62,8 @@ export default (props) => {
       <ArmoryItemModifier
         id={props.id}
         labelText="Diagonal"
-        valueKey={"diagonalPoints"}
-        operatorKey={"diagonalOperator"}
+        valueKey={Constants.DIAGONAL_POINTS}
+        operatorKey={Constants.DIAGONAL_OPERATOR}
         operatorValue={props.diagonalOperator}
         value={props.diagonalPoints}
       />
@@ -70,8 +71,8 @@ export default (props) => {
       <ArmoryItemModifier
         id={props.id}
         labelText="Defence"
-        valueKey={"defencePoints"}
-        operatorKey={"defenceOperator"}
+        valueKey={Constants.DEFENCE_POINTS}
+        operatorKey={Constants.DEFENCE_OPERATOR}
         operatorValue={props.defenceOperator}
         value={props.defencePoints}
       />
@@ -79,8 +80,8 @@ export default (props) => {
       <ArmoryItemModifier
         id={props.id}
         labelText="Movement"
-        valueKey={"movementPoints"}
-        operatorKey={"movementOperator"}
+        valueKey={Constants.MOVEMENT_POINTS}
+        operatorKey={Constants.MOVEMENT_OPERATOR}
         operatorValue={props.movementOperator}
         value={props.movementPoints}
       />
