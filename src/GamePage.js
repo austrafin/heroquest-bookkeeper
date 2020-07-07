@@ -8,6 +8,8 @@ import styles from "./GamePage.module.css";
 import { initialiseArmoryItems } from "./actions/armoryItems";
 
 const calculateStatusPoints = (item, currentValue, pointsKey, operatorKey) => {
+  if (item === undefined) return currentValue;
+
   let add = 0;
   let newValue = Number(currentValue);
 

@@ -46,7 +46,9 @@ export default (props) => {
         <ArmoryItemForm
           submit={submit}
           submitButtonText="Save changes"
+          id={props.data._id}
           name={props.data.name}
+          delete={true}
           meleeOperator={props.data.meleeOperator}
           meleePoints={props.data.meleePoints}
           rangedOperator={props.data.rangedOperator}

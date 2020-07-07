@@ -1,13 +1,33 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import styles from "./ArmoryItemForm.module.css";
 import { Button, TextField } from "@material-ui/core";
 import ArmoryItemModifier from "./ArmoryItemModifier";
+import { deleteArmoryItem } from "./actions/armoryItems";
 
 export default (props) => {
+  const dispatch = useDispatch();
   const [name, setName] = useState(props.name ?? "");
   const handleTextFieldChange = (event) => {
     setName(event.target.value);
   };
+
+  let deleteButton = null;
+
+  if (props.delete)
+    deleteButton = (
+      <Button
+        style={{
+          backgroundColor: "red",
+          margin: "10px",
+        }}
+        onClick={() => {
+          dispatch(deleteArmoryItem(props.id));
+        }}
+      >
+        Delete item
+      </Button>
+    );
 
   return (
     <form onSubmit={props.submit} method="POST">
@@ -21,7 +41,7 @@ export default (props) => {
       />
 
       <ArmoryItemModifier
-        id={props._id}
+        id={props.id}
         labelText="Melee"
         valueKey={"meleePoints"}
         operatorKey={"meleeOperator"}
@@ -30,7 +50,7 @@ export default (props) => {
       />
 
       <ArmoryItemModifier
-        id={props._id}
+        id={props.id}
         labelText="Ranged"
         valueKey={"rangedPoints"}
         operatorKey={"rangedOperator"}
@@ -39,7 +59,7 @@ export default (props) => {
       />
 
       <ArmoryItemModifier
-        id={props._id}
+        id={props.id}
         labelText="Diagonal"
         valueKey={"diagonalPoints"}
         operatorKey={"diagonalOperator"}
@@ -48,7 +68,7 @@ export default (props) => {
       />
 
       <ArmoryItemModifier
-        id={props._id}
+        id={props.id}
         labelText="Defence"
         valueKey={"defencePoints"}
         operatorKey={"defenceOperator"}
@@ -57,7 +77,7 @@ export default (props) => {
       />
 
       <ArmoryItemModifier
-        id={props._id}
+        id={props.id}
         labelText="Movement"
         valueKey={"movementPoints"}
         operatorKey={"movementOperator"}
@@ -65,9 +85,11 @@ export default (props) => {
         value={props.movementPoints}
       />
 
-      <Button color="primary" type="submit">
+      <Button style={{ backgroundColor: "blue", margin: "10px" }} type="submit">
         {props.submitButtonText}
       </Button>
+
+      {deleteButton}
     </form>
   );
 };

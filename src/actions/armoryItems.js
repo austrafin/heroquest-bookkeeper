@@ -1,4 +1,5 @@
 export const ADD = "armoryItems/ADD";
+export const DELETE = "armoryItems/DELETE";
 export const UPDATE = "armoryItems/UPDATE";
 export const ARMORY_ITEMS_LOADED = "armoryItems/ARMORY_ITEMS_LOADED";
 export const INITIALISE = "armoryItems/INITIALISE";
@@ -8,6 +9,13 @@ export function addArmoryItem(data) {
   return {
     type: ADD,
     data: data,
+  };
+}
+
+export function deleteArmoryItem(id) {
+  return {
+    type: DELETE,
+    id: id,
   };
 }
 

@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const ArmoryItem = require("../models/armory_item.model");
+const PlayerCard = require("../models/player_card.model");
 
 router.route("").get((req, res) => {
   ArmoryItem.find()
@@ -86,6 +87,25 @@ router.route("/update/:id").post((req, res) => {
 router.route("/:id").get((req, res) => {
   ArmoryItem.find({ _id: req.params.id })
     .then((armoryItem) => res.json(armoryItem))
+    .catch((err) => res.status(500).json("Error: " + err));
+});
+
+router.route("/:id").delete((req, res) => {
+  ArmoryItem.findByIdAndDelete(req.params.id)
+    .then(() => {
+      PlayerCard.updateMany(
+        { armoryItems: req.params.id },
+        {
+          $pullAll: {
+            armoryItems: [req.params.id],
+          },
+        }
+      ).then(() => {
+        // Why does this need to be here for the deletion to work???
+      });
+
+      res.json("Armory Item deleted.");
+    })
     .catch((err) => res.status(500).json("Error: " + err));
 });
 

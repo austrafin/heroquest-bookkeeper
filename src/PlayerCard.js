@@ -185,7 +185,9 @@ export default (props) => {
     armoryItemListItems = armoryItems.map((item, key) => (
       <CollapsibleTriggerLabel
         key={key}
-        labelText={armoryItemsData.items[item].name}
+        labelText={
+          armoryItemsData.items[item] ? armoryItemsData.items[item].name : "???"
+        }
       />
     ));
   }
