@@ -45,32 +45,46 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-export default (props) => {
-  const theme = createMuiTheme({
-    overrides: {
-      MuiTypography: {
-        h4: {
-          fontSize: 30,
-        },
+const theme = createMuiTheme({
+  overrides: {
+    MuiTypography: {
+      h4: {
+        fontSize: 30,
       },
     },
-  });
+  },
+});
 
-  const useStyles = makeStyles((theme) => ({
-    formControl: {
-      margin: theme.spacing(1),
-      width: "70%",
-    },
-  }));
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    width: "70%",
+  },
+}));
 
+export default (props) => {
   const classes = useStyles();
-
   const cardData = useSelector(
     (state) => state.playerCards.cardData[props.cardId]
   );
-  const armoryItems = useSelector(
-    (state) => state.playerCards.cardData[props.cardId].armoryItems
+  const armoryItems = useSelector((state) =>
+    state.playerCards.cardData[props.cardId]
+      ? state.playerCards.cardData[props.cardId].armoryItems
+      : null
   );
+  const [imageFile, setImageFile] = useState(props.imagePath);
+  const [armoryItemSelection, setArmoryItemSelection] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const dispatch = useDispatch();
+  const selectedFile = useSelector((state) =>
+    state.playerCards.cardData[props.cardId]
+      ? state.playerCards.cardData[props.cardId].selectedImageFile
+      : null
+  );
+  const armoryItemsData = useSelector((state) => state.armoryItems);
+
+  if (cardData === undefined) return null;
+
   const bodyLabelParameter = "bodyPoints";
   const mindLabelParameter = "mindPoints";
   const meleeLabelParameter = "meleePoints";
@@ -79,14 +93,6 @@ export default (props) => {
   const defenceLabelParameter = "defencePoints";
   const movementLabelParameter = "movementPoints";
   const goldLabelParameter = "gold";
-  const [imageFile, setImageFile] = useState(props.imagePath);
-  const [armoryItemSelection, setArmoryItemSelection] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
-  const dispatch = useDispatch();
-  const selectedFile = useSelector(
-    (state) => state.playerCards.cardData[props.cardId].selectedImageFile
-  );
-  const armoryItemsData = useSelector((state) => state.armoryItems);
   const browseImageId = "browse-image-" + props.cardId;
   const settingsId = "settings-" + props.cardId;
   let imageUploadInputs = null;
