@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import * as Constants from "./constants/armory_item.constants";
+import { REDUX_STORE_FIELDS as Constants } from "./constants/armory_item.constants";
 import styles from "./ArmoryItemForm.module.css";
 import { Button, TextField } from "@material-ui/core";
 import ArmoryItemModifier from "./ArmoryItemModifier";

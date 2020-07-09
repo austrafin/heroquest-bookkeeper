@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import * as Constants from "./constants/armory_item.constants";
+import { REDUX_STORE_FIELDS as Constants } from "./constants/armory_item.constants";
 import Collapsible from "react-collapsible";
 import ArmoryItemForm from "./ArmoryItemForm";
 import styles from "./ArmoryItem.module.css";

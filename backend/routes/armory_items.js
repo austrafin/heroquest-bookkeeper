@@ -4,7 +4,28 @@ const PlayerCard = require("../models/player_card.model");
 
 router.route("").get((req, res) => {
   ArmoryItem.find()
-    .then((armoryItems) => res.json(armoryItems))
+    .then((armoryItems) => {
+      const response = [];
+      armoryItems.forEach((item) => {
+        const armoryItemResponse = {};
+        armoryItemResponse["_id"] = item._id;
+        armoryItemResponse["defenceOperator"] = item.defenceOperator;
+        armoryItemResponse["defencePoints"] = item.defencePoints;
+        armoryItemResponse["diagonalOperator"] = item.diagonalOperator;
+        armoryItemResponse["diagonalPoints"] = item.diagonalPoints;
+        armoryItemResponse["meleeOperator"] = item.meleeOperator;
+        armoryItemResponse["meleePoints"] = item.meleePoints;
+        armoryItemResponse["movementOperator"] = item.movementOperator;
+        armoryItemResponse["movementPoints"] = item.movementPoints;
+        armoryItemResponse["name"] = item.name;
+        armoryItemResponse["rangedOperator"] = item.rangedOperator;
+        armoryItemResponse["rangedPoints"] = item.rangedPoints;
+
+        response.push(armoryItemResponse);
+      });
+
+      res.json(response);
+    })
     .catch((err) => res.status(500).json("Error: " + err));
 });
 

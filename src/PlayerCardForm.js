@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import * as Constants from "./constants/player_card.constants";
+import { REDUX_STORE_FIELDS as Constants } from "./constants/player_card.constants";
 import NumberInput from "./NumberInput";
 import ModalForm from "./ModalForm";
 import { Grid, Button, TextField } from "@material-ui/core";
@@ -8,6 +8,7 @@ import { deletePlayerCard } from "./actions/playerCards";
 
 export default (props) => {
   const dispatch = useDispatch();
+  const [name, setName] = useState(props.characterName ?? "");
 
   const handleClose = () => {
     props.setModalOpen(false);
@@ -18,6 +19,10 @@ export default (props) => {
 
     handleClose();
     event.preventDefault();
+  };
+
+  const handleCharacterNameChange = (event) => {
+    setName(event.target.value);
   };
 
   let deleteButton = null;
@@ -50,7 +55,8 @@ export default (props) => {
             name={Constants.CHARACTER_NAME}
             label="Name"
             required
-            value={props.characterName}
+            value={name}
+            onChange={handleCharacterNameChange}
           />
           <NumberInput
             name={Constants.BASE_BODY_POINTS}

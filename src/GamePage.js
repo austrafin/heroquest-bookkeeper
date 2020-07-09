@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as PlayerCardConstants from "./constants/player_card.constants";
-import * as ArmoryItemConstants from "./constants/armory_item.constants";
+import { REDUX_STORE_FIELDS as PlayerCardConstants } from "./constants/player_card.constants";
+import { REDUX_STORE_FIELDS as ArmoryItemConstants } from "./constants/armory_item.constants";
 import { Grid, Button } from "@material-ui/core";
 import { loadPlayerCards, addPlayerCard } from "./actions/playerCards";
 import PlayerCard from "./PlayerCard";

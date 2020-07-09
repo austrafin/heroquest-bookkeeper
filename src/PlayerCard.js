@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import * as Constants from "./constants/player_card.constants";
+import {
+  REDUX_STORE_FIELDS as Constants,
+  ALT_ARMORY_ITEM,
+  MAX_IMAGE_SIZE,
+} from "./constants/player_card.constants";
 import StatusModifier from "./StatusModifier";
 import styles from "./PlayerCard.module.css";
 import StatusLabel from "./StatusLabel";
@@ -105,7 +109,7 @@ export default (props) => {
     const file = event.target.files[0];
     if (file === undefined || file === null) {
       console.log("Error: selected file null");
-    } else if (file.size > Constants.MAX_IMAGE_SIZE) {
+    } else if (file.size > MAX_IMAGE_SIZE) {
       console.log("Error: Selected file is too large.");
     } else if (!/^image[/]/.test(file.type)) {
       console.log("Error: file type is not image.");
@@ -187,7 +191,7 @@ export default (props) => {
         labelText={
           armoryItemsData.items[item]
             ? armoryItemsData.items[item].name
-            : Constants.ALT_ARMORY_ITEM
+            : ALT_ARMORY_ITEM
         }
       />
     ));

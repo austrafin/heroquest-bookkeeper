@@ -1,21 +1,46 @@
-export const CHARACTER_NAME = "characterName";
-export const BODY_POINTS = "bodyPoints";
-export const BASE_BODY_POINTS = "baseBodyPoints";
-export const MIND_POINTS = "mindPoints";
-export const BASE_MIND_POINTS = "baseMindPoints";
-export const MELEE_POINTS = "meleePoints";
-export const BASE_MELEE_POINTS = "baseMeleePoints";
-export const RANGED_POINTS = "rangedPoints";
-export const BASE_RANGED_POINTS = "baseRangedPoints";
-export const DIAGONAL_POINTS = "diagonalPoints";
-export const BASE_DIAGONAL_POINTS = "baseDiagonalPoints";
-export const DEFENCE_POINTS = "defencePoints";
-export const BASE_DEFENCE_POINTS = "baseDefencePoints";
-export const MOVEMENT_POINTS = "movementPoints";
-export const BASE_MOVEMENT_POINTS = "baseMovementPoints";
-export const GOLD = "gold";
-export const ARMORY_ITEMS = "armoryItems";
-export const IMAGE = "image";
+export const REDUX_STORE_FIELDS = {
+  CHARACTER_NAME: "characterName",
+  BODY_POINTS: "bodyPoints",
+  BASE_BODY_POINTS: "baseBodyPoints",
+  MIND_POINTS: "mindPoints",
+  BASE_MIND_POINTS: "baseMindPoints",
+  MELEE_POINTS: "meleePoints",
+  BASE_MELEE_POINTS: "baseMeleePoints",
+  RANGED_POINTS: "rangedPoints",
+  BASE_RANGED_POINTS: "baseRangedPoints",
+  DIAGONAL_POINTS: "diagonalPoints",
+  BASE_DIAGONAL_POINTS: "baseDiagonalPoints",
+  DEFENCE_POINTS: "defencePoints",
+  BASE_DEFENCE_POINTS: "baseDefencePoints",
+  MOVEMENT_POINTS: "movementPoints",
+  BASE_MOVEMENT_POINTS: "baseMovementPoints",
+  GOLD: "gold",
+  ARMORY_ITEMS: "armoryItems",
+  IMAGE: "image",
+};
+
+export const DB_FIELDS = {
+  ID: "_id",
+  CHARACTER_NAME: "characterName",
+  BODY_POINTS: "bodyPoints",
+  BASE_BODY_POINTS: "baseBodyPoints",
+  MIND_POINTS: "mindPoints",
+  BASE_MIND_POINTS: "baseMindPoints",
+  MELEE_POINTS: "meleePoints",
+  BASE_MELEE_POINTS: "baseMeleePoints",
+  RANGED_POINTS: "rangedPoints",
+  BASE_RANGED_POINTS: "baseRangedPoints",
+  DIAGONAL_POINTS: "diagonalPoints",
+  BASE_DIAGONAL_POINTS: "baseDiagonalPoints",
+  DEFENCE_POINTS: "defencePoints",
+  BASE_DEFENCE_POINTS: "baseDefencePoints",
+  MOVEMENT_POINTS: "movementPoints",
+  BASE_MOVEMENT_POINTS: "baseMovementPoints",
+  GOLD: "gold",
+  ARMORY_ITEMS: "armoryItems",
+  IMAGE: "imageFile",
+};
+
 export const ALT_IMAGE_PATH = "./no_image.webp";
 export const ALT_ARMORY_ITEM = "???";
 export const MAX_IMAGE_SIZE = 17825792;

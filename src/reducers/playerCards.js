@@ -11,7 +11,7 @@ import {
   UPDATE_BASE_VALUES,
   CLEAR_PENDING_CHANGES,
 } from "../actions/playerCards";
-import * as Constants from "../constants/player_card.constants";
+import { REDUX_STORE_FIELDS as Constants } from "../constants/player_card.constants";
 
 function difference(state, action, decrement) {
   const newState = { ...state };
