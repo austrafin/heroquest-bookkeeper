@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  REDUX_STORE_FIELDS as Constants,
+  REDUX_STORE_FIELDS as PlayerCardConstants,
   ALT_ARMORY_ITEM,
   MAX_IMAGE_SIZE,
 } from "./constants/player_card.constants";
+import { REDUX_STORE_FIELDS as ArmoryItemConstants } from "./constants/armory_item.constants";
 import StatusModifier from "./StatusModifier";
 import styles from "./PlayerCard.module.css";
 import StatusLabel from "./StatusLabel";
@@ -190,7 +191,7 @@ export default (props) => {
         key={key}
         labelText={
           armoryItemsData.items[item]
-            ? armoryItemsData.items[item].name
+            ? armoryItemsData.items[item][ArmoryItemConstants.NAME]
             : ALT_ARMORY_ITEM
         }
       />
@@ -200,8 +201,8 @@ export default (props) => {
   if (armoryItemsData !== undefined) {
     armoryItemsSelectList = Object.entries(armoryItemsData.items).map(
       ([key, item]) => (
-        <MenuItem key={key} value={item._id}>
-          {item.name}
+        <MenuItem key={key} value={item[ArmoryItemConstants.ID]}>
+          {item[ArmoryItemConstants.NAME]}
         </MenuItem>
       )
     );
@@ -244,7 +245,7 @@ export default (props) => {
                   className={styles.media}
                   src={imageFile}
                   component="img"
-                  title={cardData[Constants.CHARACTER_NAME]}
+                  title={cardData[PlayerCardConstants.CHARACTER_NAME]}
                 />
 
                 <input
@@ -276,7 +277,7 @@ export default (props) => {
                   <Grid item xs>
                     <MuiThemeProvider theme={theme}>
                       <Typography variant="h4">
-                        {cardData[Constants.CHARACTER_NAME]}
+                        {cardData[PlayerCardConstants.CHARACTER_NAME]}
                       </Typography>
                     </MuiThemeProvider>
                   </Grid>
@@ -305,14 +306,14 @@ export default (props) => {
                 <Grid container justify="center" direction="row">
                   <Grid item xs>
                     <StatusLabel
-                      labelParameter={Constants.BODY_POINTS}
+                      labelParameter={PlayerCardConstants.BODY_POINTS}
                       cardId={props.cardId}
                     >
                       <GiHearts color="red" className={styles.icon} />
                     </StatusLabel>
 
                     <StatusLabel
-                      labelParameter={Constants.MIND_POINTS}
+                      labelParameter={PlayerCardConstants.MIND_POINTS}
                       cardId={props.cardId}
                     >
                       <GiScrollUnfurled
@@ -322,7 +323,7 @@ export default (props) => {
                     </StatusLabel>
 
                     <StatusLabel
-                      labelParameter={Constants.GOLD}
+                      labelParameter={PlayerCardConstants.GOLD}
                       cardId={props.cardId}
                     >
                       <GiCoins color="darkgoldenrod" className={styles.icon} />
@@ -331,25 +332,25 @@ export default (props) => {
 
                   <Grid item xs style={{ marginLeft: 15 }}>
                     <StatusLabel
-                      labelParameter={Constants.MELEE_POINTS}
+                      labelParameter={PlayerCardConstants.MELEE_POINTS}
                       cardId={props.cardId}
                     >
                       <GiGladius color="navy" className={styles.icon} />
                     </StatusLabel>
                     <StatusLabel
-                      labelParameter={Constants.RANGED_POINTS}
+                      labelParameter={PlayerCardConstants.RANGED_POINTS}
                       cardId={props.cardId}
                     >
                       <GiHighShot color="darkgreen" className={styles.icon} />
                     </StatusLabel>
                     <StatusLabel
-                      labelParameter={Constants.DIAGONAL_POINTS}
+                      labelParameter={PlayerCardConstants.DIAGONAL_POINTS}
                       cardId={props.cardId}
                     >
                       <GiArrowhead color="black" className={styles.icon} />
                     </StatusLabel>
                     <StatusLabel
-                      labelParameter={Constants.DEFENCE_POINTS}
+                      labelParameter={PlayerCardConstants.DEFENCE_POINTS}
                       cardId={props.cardId}
                     >
                       <GiCheckedShield
@@ -358,7 +359,7 @@ export default (props) => {
                       />
                     </StatusLabel>
                     <StatusLabel
-                      labelParameter={Constants.MOVEMENT_POINTS}
+                      labelParameter={PlayerCardConstants.MOVEMENT_POINTS}
                       cardId={props.cardId}
                     >
                       <GiWalkingBoot color="brown" className={styles.icon} />
@@ -372,13 +373,13 @@ export default (props) => {
           <StatusModifier
             labelText={"Body"}
             defaultValue={1}
-            labelParameter={Constants.BODY_POINTS}
+            labelParameter={PlayerCardConstants.BODY_POINTS}
             cardId={props.cardId}
           />
           <StatusModifier
             labelText={"Mind"}
             defaultValue={1}
-            labelParameter={Constants.MIND_POINTS}
+            labelParameter={PlayerCardConstants.MIND_POINTS}
             cardId={props.cardId}
           />
           <StatusModifier
@@ -386,7 +387,7 @@ export default (props) => {
             step={5}
             labelText={"Gold"}
             defaultValue={25}
-            labelParameter={Constants.GOLD}
+            labelParameter={PlayerCardConstants.GOLD}
             cardId={props.cardId}
           />
         </Grid>
@@ -419,14 +420,14 @@ export default (props) => {
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         delete={true}
-        characterName={cardData[Constants.CHARACTER_NAME]}
-        baseBodyPoints={cardData[Constants.BASE_BODY_POINTS]}
-        baseMindPoints={cardData[Constants.BASE_MIND_POINTS]}
-        baseMeleePoints={cardData[Constants.BASE_MELEE_POINTS]}
-        baseRangedPoints={cardData[Constants.BASE_RANGED_POINTS]}
-        baseDiagonalPoints={cardData[Constants.BASE_DIAGONAL_POINTS]}
-        baseDefencePoints={cardData[Constants.BASE_DEFENCE_POINTS]}
-        baseMovementPoints={cardData[Constants.BASE_MOVEMENT_POINTS]}
+        characterName={cardData[PlayerCardConstants.CHARACTER_NAME]}
+        baseBodyPoints={cardData[PlayerCardConstants.BASE_BODY_POINTS]}
+        baseMindPoints={cardData[PlayerCardConstants.BASE_MIND_POINTS]}
+        baseMeleePoints={cardData[PlayerCardConstants.BASE_MELEE_POINTS]}
+        baseRangedPoints={cardData[PlayerCardConstants.BASE_RANGED_POINTS]}
+        baseDiagonalPoints={cardData[PlayerCardConstants.BASE_DIAGONAL_POINTS]}
+        baseDefencePoints={cardData[PlayerCardConstants.BASE_DEFENCE_POINTS]}
+        baseMovementPoints={cardData[PlayerCardConstants.BASE_MOVEMENT_POINTS]}
       />
     </>
   );
