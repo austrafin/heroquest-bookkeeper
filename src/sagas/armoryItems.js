@@ -30,7 +30,7 @@ function mapReduxToDB(values) {
   };
 }
 
-function* loadArmoryItems() {
+export function* loadArmoryItems() {
   yield put({ type: ARMORY_ITEMS_LOADED, value: false });
   const armoryItems = {};
   yield axios
@@ -61,7 +61,7 @@ function* loadArmoryItems() {
   yield put({ type: ARMORY_ITEMS_LOADED, value: true });
 }
 
-function* addArmoryItem(action) {
+export function* addArmoryItem(action) {
   yield axios
     .post("http://localhost:5000/armory_items/add", mapReduxToDB(action.data))
     .catch((error) => {
@@ -70,7 +70,7 @@ function* addArmoryItem(action) {
   yield put({ type: ARMORY_ITEMS_LOADED, value: false });
 }
 
-function* updateDatabase(action) {
+export function* updateDatabase(action) {
   yield axios
     .post(
       "http://localhost:5000/armory_items/update/" + action.id,
@@ -82,7 +82,7 @@ function* updateDatabase(action) {
   yield put({ type: ARMORY_ITEMS_LOADED, value: false });
 }
 
-function* deleteArmoryItem(action) {
+export function* deleteArmoryItem(action) {
   yield axios
     .delete("http://localhost:5000/armory_items/" + action.id)
     .catch((error) => {
