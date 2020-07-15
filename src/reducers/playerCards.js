@@ -41,7 +41,7 @@ function difference(state, action, decrement) {
   };
 }
 
-export default (state = {}, action) => {
+export default (state = { pendingChanges: {} }, action) => {
   switch (action.type) {
     case SET_VALUE:
       if (action.cardId in state.cardData) {
@@ -67,7 +67,6 @@ export default (state = {}, action) => {
         cardData: {
           ...action.data,
         },
-        pendingChanges: {},
       };
     case ADD:
       return { ...state, newCardUploading: true };

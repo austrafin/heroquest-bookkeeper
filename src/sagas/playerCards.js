@@ -36,7 +36,7 @@ function mapBaseValuesReduxToDB(values) {
   };
 }
 
-function* loadPlayerCardData() {
+export function* loadPlayerCardData() {
   yield put({ type: CARDS_LOADED, value: false });
   const initialValues = {};
 
@@ -90,7 +90,7 @@ function* loadPlayerCardData() {
   yield put({ type: CARDS_LOADED, value: true });
 }
 
-function* addPlayerCard(action) {
+export function* addPlayerCard(action) {
   yield put({ type: CARDS_LOADED, value: false });
   yield axios
     .post(
@@ -104,7 +104,7 @@ function* addPlayerCard(action) {
   yield put({ type: CARDS_LOADED, value: true });
 }
 
-function* deletePlayerCard(action) {
+export function* deletePlayerCard(action) {
   yield put({ type: CARDS_LOADED, value: false });
   yield axios
     .delete("http://localhost:5000/player_cards/" + action.cardId)
@@ -115,7 +115,7 @@ function* deletePlayerCard(action) {
   yield put({ type: CARDS_LOADED, value: true });
 }
 
-function* addArmoryItem(action) {
+export function* addArmoryItem(action) {
   const body = { itemId: action.itemId };
   try {
     let responseStatus = null;
@@ -137,7 +137,7 @@ function* addArmoryItem(action) {
   }
 }
 
-function* updateDatabase() {
+export function* updateDatabase() {
   yield delay(200);
 
   const pendingChanges = store.getState().playerCards.pendingChanges;
@@ -154,6 +154,7 @@ function* updateDatabase() {
         pendingChanges[key][Constants.MIND_POINTS];
     if (Constants.GOLD in pendingChanges[key])
       updateValues[key][DB.GOLD] = pendingChanges[key][Constants.GOLD];
+    return updateValues;
   });
 
   yield axios
@@ -164,7 +165,7 @@ function* updateDatabase() {
   yield put({ type: CLEAR_PENDING_CHANGES });
 }
 
-function* updateBaseValues(action) {
+export function* updateBaseValues(action) {
   yield delay(200);
   yield axios
     .post("http://localhost:5000/player_cards/update", {
@@ -176,7 +177,7 @@ function* updateBaseValues(action) {
   yield put({ type: CARDS_LOADED, value: false });
 }
 
-function* uploadImage(action) {
+export function* uploadImage(action) {
   if (action.selectedFile !== null) {
     const formData = new FormData();
     formData.append(
