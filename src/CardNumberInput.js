@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setInputValue } from "./actions/inputValue";
+import { setInputValue } from "./actions/playerCards";
 import NumberInput from "./NumberInput";
 
 export default (props) => {

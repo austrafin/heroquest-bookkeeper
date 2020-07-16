@@ -13,6 +13,7 @@ export const SET_SELECTED_IMAGE = "playerCards/SET_SELECTED_IMAGE";
 export const UPLOAD_IMAGE = "playerCards/UPLOAD_IMAGE";
 export const ADD_ARMORY_ITEM = "playerCards/ADD_ARMORY_ITEM";
 export const CLEAR_PENDING_CHANGES = "playerCards/CLEAR_PENDING_CHANGES";
+export const SET = "playerCards/SET";
 
 export function addPlayerCard(values) {
   return {
@@ -90,5 +91,14 @@ export function addArmoryItem(cardId, itemId) {
     type: ADD_ARMORY_ITEM,
     cardId: cardId,
     itemId: itemId,
+  };
+}
+
+export function setInputValue(value, status, cardId) {
+  return {
+    type: SET,
+    status: status,
+    value: value,
+    cardId: cardId,
   };
 }

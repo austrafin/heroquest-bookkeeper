@@ -88,4 +88,15 @@ describe("playerCards actions", () => {
       itemId: itemId,
     });
   });
+
+  it("should create an action for setting an input value on a player card.", () => {
+    const value = 10;
+    const status = "status";
+    expect(actions.setInputValue(value, status, cardId)).toEqual({
+      type: actions.SET,
+      status: status,
+      value: value,
+      cardId: cardId,
+    });
+  });
 });
