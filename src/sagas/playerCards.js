@@ -1,19 +1,19 @@
 import { takeLatest, put, delay } from "redux-saga/effects";
 import {
   ADD,
-  ADD_AFTER,
   DELETE,
-  DELETE_AFTER,
   LOAD,
-  CARDS_LOADED,
-  INITIALISE,
   INCREMENT,
   DECREMENT,
   UPLOAD_IMAGE,
-  SET_SELECTED_IMAGE,
   ADD_ARMORY_ITEM,
   UPDATE_BASE_VALUES,
-  CLEAR_PENDING_CHANGES,
+  initialisePlayerCards,
+  addPlayerCardPostAction,
+  deletePlayerCardPostAction,
+  setCardsLoaded,
+  setSelectedImageFile,
+  clearPendingChanges,
 } from "../actions/playerCards";
 import {
   REDUX_STORE_FIELDS as Constants,
@@ -37,7 +37,7 @@ function mapBaseValuesReduxToDB(values) {
 }
 
 export function* loadPlayerCardData() {
-  yield put({ type: CARDS_LOADED, value: false });
+  yield put(setCardsLoaded(false));
   const initialValues = {};
 
   yield axios
@@ -86,12 +86,12 @@ export function* loadPlayerCardData() {
     .catch((error) => {
       console.log(error);
     });
-  yield put({ type: INITIALISE, data: initialValues });
-  yield put({ type: CARDS_LOADED, value: true });
+  yield put(initialisePlayerCards(initialValues));
+  yield put(setCardsLoaded(true));
 }
 
 export function* addPlayerCard(action) {
-  yield put({ type: CARDS_LOADED, value: false });
+  yield put(setCardsLoaded(false));
   yield axios
     .post(
       "http://localhost:5000/player_cards/add",
@@ -100,19 +100,19 @@ export function* addPlayerCard(action) {
     .catch((error) => {
       console.log(error);
     });
-  yield put({ type: ADD_AFTER });
-  yield put({ type: CARDS_LOADED, value: true });
+  yield put(addPlayerCardPostAction());
+  yield put(setCardsLoaded(true));
 }
 
 export function* deletePlayerCard(action) {
-  yield put({ type: CARDS_LOADED, value: false });
+  yield put(setCardsLoaded(false));
   yield axios
     .delete("http://localhost:5000/player_cards/" + action.cardId)
     .catch((error) => {
       console.log(error);
     });
-  yield put({ type: DELETE_AFTER, cardId: action.cardId });
-  yield put({ type: CARDS_LOADED, value: true });
+  yield put(deletePlayerCardPostAction(action.cardId));
+  yield put(setCardsLoaded(true));
 }
 
 export function* addArmoryItem(action) {
@@ -162,7 +162,7 @@ export function* updateDatabase() {
     .catch((error) => {
       console.log(error);
     });
-  yield put({ type: CLEAR_PENDING_CHANGES });
+  yield put(clearPendingChanges());
 }
 
 export function* updateBaseValues(action) {
@@ -174,7 +174,7 @@ export function* updateBaseValues(action) {
     .catch((error) => {
       console.log(error);
     });
-  yield put({ type: CARDS_LOADED, value: false });
+  yield put(setCardsLoaded(false));
 }
 
 export function* uploadImage(action) {
@@ -197,11 +197,7 @@ export function* uploadImage(action) {
           responseStatus = response.status;
         });
       if (responseStatus === 200) {
-        yield put({
-          type: SET_SELECTED_IMAGE,
-          selectedFile: null,
-          cardId: action.cardId,
-        });
+        yield put(setSelectedImageFile(null, action.cardId));
       }
     } catch (error) {
       console.log(error);

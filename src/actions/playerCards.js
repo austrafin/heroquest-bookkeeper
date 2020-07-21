@@ -22,9 +22,20 @@ export function addPlayerCard(values) {
   };
 }
 
+export function addPlayerCardPostAction() {
+  return { type: ADD_AFTER };
+}
+
 export function deletePlayerCard(cardId) {
   return {
     type: DELETE,
+    cardId: cardId,
+  };
+}
+
+export function deletePlayerCardPostAction(cardId) {
+  return {
+    type: DELETE_AFTER,
     cardId: cardId,
   };
 }
@@ -101,4 +112,16 @@ export function setInputValue(value, status, cardId) {
     value: value,
     cardId: cardId,
   };
+}
+
+export function initialisePlayerCards(initialValues) {
+  return { type: INITIALISE, data: initialValues };
+}
+
+export function setCardsLoaded(value) {
+  return { type: CARDS_LOADED, value: value };
+}
+
+export function clearPendingChanges() {
+  return { type: CLEAR_PENDING_CHANGES };
 }

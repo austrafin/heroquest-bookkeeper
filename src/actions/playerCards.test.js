@@ -13,9 +13,22 @@ describe("playerCards actions", () => {
     });
   });
 
+  it("should create an action for new player card post action", () => {
+    expect(actions.addPlayerCardPostAction()).toEqual({
+      type: actions.ADD_AFTER,
+    });
+  });
+
   it("should create an action for deleting a player card", () => {
     expect(actions.deletePlayerCard(cardId)).toEqual({
       type: actions.DELETE,
+      cardId: cardId,
+    });
+  });
+
+  it("should create an action for delete player card post action", () => {
+    expect(actions.deletePlayerCardPostAction(cardId)).toEqual({
+      type: actions.DELETE_AFTER,
       cardId: cardId,
     });
   });
@@ -97,6 +110,26 @@ describe("playerCards actions", () => {
       status: status,
       value: value,
       cardId: cardId,
+    });
+  });
+
+  it("should create an action for initialising player card data.", () => {
+    expect(actions.initialisePlayerCards(values)).toEqual({
+      type: actions.INITIALISE,
+      data: values,
+    });
+  });
+
+  it("should create an action for setting player cards loaded", () => {
+    expect(actions.setCardsLoaded(true)).toEqual({
+      type: actions.CARDS_LOADED,
+      value: true,
+    });
+  });
+
+  it("should create an action for clearing the pending changes", () => {
+    expect(actions.clearPendingChanges()).toEqual({
+      type: actions.CLEAR_PENDING_CHANGES,
     });
   });
 });
