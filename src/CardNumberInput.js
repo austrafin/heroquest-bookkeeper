@@ -5,7 +5,9 @@ import NumberInput from "./NumberInput";
 
 export default (props) => {
   const dispatch = useDispatch();
-  const inputValue = useSelector((state) => state.inputValue);
+  const inputValues = useSelector(
+    (state) => state.playerCards.cardData[props.cardId].inputValues
+  );
   const minValue = props.minValue || 1;
   const maxValue = props.maxValue || 100;
   const step = props.step || 1;
@@ -14,8 +16,8 @@ export default (props) => {
   };
 
   if (
-    inputValue[props.cardId] === undefined ||
-    inputValue[props.cardId][props.labelParameter] === undefined
+    inputValues === undefined ||
+    inputValues[props.labelParameter] === undefined
   ) {
     handleInputChange(props.defaultValue);
   }

@@ -106,7 +106,7 @@ describe("playerCards actions", () => {
     const value = 10;
     const status = "status";
     expect(actions.setInputValue(value, status, cardId)).toEqual({
-      type: actions.SET,
+      type: actions.SET_INPUT_VALUE,
       status: status,
       value: value,
       cardId: cardId,

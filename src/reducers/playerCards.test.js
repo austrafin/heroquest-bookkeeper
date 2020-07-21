@@ -179,4 +179,17 @@ describe("playerCards reducers", () => {
       )
     ).toEqual({ pendingChanges: {} });
   });
+
+  it("should return a new state with the new input value.", () => {
+    const status = "status";
+    const inputValue = 112;
+    expect(
+      reducer(
+        { cardData: { [cardId]: {} } },
+        actions.setInputValue(inputValue, status, cardId)
+      )
+    ).toEqual({
+      cardData: { [cardId]: { inputValues: { [status]: inputValue } } },
+    });
+  });
 });

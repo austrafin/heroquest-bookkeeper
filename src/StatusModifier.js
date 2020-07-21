@@ -6,12 +6,14 @@ import { increment, decrement } from "./actions/playerCards";
 
 export default (props) => {
   const dispatch = useDispatch();
-  const inputValue = useSelector((state) => state.inputValue[props.cardId]);
+  const inputValues = useSelector(
+    (state) => state.playerCards.cardData[props.cardId].inputValues
+  );
 
   const handleButtonClick = (dispatchFunction) => {
     dispatch(
       dispatchFunction(
-        inputValue[props.labelParameter],
+        inputValues[props.labelParameter],
         props.labelParameter,
         props.cardId
       )

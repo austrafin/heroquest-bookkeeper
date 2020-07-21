@@ -10,6 +10,7 @@ import {
   SET_SELECTED_IMAGE,
   UPDATE_BASE_VALUES,
   CLEAR_PENDING_CHANGES,
+  SET_INPUT_VALUE,
 } from "../actions/playerCards";
 import { REDUX_STORE_FIELDS as Constants } from "../constants/player_card.constants";
 
@@ -117,6 +118,20 @@ export default (state = { pendingChanges: {} }, action) => {
       return {
         ...state,
         pendingChanges: {},
+      };
+    case SET_INPUT_VALUE:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          [action.cardId]: {
+            ...state.cardData[action.cardId],
+            inputValues: {
+              ...state.cardData[action.cardId].inputValues,
+              [action.status]: action.value,
+            },
+          },
+        },
       };
     default:
       return state;
