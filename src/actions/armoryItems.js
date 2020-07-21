@@ -2,8 +2,8 @@ export const ADD = "armoryItems/ADD";
 export const DELETE = "armoryItems/DELETE";
 export const UPDATE = "armoryItems/UPDATE";
 export const ARMORY_ITEMS_LOADED = "armoryItems/ARMORY_ITEMS_LOADED";
+export const LOAD = "armoryItems/LOAD";
 export const INITIALISE = "armoryItems/INITIALISE";
-export const INITIALISE_AFTER = "armoryItems/INITIALISE_AFTER";
 
 export function addArmoryItem(data) {
   return {
@@ -19,10 +19,14 @@ export function deleteArmoryItem(id) {
   };
 }
 
-export function initialiseArmoryItems() {
+export function loadArmoryItems() {
   return {
-    type: INITIALISE,
+    type: LOAD,
   };
+}
+
+export function initialiseArmoryItems(armoryItems) {
+  return { type: INITIALISE, data: armoryItems };
 }
 
 export function updateArmoryItem(id, data) {
@@ -31,4 +35,8 @@ export function updateArmoryItem(id, data) {
     id: id,
     data: data,
   };
+}
+
+export function setArmoryItemsLoaded(value) {
+  return { type: ARMORY_ITEMS_LOADED, value: value };
 }

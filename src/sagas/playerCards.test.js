@@ -1,18 +1,18 @@
 import moxios from "moxios";
 
 import {
-  ADD_AFTER,
-  DELETE_AFTER,
-  LOAD,
-  CARDS_LOADED,
-  INITIALISE,
-  SET_SELECTED_IMAGE,
-  CLEAR_PENDING_CHANGES,
   addPlayerCard as actionAddPlayerCard,
   deletePlayerCard as actionDeletePlayerCard,
   addArmoryItem as actionAddArmoryItem,
   updateBaseValues as actionUpdateBaseValues,
   uploadImage as actionUploadImage,
+  setCardsLoaded,
+  addPlayerCardPostAction,
+  deletePlayerCardPostAction,
+  loadPlayerCards,
+  setSelectedImageFile,
+  initialisePlayerCards,
+  clearPendingChanges,
 } from "../actions/playerCards";
 import store from "../store"; // gets rid of an error
 import {
@@ -25,6 +25,11 @@ import {
   uploadImage,
 } from "./playerCards";
 import { assertSaga } from "./commonFunctions";
+import {
+  REDUX_STORE_FIELDS as Constants,
+  ALT_IMAGE_PATH,
+  DB_FIELDS as DB,
+} from "../constants/player_card.constants";
 
 describe("playerCards", () => {
   const baseURL = "http://localhost:5000/player_cards";
@@ -42,19 +47,19 @@ describe("playerCards", () => {
     it("should load the player cards from the API call the initialise and loading actions.", async () => {
       const cards = [
         {
-          _id: cardId,
-          characterName: "Dwarf",
-          baseBodyPoints: 1,
-          bodyPoints: 34,
-          baseMindPoints: 2,
-          mindPoints: 29,
-          baseMeleePoints: 3,
-          baseDiagonalPoints: 3,
-          baseRangedPoints: 3,
-          baseDefencePoints: 4,
-          baseMovementPoints: 2,
-          gold: 157,
-          image: "./no_image.webp",
+          [DB.ID]: cardId,
+          [DB.CHARACTER_NAME]: "Dwarf",
+          [DB.BASE_BODY_POINTS]: 1,
+          [DB.BODY_POINTS]: 34,
+          [DB.BASE_MIND_POINTS]: 2,
+          [DB.MIND_POINTS]: 29,
+          [DB.BASE_MELEE_POINTS]: 3,
+          [DB.BASE_DIAGONAL_POINTS]: 3,
+          [DB.BASE_RANGED_POINTS]: 3,
+          [DB.BASE_DEFENCE_POINTS]: 4,
+          [DB.BASE_MOVEMENT_POINTS]: 2,
+          [DB.GOLD]: 157,
+          [DB.IMAGE]: undefined,
         },
       ];
 
@@ -64,33 +69,30 @@ describe("playerCards", () => {
       });
 
       await assertSaga(loadPlayerCardData, [
-        { type: CARDS_LOADED, value: false },
-        {
-          type: INITIALISE,
-          data: {
-            [cardId]: {
-              armoryItems: undefined,
-              baseBodyPoints: 1,
-              baseDefencePoints: 4,
-              baseDiagonalPoints: 3,
-              baseMeleePoints: 3,
-              baseMindPoints: 2,
-              baseMovementPoints: 2,
-              baseRangedPoints: 3,
-              bodyPoints: 34,
-              characterName: "Dwarf",
-              defencePoints: 4,
-              diagonalPoints: 3,
-              gold: 157,
-              image: "./no_image.webp",
-              meleePoints: 3,
-              mindPoints: 29,
-              movementPoints: 2,
-              rangedPoints: 3,
-            },
+        setCardsLoaded(false),
+        initialisePlayerCards({
+          [cardId]: {
+            [Constants.ARMORY_ITEMS]: undefined,
+            [Constants.BASE_BODY_POINTS]: 1,
+            [Constants.BASE_DEFENCE_POINTS]: 4,
+            [Constants.BASE_DIAGONAL_POINTS]: 3,
+            [Constants.BASE_MELEE_POINTS]: 3,
+            [Constants.BASE_MIND_POINTS]: 2,
+            [Constants.BASE_MOVEMENT_POINTS]: 2,
+            [Constants.BASE_RANGED_POINTS]: 3,
+            [Constants.BODY_POINTS]: 34,
+            [Constants.CHARACTER_NAME]: "Dwarf",
+            [Constants.DEFENCE_POINTS]: 4,
+            [Constants.DIAGONAL_POINTS]: 3,
+            [Constants.GOLD]: 157,
+            [Constants.IMAGE]: ALT_IMAGE_PATH,
+            [Constants.MELEE_POINTS]: 3,
+            [Constants.MIND_POINTS]: 29,
+            [Constants.MOVEMENT_POINTS]: 2,
+            [Constants.RANGED_POINTS]: 3,
           },
-        },
-        { type: CARDS_LOADED, value: true },
+        }),
+        setCardsLoaded(true),
       ]);
     });
   });
@@ -105,9 +107,9 @@ describe("playerCards", () => {
       await assertSaga(
         addPlayerCard,
         [
-          { type: CARDS_LOADED, value: false },
-          { type: ADD_AFTER },
-          { type: CARDS_LOADED, value: true },
+          setCardsLoaded(false),
+          addPlayerCardPostAction(),
+          setCardsLoaded(true),
         ],
         actionAddPlayerCard({
           characterName: "Dwarf",
@@ -134,9 +136,9 @@ describe("playerCards", () => {
       await assertSaga(
         deletePlayerCard,
         [
-          { type: CARDS_LOADED, value: false },
-          { type: DELETE_AFTER, cardId: cardId },
-          { type: CARDS_LOADED, value: true },
+          setCardsLoaded(false),
+          deletePlayerCardPostAction(cardId),
+          setCardsLoaded(true),
         ],
         actionDeletePlayerCard(cardId)
       );
@@ -152,7 +154,7 @@ describe("playerCards", () => {
 
       await assertSaga(
         addArmoryItem,
-        [{ type: LOAD }],
+        [loadPlayerCards()],
         actionAddArmoryItem(cardId, "armory_123")
       );
     });
@@ -178,7 +180,7 @@ describe("playerCards", () => {
         response: "Player cards updated",
       });
 
-      await assertSaga(updateDatabase, [{ type: CLEAR_PENDING_CHANGES }]);
+      await assertSaga(updateDatabase, [clearPendingChanges()]);
     });
   });
 
@@ -191,7 +193,7 @@ describe("playerCards", () => {
 
       await assertSaga(
         updateBaseValues,
-        [{ type: CARDS_LOADED, value: false }],
+        [setCardsLoaded(false)],
         actionUpdateBaseValues(
           {
             characterName: "Dwarf",
@@ -219,13 +221,7 @@ describe("playerCards", () => {
 
       await assertSaga(
         uploadImage,
-        [
-          {
-            type: SET_SELECTED_IMAGE,
-            selectedFile: null,
-            cardId: cardId,
-          },
-        ],
+        [setSelectedImageFile(null, cardId)],
         actionUploadImage(new Blob(), cardId)
       );
     });

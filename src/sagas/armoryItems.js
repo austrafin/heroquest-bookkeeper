@@ -3,15 +3,15 @@ import {
   ADD,
   DELETE,
   UPDATE,
-  INITIALISE,
-  INITIALISE_AFTER,
-  ARMORY_ITEMS_LOADED,
+  LOAD,
+  initialiseArmoryItems,
+  setArmoryItemsLoaded,
 } from "../actions/armoryItems";
 import {
   REDUX_STORE_FIELDS as Constants,
   DB_FIELDS as DB,
 } from "../constants/armory_item.constants";
-import { CARDS_LOADED } from "../actions/playerCards";
+import { setCardsLoaded } from "../actions/playerCards";
 import axios from "axios";
 
 function mapReduxToDB(values) {
@@ -31,7 +31,7 @@ function mapReduxToDB(values) {
 }
 
 export function* loadArmoryItems() {
-  yield put({ type: ARMORY_ITEMS_LOADED, value: false });
+  yield put(setArmoryItemsLoaded(false));
   const armoryItems = {};
   yield axios
     .get("http://localhost:5000/armory_items")
@@ -57,8 +57,8 @@ export function* loadArmoryItems() {
     .catch((error) => {
       console.log(error);
     });
-  yield put({ type: INITIALISE_AFTER, data: armoryItems });
-  yield put({ type: ARMORY_ITEMS_LOADED, value: true });
+  yield put(initialiseArmoryItems(armoryItems));
+  yield put(setArmoryItemsLoaded(true));
 }
 
 export function* addArmoryItem(action) {
@@ -67,7 +67,7 @@ export function* addArmoryItem(action) {
     .catch((error) => {
       console.log(error);
     });
-  yield put({ type: ARMORY_ITEMS_LOADED, value: false });
+  yield put(setArmoryItemsLoaded(false));
 }
 
 export function* updateDatabase(action) {
@@ -79,7 +79,7 @@ export function* updateDatabase(action) {
     .catch((error) => {
       console.log(error);
     });
-  yield put({ type: ARMORY_ITEMS_LOADED, value: false });
+  yield put(setArmoryItemsLoaded(false));
 }
 
 export function* deleteArmoryItem(action) {
@@ -88,13 +88,13 @@ export function* deleteArmoryItem(action) {
     .catch((error) => {
       console.log(error);
     });
-  yield put({ type: ARMORY_ITEMS_LOADED, value: false });
-  yield put({ type: CARDS_LOADED, value: false });
+  yield put(setArmoryItemsLoaded(false));
+  yield put(setCardsLoaded(false));
 }
 
 export const armoryItemSagas = [
   takeLatest(ADD, addArmoryItem),
   takeLatest(DELETE, deleteArmoryItem),
-  takeLatest(INITIALISE, loadArmoryItems),
+  takeLatest(LOAD, loadArmoryItems),
   takeLatest(UPDATE, updateDatabase),
 ];

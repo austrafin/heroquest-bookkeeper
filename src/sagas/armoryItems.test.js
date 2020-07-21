@@ -1,12 +1,12 @@
 import moxios from "moxios";
 import {
-  ARMORY_ITEMS_LOADED,
-  INITIALISE_AFTER,
   addArmoryItem as actionAddArmoryItem,
   updateArmoryItem,
   deleteArmoryItem as actionDeleteArmoryItem,
+  setArmoryItemsLoaded,
+  initialiseArmoryItems,
 } from "../actions/armoryItems";
-import { CARDS_LOADED } from "../actions/playerCards";
+import { setCardsLoaded } from "../actions/playerCards";
 import {
   loadArmoryItems,
   addArmoryItem,
@@ -14,22 +14,26 @@ import {
   deleteArmoryItem,
 } from "./armoryItems";
 import { assertSaga } from "./commonFunctions";
+import {
+  REDUX_STORE_FIELDS as Constants,
+  DB_FIELDS as DB,
+} from "../constants/armory_item.constants";
 
 describe("armoryItems", () => {
   const baseURL = "http://localhost:5000/armory_items";
   const itemId = "123";
   const armoryItems = {
-    defenceOperator: "+",
-    defencePoints: 3,
-    diagonalOperator: "=",
-    diagonalPoints: 66,
-    meleeOperator: "-",
-    meleePoints: 5,
-    movementOperator: "+",
-    movementPoints: 3,
-    name: "miekka",
-    rangedOperator: "+",
-    rangedPoints: 3,
+    [Constants.DEFENCE_OPERATOR]: "+",
+    [Constants.DEFENCE_POINTS]: 3,
+    [Constants.DIAGONAL_OPERATOR]: "=",
+    [Constants.DIAGONAL_POINTS]: 66,
+    [Constants.MELEE_OPERATOR]: "-",
+    [Constants.MELEE_POINTS]: 5,
+    [Constants.MOVEMENT_OPERATOR]: "+",
+    [Constants.MOVEMENT_POINTS]: 3,
+    [Constants.NAME]: "miekka",
+    [Constants.RANGED_OPERATOR]: "+",
+    [Constants.RANGED_POINTS]: 3,
   };
 
   beforeEach(() => {
@@ -42,18 +46,35 @@ describe("armoryItems", () => {
 
   describe("loadArmoryItems", () => {
     it("should load the armory items via an API call and call the initialise and loading actions.", async () => {
-      const armoryItemsDB = { ...armoryItems, _id: itemId };
-      const armoryItemsRedux = { ...armoryItems, id: itemId };
-
       moxios.stubOnce("get", baseURL, {
         status: 200,
-        response: [armoryItemsDB],
+        response: [
+          {
+            [DB.ID]: itemId,
+            [DB.DEFENCE_OPERATOR]: "+",
+            [DB.DEFENCE_POINTS]: 3,
+            [DB.DIAGONAL_OPERATOR]: "=",
+            [DB.DIAGONAL_POINTS]: 66,
+            [DB.MELEE_OPERATOR]: "-",
+            [DB.MELEE_POINTS]: 5,
+            [DB.MOVEMENT_OPERATOR]: "+",
+            [DB.MOVEMENT_POINTS]: 3,
+            [DB.NAME]: "miekka",
+            [DB.RANGED_OPERATOR]: "+",
+            [DB.RANGED_POINTS]: 3,
+          },
+        ],
       });
 
       await assertSaga(loadArmoryItems, [
-        { type: ARMORY_ITEMS_LOADED, value: false },
-        { type: INITIALISE_AFTER, data: { [itemId]: armoryItemsRedux } },
-        { type: ARMORY_ITEMS_LOADED, value: true },
+        setArmoryItemsLoaded(false),
+        initialiseArmoryItems({
+          [itemId]: {
+            [Constants.ID]: itemId,
+            ...armoryItems,
+          },
+        }),
+        setArmoryItemsLoaded(true),
       ]);
     });
   });
@@ -67,7 +88,7 @@ describe("armoryItems", () => {
 
       await assertSaga(
         addArmoryItem,
-        [{ type: ARMORY_ITEMS_LOADED, value: false }],
+        [setArmoryItemsLoaded(false)],
         actionAddArmoryItem(armoryItems)
       );
     });
@@ -82,7 +103,7 @@ describe("armoryItems", () => {
 
       await assertSaga(
         updateDatabase,
-        [{ type: ARMORY_ITEMS_LOADED, value: false }],
+        [setArmoryItemsLoaded(false)],
         updateArmoryItem(itemId, armoryItems)
       );
     });
@@ -97,10 +118,7 @@ describe("armoryItems", () => {
 
       await assertSaga(
         deleteArmoryItem,
-        [
-          { type: ARMORY_ITEMS_LOADED, value: false },
-          { type: CARDS_LOADED, value: false },
-        ],
+        [setArmoryItemsLoaded(false), setCardsLoaded(false)],
         actionDeleteArmoryItem(itemId)
       );
     });

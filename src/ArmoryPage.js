@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ArmoryItem from "./ArmoryItem";
 import ArmoryItemForm from "./ArmoryItemForm";
 import ModalForm from "./ModalForm";
-import { initialiseArmoryItems, addArmoryItem } from "./actions/armoryItems";
+import { loadArmoryItems, addArmoryItem } from "./actions/armoryItems";
 import { Button } from "@material-ui/core";
 
 export default (props) => {
@@ -19,7 +19,7 @@ export default (props) => {
     if (hasLoadedArmoryItems) {
       return;
     }
-    stableDispatch(initialiseArmoryItems());
+    stableDispatch(loadArmoryItems());
   }, [stableDispatch, hasLoadedArmoryItems]);
 
   if (!hasLoadedArmoryItems) {

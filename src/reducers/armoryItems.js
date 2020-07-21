@@ -1,8 +1,8 @@
-import { ARMORY_ITEMS_LOADED, INITIALISE_AFTER } from "../actions/armoryItems";
+import { ARMORY_ITEMS_LOADED, INITIALISE } from "../actions/armoryItems";
 
 function armoryItemsReducer(state = {}, action) {
   switch (action.type) {
-    case INITIALISE_AFTER:
+    case INITIALISE:
       return {
         ...state,
         items: action.data,

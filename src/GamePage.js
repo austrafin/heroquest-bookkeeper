@@ -7,7 +7,7 @@ import { loadPlayerCards, addPlayerCard } from "./actions/playerCards";
 import PlayerCard from "./PlayerCard";
 import PlayerCardForm from "./PlayerCardForm";
 import styles from "./GamePage.module.css";
-import { initialiseArmoryItems } from "./actions/armoryItems";
+import { loadArmoryItems } from "./actions/armoryItems";
 
 const calculateStatusPoints = (item, currentValue, pointsKey, operatorKey) => {
   if (item === undefined) return currentValue;
@@ -53,7 +53,7 @@ export default () => {
     if (hasLoadedArmoryItems) {
       return;
     }
-    stableDispatch(initialiseArmoryItems());
+    stableDispatch(loadArmoryItems());
   }, [stableDispatch, hasLoadedArmoryItems]);
 
   if (!hasLoaded || !hasLoadedArmoryItems || newCardUploading) {

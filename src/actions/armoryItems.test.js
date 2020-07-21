@@ -18,9 +18,16 @@ describe("addArmoryItems actions", () => {
     });
   });
 
+  it("should create an action for fetching the armory items.", () => {
+    expect(actions.loadArmoryItems()).toEqual({
+      type: actions.LOAD,
+    });
+  });
+
   it("should create an action for initialising armory items.", () => {
-    expect(actions.initialiseArmoryItems()).toEqual({
+    expect(actions.initialiseArmoryItems({})).toEqual({
       type: actions.INITIALISE,
+      data: {},
     });
   });
 
@@ -29,6 +36,20 @@ describe("addArmoryItems actions", () => {
       type: actions.UPDATE,
       id: itemId,
       data: data,
+    });
+  });
+
+  it("should create an action for setting the armory items loaded flag true.", () => {
+    expect(actions.setArmoryItemsLoaded(true)).toEqual({
+      type: actions.ARMORY_ITEMS_LOADED,
+      value: true,
+    });
+  });
+
+  it("should create an action for setting the armory items loaded flag false.", () => {
+    expect(actions.setArmoryItemsLoaded(false)).toEqual({
+      type: actions.ARMORY_ITEMS_LOADED,
+      value: false,
     });
   });
 });
