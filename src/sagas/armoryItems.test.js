@@ -45,7 +45,7 @@ describe("armoryItems", () => {
   });
 
   describe("loadArmoryItems", () => {
-    it("should load the armory items via an API call and call the initialise and loading actions.", async () => {
+    it("should load the armory items via API and call the initialise and loading actions.", async () => {
       moxios.stubOnce("get", baseURL, {
         status: 200,
         response: [
@@ -80,7 +80,7 @@ describe("armoryItems", () => {
   });
 
   describe("addArmoryItem", () => {
-    it("should add a new armory item via an API call the loading action.", async () => {
+    it("should add a new armory item via API and call the loading action.", async () => {
       moxios.stubOnce("post", baseURL + "/add", {
         status: 201,
         response: "Armory item added",
@@ -95,7 +95,7 @@ describe("armoryItems", () => {
   });
 
   describe("updateDatabase", () => {
-    it("should update the armory item values via an API and call the loading action.", async () => {
+    it("should update the armory item values via API and call the loading action.", async () => {
       moxios.stubOnce("post", baseURL + "/update/" + itemId, {
         status: 200,
         response: "Armory item updated",
@@ -110,7 +110,7 @@ describe("armoryItems", () => {
   });
 
   describe("deleteArmoryItem", () => {
-    it("should delete the armory item via an API and call the loading actions.", async () => {
+    it("should delete the armory item via API and call the loading actions.", async () => {
       moxios.stubOnce("delete", baseURL + "/" + itemId, {
         status: 200,
         response: "Armory item deleted",
