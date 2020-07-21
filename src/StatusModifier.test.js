@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { mount } from "enzyme";
 import StatusModifier from "./StatusModifier";
 import { Provider } from "react-redux";
 import { increment, decrement } from "./actions/playerCards";
@@ -25,47 +25,30 @@ describe("StatusModifier", () => {
     decrement.mockClear();
   });
 
-  it("renders", () => {
-    const component = shallow(
-      <Provider store={store}>
-        <StatusModifier />
-      </Provider>
-    );
+  const component = mount(
+    <Provider store={store}>
+      <StatusModifier
+        labelText={"test label"}
+        maxValue={100}
+        step={1}
+        defaultValue={1}
+        labelParameter="testParameter"
+        cardId={cardId}
+      />
+    </Provider>
+  );
 
-    expect(component).toBeDefined();
+  it("renders correctly", () => {
     expect(component).toMatchSnapshot();
   });
 
-  describe("Increment and decrement", () => {
-    const component = mount(
-      <Provider store={store}>
-        <StatusModifier
-          labelText={"test label"}
-          maxValue={100}
-          step={1}
-          defaultValue={1}
-          labelParameter="testParameter"
-          cardId={cardId}
-        />
-      </Provider>
-    );
+  it("checks that the increment action is dispatched when the increment button is clicked.", () => {
+    component.find('[data-test="increment"]').find("button").simulate("click");
+    expect(increment).toHaveBeenCalledTimes(1);
+  });
 
-    it("checks that the increment action is dispatched when the increment button is clicked.", () => {
-      component
-        .find('[data-test="increment"]')
-        .find("button")
-        .simulate("click");
-
-      expect(increment).toHaveBeenCalledTimes(1);
-    });
-
-    it("checks that the increment action is dispatched when the increment button is clicked.", () => {
-      component
-        .find('[data-test="decrement"]')
-        .find("button")
-        .simulate("click");
-
-      expect(decrement).toHaveBeenCalledTimes(1);
-    });
+  it("checks that the increment action is dispatched when the increment button is clicked.", () => {
+    component.find('[data-test="decrement"]').find("button").simulate("click");
+    expect(decrement).toHaveBeenCalledTimes(1);
   });
 });
