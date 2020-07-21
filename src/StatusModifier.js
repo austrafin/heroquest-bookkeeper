@@ -40,8 +40,18 @@ export default (props) => {
           fullWidth={true}
           style={{ marginTop: 12 }}
         >
-          <Button onClick={() => handleButtonClick(increment)}>+</Button>
-          <Button onClick={() => handleButtonClick(decrement)}>-</Button>
+          <Button
+            data-test="increment"
+            onClick={() => handleButtonClick(increment)}
+          >
+            +
+          </Button>
+          <Button
+            data-test="decrement"
+            onClick={() => handleButtonClick(decrement)}
+          >
+            -
+          </Button>
         </ButtonGroup>
       </Grid>
     </Grid>
