@@ -14,7 +14,7 @@ export default (props) => {
     event.preventDefault();
     const data = {};
 
-    [...event.target].forEach((input) => {
+    [...event.target.elements].forEach((input) => {
       if (
         input.type === "text" ||
         input.type === "number" ||

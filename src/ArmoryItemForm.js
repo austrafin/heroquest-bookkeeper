@@ -31,7 +31,7 @@ export default (props) => {
     );
 
   return (
-    <form onSubmit={props.submit} method="POST">
+    <form onSubmit={props.submit} method="POST" data-test="submit">
       <TextField
         name={Constants.NAME}
         className={styles.name}
