@@ -18,6 +18,7 @@ export default (props) => {
   if (props.delete)
     deleteButton = (
       <Button
+        data-test="delete-button"
         style={{
           backgroundColor: "red",
           margin: "10px",
@@ -39,6 +40,7 @@ export default (props) => {
         label="Name"
         value={name}
         onChange={handleTextFieldChange}
+        data-test="name-field"
       />
 
       <ArmoryItemModifier

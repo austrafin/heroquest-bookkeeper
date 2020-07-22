@@ -55,6 +55,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
       >
         <div
           className="MuiFormControl-root MuiTextField-root name"
+          data-test="name-field"
         >
           <label
             className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-required Mui-required"
@@ -1437,6 +1438,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
         </button>
         <button
           className="MuiButtonBase-root MuiButton-root MuiButton-text"
+          data-test="delete-button"
           disabled={false}
           onBlur={[Function]}
           onClick={[Function]}
