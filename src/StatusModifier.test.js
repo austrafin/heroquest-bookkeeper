@@ -47,7 +47,7 @@ describe("StatusModifier", () => {
     expect(increment).toHaveBeenCalledTimes(1);
   });
 
-  it("checks that the increment action is dispatched when the increment button is clicked.", () => {
+  it("checks that the decrement action is dispatched when the decrement button is clicked.", () => {
     component.find('[data-test="decrement"]').find("button").simulate("click");
     expect(decrement).toHaveBeenCalledTimes(1);
   });
