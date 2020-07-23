@@ -47,6 +47,7 @@ export default (props) => {
         <ArmoryItemForm
           submit={submit}
           submitButtonText="Save changes"
+          testSubmitForm={props.testSubmitForm}
           delete={true}
           id={props.data[Constants.ID]}
           name={props.data[Constants.NAME]}

@@ -9,6 +9,7 @@ import { updateArmoryItem } from "./actions/armoryItems";
 jest.mock("./actions/armoryItems");
 
 describe("ArmoryItem component", () => {
+  const formTest = "update-armory-item";
   const mockStore = configureStore([]);
   const store = mockStore({});
 
@@ -31,6 +32,7 @@ describe("ArmoryItem component", () => {
           [Constants.MOVEMENT_OPERATOR]: "+",
           [Constants.MOVEMENT_POINTS]: 5,
         }}
+        testSubmitForm={formTest}
       />
     </Provider>
   );
@@ -40,7 +42,7 @@ describe("ArmoryItem component", () => {
   });
 
   it("checks that the armory item update action is dispatched when the form is submitted.", () => {
-    component.find('[data-test="submit"]').simulate("submit");
+    component.find(`[data-test="${formTest}"]`).simulate("submit");
     expect(updateArmoryItem).toHaveBeenCalledTimes(1);
   });
 });

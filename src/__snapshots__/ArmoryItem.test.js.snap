@@ -49,7 +49,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
       className="Collapsible__contentInner"
     >
       <form
-        data-test="submit"
+        data-test="update-armory-item"
         method="POST"
         onSubmit={[Function]}
       >

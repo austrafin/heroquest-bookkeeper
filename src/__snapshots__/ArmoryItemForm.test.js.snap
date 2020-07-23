@@ -2,7 +2,6 @@
 
 exports[`ArmoryItemForm component renders correctly with the delete button 1`] = `
 <form
-  data-test="submit"
   method="POST"
 >
   <div
@@ -1432,7 +1431,6 @@ exports[`ArmoryItemForm component renders correctly with the delete button 1`] =
 
 exports[`ArmoryItemForm component renders correctly without the delete button 1`] = `
 <form
-  data-test="submit"
   method="POST"
 >
   <div
