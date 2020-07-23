@@ -5,13 +5,6 @@ import { AppBar, Tabs, Tab } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import GamePage from "./GamePage";
 
-const a11yProps = (index) => {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-};
-
 const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
@@ -31,11 +24,10 @@ export default () => {
           onChange={(event, newIndex) => {
             setTabIndex(newIndex);
           }}
-          aria-label="simple tabs example"
         >
-          <Tab label="Game" {...a11yProps(0)} />
-          <Tab label="Armory" {...a11yProps(1)} />
-          <Tab label="Potions" {...a11yProps(2)} />
+          <Tab label="Game" />
+          <Tab label="Armory" />
+          <Tab label="Potions" />
         </Tabs>
       </AppBar>
       <TabPanel value={tabIndex} index={0}>
