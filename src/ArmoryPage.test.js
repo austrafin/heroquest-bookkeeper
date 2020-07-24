@@ -11,21 +11,26 @@ jest.mock("./actions/armoryItems");
 describe("ArmoryPage component", () => {
   const mockStore = configureStore([]);
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe("Items not loaded", () => {
     const store = mockStore({ armoryItems: {} });
-    store.dispatch = jest.fn();
-
-    const component = mount(
+    const component = (
       <Provider store={store}>
         <ArmoryPage />
       </Provider>
     );
 
+    store.dispatch = jest.fn();
+
     it("renders correctly when the items have not been loaded yet", () => {
-      expect(component).toMatchSnapshot();
+      expect(mount(component)).toMatchSnapshot();
     });
 
     it("checks that the armory items load action is dispatched when the loaded flag is not set.", () => {
+      mount(component);
       expect(loadArmoryItems).toHaveBeenCalledTimes(1);
     });
   });
@@ -54,29 +59,31 @@ describe("ArmoryPage component", () => {
         armoryItemsLoaded: true,
       },
     });
-    store.dispatch = jest.fn();
 
-    const component = mount(
+    const component = (
       <Provider store={store}>
         <ArmoryPage testSubmitForm={formTest} />
       </Provider>
     );
 
+    store.dispatch = jest.fn();
+
     it("renders correctly when the items have been loaded.", () => {
-      expect(component).toMatchSnapshot();
+      expect(mount(component)).toMatchSnapshot();
     });
 
     it("checks that the armory items load action is not dispatched when the loaded flag is set.", () => {
-      jest.clearAllMocks();
+      mount(component);
       expect(loadArmoryItems).toHaveBeenCalledTimes(0);
     });
 
     it("checks that the new armory item action is dispatched when the form is submitted.", () => {
-      component
+      const mountedComponent = mount(component);
+      mountedComponent
         .find('[data-test="add-button"]')
         .find("button")
         .simulate("click");
-      component.find(`[data-test="${formTest}"]`).simulate("submit");
+      mountedComponent.find(`[data-test="${formTest}"]`).simulate("submit");
       expect(addArmoryItem).toHaveBeenCalledTimes(1);
     });
   });

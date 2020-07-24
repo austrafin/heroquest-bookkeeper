@@ -15,7 +15,7 @@ describe("ArmoryItem component", () => {
 
   store.dispatch = jest.fn();
 
-  const component = mount(
+  const component = (
     <Provider store={store}>
       <ArmoryItem
         data={{
@@ -38,11 +38,11 @@ describe("ArmoryItem component", () => {
   );
 
   it("renders correctly", () => {
-    expect(component).toMatchSnapshot();
+    expect(mount(component)).toMatchSnapshot();
   });
 
   it("checks that the armory item update action is dispatched when the form is submitted.", () => {
-    component.find(`[data-test="${formTest}"]`).simulate("submit");
+    mount(component).find(`[data-test="${formTest}"]`).simulate("submit");
     expect(updateArmoryItem).toHaveBeenCalledTimes(1);
   });
 });

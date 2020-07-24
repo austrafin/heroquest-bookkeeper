@@ -10,10 +10,7 @@ jest.mock("./actions/armoryItems");
 describe("ArmoryItemForm component", () => {
   const mockStore = configureStore([]);
   const store = mockStore({});
-
-  store.dispatch = jest.fn();
-
-  const componentWithDelete = mount(
+  const component = (
     <Provider store={store}>
       <ArmoryItemForm
         submitButtonText="Save changes"
@@ -34,11 +31,18 @@ describe("ArmoryItemForm component", () => {
     </Provider>
   );
 
+  store.dispatch = jest.fn();
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("renders correctly with the delete button", () => {
+    const mountedComponent = mount(component);
     expect(
-      componentWithDelete.find('[data-test="delete-button"]').exists()
+      mountedComponent.find('[data-test="delete-button"]').exists()
     ).toBeTruthy();
-    expect(componentWithDelete).toMatchSnapshot();
+    expect(mountedComponent).toMatchSnapshot();
   });
 
   it("renders correctly without the delete button", () => {
@@ -69,7 +73,7 @@ describe("ArmoryItemForm component", () => {
   });
 
   it("checks that the armory item delete action is dispatched when the delete button is clicked.", () => {
-    componentWithDelete
+    mount(component)
       .find('[data-test="delete-button"]')
       .find("button")
       .simulate("click");
@@ -77,16 +81,16 @@ describe("ArmoryItemForm component", () => {
   });
 
   it("checks that the item name value is actually changed after the onChange event.", () => {
+    const mountedComponent = mount(component);
     const newValue = "new value";
-    componentWithDelete
+
+    mountedComponent
       .find('[data-test="name-field"]')
       .find("input")
       .simulate("change", { target: { value: newValue } });
     expect(
-      componentWithDelete
-        .find('[data-test="name-field"]')
-        .find("input")
-        .instance().value
+      mountedComponent.find('[data-test="name-field"]').find("input").instance()
+        .value
     ).toBe(newValue);
   });
 });
