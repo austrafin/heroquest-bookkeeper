@@ -49,7 +49,7 @@ export default (props) => {
       modalOpen={props.modalOpen}
       handleClose={handleClose}
     >
-      <form onSubmit={submit} method="POST">
+      <form onSubmit={submit} method="POST" data-test="add-playercard-form">
         <Grid container direction="column">
           <TextField
             name={Constants.CHARACTER_NAME}

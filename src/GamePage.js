@@ -63,7 +63,7 @@ export default () => {
   const cards = [];
 
   Object.entries(playerCardData).map(([cardId, values]) => {
-    if (values.armoryItems.length > 0) {
+    if (values.armoryItems && values.armoryItems.length > 0) {
       let meleePoints = values[PlayerCardConstants.BASE_MELEE_POINTS];
       let rangedPoints = values[PlayerCardConstants.BASE_RANGED_POINTS];
       let diagonalPoints = values[PlayerCardConstants.BASE_DIAGONAL_POINTS];
@@ -129,7 +129,7 @@ export default () => {
   const submit = (event) => {
     const data = {};
 
-    [...event.target].forEach((input) => {
+    [...event.target.elements].forEach((input) => {
       if (input.name !== "") data[input.name] = input.value;
     });
 
@@ -141,6 +141,7 @@ export default () => {
       <Button
         style={{ backgroundColor: "blue", marginBottom: "10px" }}
         onClick={handleOpen}
+        data-test="add-playercard-button"
       >
         Add character
       </Button>
