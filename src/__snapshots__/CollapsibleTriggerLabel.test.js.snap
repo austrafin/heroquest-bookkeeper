@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CollapsibleTriggerLabel component renders correctly 1`] = `
+<div>
+  <span
+    className="label"
+  />
+  <span
+    className="icon"
+  />
+</div>
+`;
