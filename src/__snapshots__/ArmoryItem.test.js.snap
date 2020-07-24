@@ -319,6 +319,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
             >
               <div
                 className="MuiFormControl-root MuiTextField-root"
+                data-test="test-number-input"
                 onKeyPress={[Function]}
               >
                 <label
@@ -582,6 +583,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
             >
               <div
                 className="MuiFormControl-root MuiTextField-root"
+                data-test="test-number-input"
                 onKeyPress={[Function]}
               >
                 <label
@@ -845,6 +847,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
             >
               <div
                 className="MuiFormControl-root MuiTextField-root"
+                data-test="test-number-input"
                 onKeyPress={[Function]}
               >
                 <label
@@ -1108,6 +1111,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
             >
               <div
                 className="MuiFormControl-root MuiTextField-root"
+                data-test="test-number-input"
                 onKeyPress={[Function]}
               >
                 <label
@@ -1371,6 +1375,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
             >
               <div
                 className="MuiFormControl-root MuiTextField-root"
+                data-test="test-number-input"
                 onKeyPress={[Function]}
               >
                 <label

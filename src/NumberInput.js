@@ -42,6 +42,7 @@ export default (props) => {
       }}
       onKeyPress={handleKeyPress}
       onChange={props.onChange}
+      data-test="test-number-input"
     />
   );
 };

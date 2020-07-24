@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CardNumberInput component InputValues are defined renders correctly 1`] = `
+<div
+  className="MuiFormControl-root MuiTextField-root"
+  data-test="test-number-input"
+  onKeyPress={[Function]}
+>
+  <div
+    className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
+    onClick={[Function]}
+  >
+    <input
+      aria-invalid={false}
+      autoFocus={false}
+      className="MuiInputBase-input MuiInput-input"
+      disabled={false}
+      max={100}
+      min={1}
+      onAnimationStart={[Function]}
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      required={false}
+      step={1}
+      type="number"
+    />
+  </div>
+</div>
+`;
+
+exports[`CardNumberInput component InputValues not defined renders correctly 1`] = `
+<div
+  className="MuiFormControl-root MuiTextField-root"
+  data-test="test-number-input"
+  onKeyPress={[Function]}
+>
+  <div
+    className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
+    onClick={[Function]}
+  >
+    <input
+      aria-invalid={false}
+      autoFocus={false}
+      className="MuiInputBase-input MuiInput-input"
+      disabled={false}
+      max={100}
+      min={1}
+      onAnimationStart={[Function]}
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      required={false}
+      step={1}
+      type="number"
+    />
+  </div>
+</div>
+`;

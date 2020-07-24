@@ -270,6 +270,7 @@ exports[`ArmoryItemForm component renders correctly with the delete button 1`] =
       >
         <div
           className="MuiFormControl-root MuiTextField-root"
+          data-test="test-number-input"
           onKeyPress={[Function]}
         >
           <label
@@ -534,6 +535,7 @@ exports[`ArmoryItemForm component renders correctly with the delete button 1`] =
       >
         <div
           className="MuiFormControl-root MuiTextField-root"
+          data-test="test-number-input"
           onKeyPress={[Function]}
         >
           <label
@@ -798,6 +800,7 @@ exports[`ArmoryItemForm component renders correctly with the delete button 1`] =
       >
         <div
           className="MuiFormControl-root MuiTextField-root"
+          data-test="test-number-input"
           onKeyPress={[Function]}
         >
           <label
@@ -1062,6 +1065,7 @@ exports[`ArmoryItemForm component renders correctly with the delete button 1`] =
       >
         <div
           className="MuiFormControl-root MuiTextField-root"
+          data-test="test-number-input"
           onKeyPress={[Function]}
         >
           <label
@@ -1326,6 +1330,7 @@ exports[`ArmoryItemForm component renders correctly with the delete button 1`] =
       >
         <div
           className="MuiFormControl-root MuiTextField-root"
+          data-test="test-number-input"
           onKeyPress={[Function]}
         >
           <label
@@ -1699,6 +1704,7 @@ exports[`ArmoryItemForm component renders correctly without the delete button 1`
       >
         <div
           className="MuiFormControl-root MuiTextField-root"
+          data-test="test-number-input"
           onKeyPress={[Function]}
         >
           <label
@@ -1963,6 +1969,7 @@ exports[`ArmoryItemForm component renders correctly without the delete button 1`
       >
         <div
           className="MuiFormControl-root MuiTextField-root"
+          data-test="test-number-input"
           onKeyPress={[Function]}
         >
           <label
@@ -2227,6 +2234,7 @@ exports[`ArmoryItemForm component renders correctly without the delete button 1`
       >
         <div
           className="MuiFormControl-root MuiTextField-root"
+          data-test="test-number-input"
           onKeyPress={[Function]}
         >
           <label
@@ -2491,6 +2499,7 @@ exports[`ArmoryItemForm component renders correctly without the delete button 1`
       >
         <div
           className="MuiFormControl-root MuiTextField-root"
+          data-test="test-number-input"
           onKeyPress={[Function]}
         >
           <label
@@ -2755,6 +2764,7 @@ exports[`ArmoryItemForm component renders correctly without the delete button 1`
       >
         <div
           className="MuiFormControl-root MuiTextField-root"
+          data-test="test-number-input"
           onKeyPress={[Function]}
         >
           <label

@@ -353,6 +353,7 @@ Array [
               >
                 <div
                   className="MuiFormControl-root MuiTextField-root"
+                  data-test="test-number-input"
                   onKeyPress={[Function]}
                 >
                   <label
@@ -616,6 +617,7 @@ Array [
               >
                 <div
                   className="MuiFormControl-root MuiTextField-root"
+                  data-test="test-number-input"
                   onKeyPress={[Function]}
                 >
                   <label
@@ -879,6 +881,7 @@ Array [
               >
                 <div
                   className="MuiFormControl-root MuiTextField-root"
+                  data-test="test-number-input"
                   onKeyPress={[Function]}
                 >
                   <label
@@ -1142,6 +1145,7 @@ Array [
               >
                 <div
                   className="MuiFormControl-root MuiTextField-root"
+                  data-test="test-number-input"
                   onKeyPress={[Function]}
                 >
                   <label
@@ -1405,6 +1409,7 @@ Array [
               >
                 <div
                   className="MuiFormControl-root MuiTextField-root"
+                  data-test="test-number-input"
                   onKeyPress={[Function]}
                 >
                   <label
