@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModalForm component renders correctly 1`] = `
+<ForwardRef(Modal)
+  open={false}
+>
+  <div
+    className="makeStyles-paper-1"
+  >
+    <h2 />
+  </div>
+</ForwardRef(Modal)>
+`;

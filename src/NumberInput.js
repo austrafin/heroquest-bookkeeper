@@ -1,33 +1,41 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 
-export default (props) => {
-  const minValue = props.minValue || 0;
-  const maxValue = props.maxValue || 100;
-  const step = props.step || 1;
+export const handleKeyPress = (evt, minValue, maxValue) => {
+  const enteredCharCode = evt.which ? evt.which : evt.keyCode;
+  const newValue = evt.target.value + evt.key;
 
-  const handleKeyPress = (evt) => {
-    const enteredCharCode = evt.which ? evt.which : evt.keyCode;
-    const newValue = evt.target.value + evt.key;
+  if (
+    enteredCharCode <= 47 ||
+    enteredCharCode >= 58 ||
+    newValue < minValue ||
+    newValue > maxValue
+  ) {
+    evt.preventDefault();
+    return;
+  }
+  return newValue;
+};
 
-    if (
-      enteredCharCode <= 47 ||
-      enteredCharCode >= 58 ||
-      newValue < minValue ||
-      newValue > maxValue
-    ) {
+export const handleChange = (evt, onChange) => {
+  if (evt.target.value[0] === "0" && evt.target.value.length > 1) {
+    evt.target.value = evt.target.value.slice(1); // Remove the leading zero
+
+    if (evt.target.value === "0") {
+      // No action required for double zero
       evt.preventDefault();
-      return;
+      return evt.target.value;
     }
+  }
+  onChange(evt);
 
-    if (evt.target.value[0] === "0") {
-      /* Prevent input if the first character is zero and the entered character is also zero.
-           else remove the first zero. */
-      enteredCharCode === 48
-        ? evt.preventDefault()
-        : (evt.target.value = evt.target.value.slice(1));
-    }
-  };
+  return evt.target.value;
+};
+
+export default (props) => {
+  const minValue = props.minValue ?? 0;
+  const maxValue = props.maxValue ?? 100;
+  const step = props.step ?? 1;
 
   return (
     <TextField
@@ -40,8 +48,8 @@ export default (props) => {
         max: maxValue,
         step: step,
       }}
-      onKeyPress={handleKeyPress}
-      onChange={props.onChange}
+      onKeyPress={(evt) => handleKeyPress(evt, minValue, maxValue)}
+      onChange={(evt) => handleChange(evt, props.onChange)}
       data-test="test-number-input"
     />
   );

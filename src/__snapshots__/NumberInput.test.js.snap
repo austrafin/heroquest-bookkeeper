@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` NumberInput component renders correctly 1`] = `
+<WithStyles(ForwardRef(TextField))
+  data-test="test-number-input"
+  defaultValue={1}
+  inputProps={
+    Object {
+      "max": 100,
+      "min": 0,
+      "step": 1,
+    }
+  }
+  label="label text"
+  name="label name"
+  onChange={[Function]}
+  onKeyPress={[Function]}
+  type="number"
+/>
+`;

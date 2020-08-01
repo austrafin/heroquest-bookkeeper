@@ -8,9 +8,9 @@ export default (props) => {
   const inputValues = useSelector(
     (state) => state.playerCards.cardData[props.cardId].inputValues
   );
-  const minValue = props.minValue || 1;
-  const maxValue = props.maxValue || 100;
-  const step = props.step || 1;
+  const minValue = props.minValue ?? 1;
+  const maxValue = props.maxValue ?? 100;
+  const step = props.step ?? 1;
   const handleInputChange = (value) => {
     dispatch(setInputValue(Number(value), props.labelParameter, props.cardId));
   };
