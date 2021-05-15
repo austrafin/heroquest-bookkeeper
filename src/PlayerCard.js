@@ -14,6 +14,7 @@ import {
   uploadImage,
   setSelectedImageFile,
   addArmoryItem,
+  deleteArmoryItem,
   updateBaseValues,
 } from "./actions/playerCards";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
@@ -27,6 +28,7 @@ import {
   Cancel,
   AddBox,
   Settings,
+  RemoveCircle,
 } from "@material-ui/icons";
 import {
   GiHighShot,
@@ -133,6 +135,10 @@ export default (props) => {
     dispatch(addArmoryItem(props.cardId, armoryItemSelection));
   };
 
+  const handleArmoryItemDeleteButtonClick = (itemID) => {
+    dispatch(deleteArmoryItem(props.cardId, itemID));
+  };
+
   const handleCardSettingsButtonClick = () => {
     setModalOpen(true);
   };
@@ -190,9 +196,22 @@ export default (props) => {
       <CollapsibleTriggerLabel
         key={key}
         labelText={
-          armoryItemsData.items[item]
-            ? armoryItemsData.items[item][ArmoryItemConstants.NAME]
-            : ALT_ARMORY_ITEM
+          <>
+            {armoryItemsData.items[item]
+              ? armoryItemsData.items[item][ArmoryItemConstants.NAME]
+              : ALT_ARMORY_ITEM}
+            <IconButton
+              style={{ float: "right" }}
+              onClick={() =>
+                handleArmoryItemDeleteButtonClick(
+                  armoryItemsData.items[item][ArmoryItemConstants.ID]
+                )
+              }
+              color="primary"
+            >
+              <RemoveCircle />
+            </IconButton>
+          </>
         }
       />
     ));

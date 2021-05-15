@@ -7,6 +7,7 @@ import {
   DECREMENT,
   UPLOAD_IMAGE,
   ADD_ARMORY_ITEM,
+  DELETE_ARMORY_ITEM,
   UPDATE_BASE_VALUES,
   initialisePlayerCards,
   addPlayerCardPostAction,
@@ -137,6 +138,29 @@ export function* addArmoryItem(action) {
   }
 }
 
+export function* deleteArmoryItem(action) {
+  const body = { itemId: action.itemId };
+  try {
+    let responseStatus = null;
+
+    yield axios
+      .patch(
+        "http://localhost:5000/player_cards/delete_armory_item/" +
+          action.cardId,
+        body
+      )
+      .then((response) => {
+        responseStatus = response.status;
+      });
+
+    if (responseStatus === 200) {
+      yield put({ type: LOAD });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export function* updateDatabase() {
   yield delay(200);
 
@@ -214,4 +238,5 @@ export const playerCardsSagas = [
   takeLatest(UPDATE_BASE_VALUES, updateBaseValues),
   takeLatest(UPLOAD_IMAGE, uploadImage),
   takeLatest(ADD_ARMORY_ITEM, addArmoryItem),
+  takeLatest(DELETE_ARMORY_ITEM, deleteArmoryItem),
 ];

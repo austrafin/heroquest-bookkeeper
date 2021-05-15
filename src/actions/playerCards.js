@@ -12,6 +12,7 @@ export const INITIALISE = "playerCards/INITIALISE";
 export const SET_SELECTED_IMAGE = "playerCards/SET_SELECTED_IMAGE";
 export const UPLOAD_IMAGE = "playerCards/UPLOAD_IMAGE";
 export const ADD_ARMORY_ITEM = "playerCards/ADD_ARMORY_ITEM";
+export const DELETE_ARMORY_ITEM = "playerCards/DELETE_ARMORY_ITEM";
 export const CLEAR_PENDING_CHANGES = "playerCards/CLEAR_PENDING_CHANGES";
 export const SET_INPUT_VALUE = "playerCards/SET_INPUT_VALUE";
 
@@ -100,6 +101,14 @@ export function uploadImage(selectedFile, cardId) {
 export function addArmoryItem(cardId, itemId) {
   return {
     type: ADD_ARMORY_ITEM,
+    cardId: cardId,
+    itemId: itemId,
+  };
+}
+
+export function deleteArmoryItem(cardId, itemId) {
+  return {
+    type: DELETE_ARMORY_ITEM,
     cardId: cardId,
     itemId: itemId,
   };

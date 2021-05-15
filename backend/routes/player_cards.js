@@ -111,6 +111,16 @@ router.route("/add_armory_item/:id").post((req, res) => {
   });
 });
 
+router.route("/delete_armory_item/:id").patch((req, res) => {
+  if (!req.body.itemId)
+    return res.status(422).json("Error: Missing Armory Item ID");
+
+  PlayerCard.findOneAndUpdate(
+    { _id: req.params.id },
+    { $pull: { armoryItems: { $in: req.body.itemId } } }
+  ).then(() => res.json("Armory item deleted"));
+});
+
 router.route("/:id").delete((req, res) => {
   console.log("req.params");
   PlayerCard.findByIdAndDelete(req.params.id)
