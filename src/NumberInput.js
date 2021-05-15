@@ -27,7 +27,8 @@ export const handleChange = (evt, onChange) => {
       return evt.target.value;
     }
   }
-  onChange(evt);
+
+  if (onChange) onChange(evt);
 
   return evt.target.value;
 };
