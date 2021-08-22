@@ -42,7 +42,7 @@ export function* loadPlayerCardData() {
   const initialValues = {};
 
   yield axios
-    .get("http://localhost:5000/player_cards")
+    .get(process.env.REACT_APP_API_BASE_URL + "player_cards")
     .then((response) => {
       if (response.status === 200) {
         response.data.forEach((card) => {
@@ -95,7 +95,7 @@ export function* addPlayerCard(action) {
   yield put(setCardsLoaded(false));
   yield axios
     .post(
-      "http://localhost:5000/player_cards/add",
+      process.env.REACT_APP_API_BASE_URL + "player_cards/add",
       mapBaseValuesReduxToDB(action.values)
     )
     .catch((error) => {
@@ -108,7 +108,9 @@ export function* addPlayerCard(action) {
 export function* deletePlayerCard(action) {
   yield put(setCardsLoaded(false));
   yield axios
-    .delete("http://localhost:5000/player_cards/" + action.cardId)
+    .delete(
+      process.env.REACT_APP_API_BASE_URL + "player_cards/" + action.cardId
+    )
     .catch((error) => {
       console.log(error);
     });
@@ -123,7 +125,9 @@ export function* addArmoryItem(action) {
 
     yield axios
       .post(
-        "http://localhost:5000/player_cards/add_armory_item/" + action.cardId,
+        process.env.REACT_APP_API_BASE_URL +
+          "player_cards/add_armory_item/" +
+          action.cardId,
         body
       )
       .then((response) => {
@@ -145,7 +149,8 @@ export function* deleteArmoryItem(action) {
 
     yield axios
       .patch(
-        "http://localhost:5000/player_cards/delete_armory_item/" +
+        process.env.REACT_APP_API_BASE_URL +
+          "player_cards/delete_armory_item/" +
           action.cardId,
         body
       )
@@ -182,7 +187,10 @@ export function* updateDatabase() {
   });
 
   yield axios
-    .post("http://localhost:5000/player_cards/update", updateValues)
+    .post(
+      process.env.REACT_APP_API_BASE_URL + "player_cards/update",
+      updateValues
+    )
     .catch((error) => {
       console.log(error);
     });
@@ -192,7 +200,7 @@ export function* updateDatabase() {
 export function* updateBaseValues(action) {
   yield delay(200);
   yield axios
-    .post("http://localhost:5000/player_cards/update", {
+    .post(process.env.REACT_APP_API_BASE_URL + "player_cards/update", {
       [action.cardId]: mapBaseValuesReduxToDB(action.values),
     })
     .catch((error) => {
@@ -214,7 +222,9 @@ export function* uploadImage(action) {
 
       yield axios
         .post(
-          "http://localhost:5000/player_cards/upload_image/" + action.cardId,
+          process.env.REACT_APP_API_BASE_URL +
+            "player_cards/upload_image/" +
+            action.cardId,
           formData
         )
         .then((response) => {

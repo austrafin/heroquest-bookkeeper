@@ -32,7 +32,7 @@ import {
 } from "../constants/player_card.constants";
 
 describe("playerCards", () => {
-  const baseURL = "http://localhost:5000/player_cards";
+  const baseURL = process.env.REACT_APP_API_BASE_URL + "player_cards";
   const cardId = "123";
 
   beforeEach(() => {

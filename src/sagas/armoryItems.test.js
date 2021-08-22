@@ -20,7 +20,7 @@ import {
 } from "../constants/armory_item.constants";
 
 describe("armoryItems", () => {
-  const baseURL = "http://localhost:5000/armory_items";
+  const baseURL = process.env.REACT_APP_API_BASE_URL + "armory_items";
   const itemId = "123";
   const armoryItems = {
     [Constants.DEFENCE_OPERATOR]: "+",

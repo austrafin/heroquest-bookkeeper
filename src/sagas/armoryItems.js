@@ -34,7 +34,7 @@ export function* loadArmoryItems() {
   yield put(setArmoryItemsLoaded(false));
   const armoryItems = {};
   yield axios
-    .get("http://localhost:5000/armory_items")
+    .get(process.env.REACT_APP_API_BASE_URL + "armory_items")
     .then((response) => {
       response.data.forEach((item) => {
         const values = {};
@@ -63,7 +63,10 @@ export function* loadArmoryItems() {
 
 export function* addArmoryItem(action) {
   yield axios
-    .post("http://localhost:5000/armory_items/add", mapReduxToDB(action.data))
+    .post(
+      process.env.REACT_APP_API_BASE_URL + "armory_items/add",
+      mapReduxToDB(action.data)
+    )
     .catch((error) => {
       console.log(error);
     });
@@ -73,7 +76,7 @@ export function* addArmoryItem(action) {
 export function* updateDatabase(action) {
   yield axios
     .post(
-      "http://localhost:5000/armory_items/update/" + action.id,
+      process.env.REACT_APP_API_BASE_URL + "armory_items/update/" + action.id,
       mapReduxToDB(action.data)
     )
     .catch((error) => {
@@ -84,7 +87,7 @@ export function* updateDatabase(action) {
 
 export function* deleteArmoryItem(action) {
   yield axios
-    .delete("http://localhost:5000/armory_items/" + action.id)
+    .delete(process.env.REACT_APP_API_BASE_URL + "armory_items/" + action.id)
     .catch((error) => {
       console.log(error);
     });
