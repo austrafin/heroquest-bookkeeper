@@ -6,7 +6,7 @@ import { Button, TextField } from "@material-ui/core";
 import ArmoryItemModifier from "./ArmoryItemModifier";
 import { deleteArmoryItem } from "./actions/armoryItems";
 
-export default (props) => {
+const ArmoryItemForm = (props) => {
   const dispatch = useDispatch();
   const [name, setName] = useState(props.name ?? "");
   const handleTextFieldChange = (event) => {
@@ -100,3 +100,5 @@ export default (props) => {
     </form>
   );
 };
+
+export default ArmoryItemForm;

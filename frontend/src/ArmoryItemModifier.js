@@ -9,7 +9,7 @@ import {
   FormControl,
 } from "@material-ui/core";
 
-export default (props) => {
+const ArmoryItemModifier = (props) => {
   return (
     <FormControl component="fieldset" className={styles.root}>
       <Grid container spacing={4}>
@@ -35,3 +35,5 @@ export default (props) => {
     </FormControl>
   );
 };
+
+export default ArmoryItemModifier;

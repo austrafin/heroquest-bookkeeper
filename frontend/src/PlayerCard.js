@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default (props) => {
+const PlayerCard = (props) => {
   const classes = useStyles();
   const cardData = useSelector(
     (state) => state.playerCards.cardData[props.cardId]
@@ -451,3 +451,5 @@ export default (props) => {
     </>
   );
 };
+
+export default PlayerCard;

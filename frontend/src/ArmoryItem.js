@@ -8,7 +8,7 @@ import CollapsibleTriggerLabel from "./CollapsibleTriggerLabel";
 import { ArrowDropDown, ArrowDropUp } from "@material-ui/icons";
 import { updateArmoryItem } from "./actions/armoryItems";
 
-export default (props) => {
+const ArmoryItem = (props) => {
   const dispatch = useDispatch();
   const submit = (event) => {
     event.preventDefault();
@@ -66,3 +66,5 @@ export default (props) => {
     </>
   );
 };
+
+export default ArmoryItem;

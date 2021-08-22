@@ -28,7 +28,7 @@ const calculateStatusPoints = (item, currentValue, pointsKey, operatorKey) => {
   return newValue;
 };
 
-export default () => {
+const GamePage = () => {
   const dispatch = useDispatch();
   const playerCardData = useSelector((state) => state.playerCards.cardData);
   const armoryItemsData = useSelector((state) => state.armoryItems);
@@ -39,7 +39,7 @@ export default () => {
   const newCardUploading = useSelector(
     (state) => state.playerCards.newCardUploading
   );
-  const stableDispatch = useCallback(dispatch, []);
+  const stableDispatch = useCallback(dispatch, [dispatch]);
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
@@ -159,3 +159,5 @@ export default () => {
     </>
   );
 };
+
+export default GamePage;

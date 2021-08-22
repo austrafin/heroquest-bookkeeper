@@ -6,7 +6,7 @@ import ModalForm from "./ModalForm";
 import { Grid, Button, TextField } from "@material-ui/core";
 import { deletePlayerCard } from "./actions/playerCards";
 
-export default (props) => {
+const PlayerCardForm = (props) => {
   const dispatch = useDispatch();
   const [name, setName] = useState(props.characterName ?? "");
 
@@ -106,3 +106,5 @@ export default (props) => {
     </ModalForm>
   );
 };
+
+export default PlayerCardForm;

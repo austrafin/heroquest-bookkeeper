@@ -33,7 +33,7 @@ export const handleChange = (evt, onChange) => {
   return evt.target.value;
 };
 
-export default (props) => {
+const NumberInput = (props) => {
   const minValue = props.minValue ?? 0;
   const maxValue = props.maxValue ?? 100;
   const step = props.step ?? 1;
@@ -55,3 +55,5 @@ export default (props) => {
     />
   );
 };
+
+export default NumberInput;

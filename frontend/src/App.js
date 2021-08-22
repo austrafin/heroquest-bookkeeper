@@ -12,7 +12,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default () => {
+const App = () => {
   const classes = useStyles();
   const [tabIndex, setTabIndex] = useState(0);
 
@@ -42,3 +42,5 @@ export default () => {
     </div>
   );
 };
+
+export default App;

@@ -6,9 +6,9 @@ import ModalForm from "./ModalForm";
 import { loadArmoryItems, addArmoryItem } from "./actions/armoryItems";
 import { Button } from "@material-ui/core";
 
-export default (props) => {
+const ArmoryPage = (props) => {
   const dispatch = useDispatch();
-  const stableDispatch = useCallback(dispatch, []);
+  const stableDispatch = useCallback(dispatch, [dispatch]);
   const hasLoadedArmoryItems = useSelector(
     (state) => state.armoryItems.armoryItemsLoaded
   );
@@ -81,3 +81,5 @@ export default (props) => {
     </>
   );
 };
+
+export default ArmoryPage;

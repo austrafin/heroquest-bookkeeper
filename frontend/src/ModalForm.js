@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default (props) => {
+const ModalForm = (props) => {
   const classes = useStyles();
 
   return (
@@ -27,3 +27,5 @@ export default (props) => {
     </Modal>
   );
 };
+
+export default ModalForm;

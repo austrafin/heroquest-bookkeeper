@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setInputValue } from "./actions/playerCards";
 import NumberInput from "./NumberInput";
 
-export default (props) => {
+const CardNumberInput = (props) => {
   const dispatch = useDispatch();
   const inputValues = useSelector(
     (state) => state.playerCards.cardData[props.cardId].inputValues
@@ -33,3 +33,5 @@ export default (props) => {
     />
   );
 };
+
+export default CardNumberInput;

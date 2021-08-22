@@ -42,7 +42,7 @@ function difference(state, action, decrement) {
   };
 }
 
-export default (state = { pendingChanges: {} }, action) => {
+const playerCards = (state = { pendingChanges: {} }, action) => {
   switch (action.type) {
     case SET_VALUE:
       if (action.cardId in state.cardData) {
@@ -137,3 +137,5 @@ export default (state = { pendingChanges: {} }, action) => {
       return state;
   }
 };
+
+export default playerCards;
