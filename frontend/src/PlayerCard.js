@@ -17,7 +17,7 @@ import {
   deleteArmoryItem,
   updateBaseValues,
 } from "./actions/playerCards";
-import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import { createTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Collapsible from "react-collapsible";
 import CollapsibleTriggerLabel from "./CollapsibleTriggerLabel";
 import {
@@ -53,7 +53,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-const theme = createMuiTheme({
+const theme = createTheme({
   overrides: {
     MuiTypography: {
       h4: {
@@ -93,20 +93,98 @@ const PlayerCard = (props) => {
 
   if (cardData === undefined) return null;
 
+  const handleArmoryItemDeleteButtonClick = (itemID) => {
+    dispatch(deleteArmoryItem(props.cardId, itemID));
+  };
+
+  const armoryItemListItems =
+    armoryItems === undefined
+      ? []
+      : armoryItems.map((item, key) => (
+          <CollapsibleTriggerLabel
+            key={key}
+            labelText={
+              <>
+                {armoryItemsData.items[item]
+                  ? armoryItemsData.items[item][ArmoryItemConstants.NAME]
+                  : ALT_ARMORY_ITEM}
+                <IconButton
+                  style={{ float: "right" }}
+                  onClick={() =>
+                    handleArmoryItemDeleteButtonClick(
+                      armoryItemsData.items[item][ArmoryItemConstants.ID]
+                    )
+                  }
+                  color="primary"
+                >
+                  <RemoveCircle />
+                </IconButton>
+              </>
+            }
+          />
+        ));
+
+  const armoryItemsSelectList =
+    armoryItemsData === undefined
+      ? []
+      : Object.entries(armoryItemsData.items).map(([key, item]) => (
+          <MenuItem key={key} value={item[ArmoryItemConstants.ID]}>
+            {item[ArmoryItemConstants.NAME]}
+          </MenuItem>
+        ));
+
   const browseImageId = "browse-image-" + props.cardId;
   const settingsId = "settings-" + props.cardId;
-  let imageUploadInputs = null;
-  let armoryItemListItems = [];
-  let armoryItemsSelectList = [];
+  const imageUploadInputs =
+    selectedFile && selectedFile !== null
+      ? (() => {
+          const handleImageUpload = () => {
+            dispatch(uploadImage(selectedFile, props.cardId));
+          };
 
-  const handleCancel = () => {
-    dispatch(setSelectedImageFile(null, props.cardId));
-    setImageFile(props.imagePath);
-  };
+          const handleCancel = () => {
+            dispatch(setSelectedImageFile(null, props.cardId));
+            setImageFile(props.imagePath);
+          };
 
-  const handleImageUpload = () => {
-    dispatch(uploadImage(selectedFile, props.cardId));
-  };
+          const uploadId = "upload-image-" + props.cardId;
+          const cancelId = "cancel-image-" + props.cardId;
+
+          return (
+            <>
+              <input
+                id={uploadId}
+                className={styles.uploadbutton}
+                onClick={handleImageUpload}
+              />
+              <label htmlFor={uploadId}>
+                <IconButton
+                  className={styles.uploadbutton}
+                  aria-label="upload picture"
+                  component="span"
+                >
+                  <CheckCircle style={{ fill: "green" }} />
+                </IconButton>
+              </label>
+
+              <input
+                id={cancelId}
+                className={styles.uploadbutton}
+                onClick={handleCancel}
+              />
+              <label htmlFor={cancelId}>
+                <IconButton
+                  className={styles.uploadbutton}
+                  aria-label="upload picture"
+                  component="span"
+                >
+                  <Cancel style={{ fill: "red" }} />
+                </IconButton>
+              </label>
+            </>
+          );
+        })()
+      : null;
 
   const handleImageBrowse = (event) => {
     const file = event.target.files[0];
@@ -135,10 +213,6 @@ const PlayerCard = (props) => {
     dispatch(addArmoryItem(props.cardId, armoryItemSelection));
   };
 
-  const handleArmoryItemDeleteButtonClick = (itemID) => {
-    dispatch(deleteArmoryItem(props.cardId, itemID));
-  };
-
   const handleCardSettingsButtonClick = () => {
     setModalOpen(true);
   };
@@ -152,80 +226,6 @@ const PlayerCard = (props) => {
 
     dispatch(updateBaseValues(data, props.cardId));
   };
-
-  if (selectedFile && selectedFile !== null) {
-    const uploadId = "upload-image-" + props.cardId;
-    const cancelId = "cancel-image-" + props.cardId;
-    imageUploadInputs = (
-      <>
-        <input
-          id={uploadId}
-          className={styles.uploadbutton}
-          onClick={handleImageUpload}
-        />
-        <label htmlFor={uploadId}>
-          <IconButton
-            className={styles.uploadbutton}
-            aria-label="upload picture"
-            component="span"
-          >
-            <CheckCircle style={{ fill: "green" }} />
-          </IconButton>
-        </label>
-
-        <input
-          id={cancelId}
-          className={styles.uploadbutton}
-          onClick={handleCancel}
-        />
-        <label htmlFor={cancelId}>
-          <IconButton
-            className={styles.uploadbutton}
-            aria-label="upload picture"
-            component="span"
-          >
-            <Cancel style={{ fill: "red" }} />
-          </IconButton>
-        </label>
-      </>
-    );
-  }
-
-  if (armoryItems !== undefined) {
-    armoryItemListItems = armoryItems.map((item, key) => (
-      <CollapsibleTriggerLabel
-        key={key}
-        labelText={
-          <>
-            {armoryItemsData.items[item]
-              ? armoryItemsData.items[item][ArmoryItemConstants.NAME]
-              : ALT_ARMORY_ITEM}
-            <IconButton
-              style={{ float: "right" }}
-              onClick={() =>
-                handleArmoryItemDeleteButtonClick(
-                  armoryItemsData.items[item][ArmoryItemConstants.ID]
-                )
-              }
-              color="primary"
-            >
-              <RemoveCircle />
-            </IconButton>
-          </>
-        }
-      />
-    ));
-  }
-
-  if (armoryItemsData !== undefined) {
-    armoryItemsSelectList = Object.entries(armoryItemsData.items).map(
-      ([key, item]) => (
-        <MenuItem key={key} value={item[ArmoryItemConstants.ID]}>
-          {item[ArmoryItemConstants.NAME]}
-        </MenuItem>
-      )
-    );
-  }
 
   armoryItemListItems.push(
     <CollapsibleTriggerLabel
