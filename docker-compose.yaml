@@ -30,6 +30,7 @@ services:
     volumes:
       - ./backend/routes:/usr/app/routes
       - ./backend/models:/usr/app/models
+      - ./backend/server.js:/usr/app/server.js
     depends_on:
       - db
 
