@@ -1,7 +1,119 @@
+/**
+ * @swagger
+ * tags:
+ *   name: Player cards
+ *   description: API to manage player cards in the game.
+ * components:
+ *   schemas:
+ *     PlayerCard:
+ *       type: object
+ *       required:
+ *         - characterName
+ *       properties:
+ *         _id:
+ *           type: uuid
+ *           description: Unique identifier for the player card
+ *         characterName:
+ *           type: string
+ *           description: The name of the character
+ *         baseBodyPoints:
+ *           type: integer
+ *           nullable: true
+ *           description: The base body points that the character starts with
+ *         bodyPoints:
+ *           type: integer
+ *           description: Current body points of the character
+ *         baseMindPoints:
+ *           type: integer
+ *           nullable: true
+ *           description: The base base mind points that the character starts
+ *                        with
+ *         mindPoints:
+ *           type: integer
+ *           description: Current mind points of the character
+ *         baseDiagonalPoints:
+ *           type: integer
+ *           nullable: true
+ *           description: The base diagonal attack points that the character
+ *                        starts with
+ *         baseMeleePoints:
+ *           type: integer
+ *           nullable: true
+ *           description: The base melee attack points that the character
+ *                        starts with
+ *         baseRangedPoints:
+ *           type: integer
+ *           nullable: true
+ *           description: The base ranged attack points that the character
+ *                        starts with
+ *         baseDefencePoints:
+ *           type: integer
+ *           nullable: true
+ *           description: The base defence points that the character starts with
+ *         baseMovementPoints:
+ *           type: integer
+ *           nullable: true
+ *           description: The base movement points that the character starts
+ *                        with
+ *         gold:
+ *           type: integer
+ *           description: The amount of gold the character has
+ *         imageFile:
+ *           type: object
+ *           nullable: true
+ *           description: The character's profile picture
+ *           properties:
+ *             type:
+ *               type: string
+ *             data:
+ *               type: string
+ *               format: binary
+ *         armoryItems:
+ *           type: array
+ *           items:
+ *             type: uuid
+ *           description: The amount of gold the character has
+ *       example:
+ *          _id: 6274363f636ebf0013fd1235
+ *          characterName: Barbarian
+ *          baseBodyPoints: 7
+ *          bodyPoints: 5
+ *          baseMindPoints: 3
+ *          mindPoints: 2
+ *          baseDiagonalPoints: 0
+ *          baseMeleePoints: 3
+ *          baseRangedPoints: 0
+ *          baseDefencePoints: 2
+ *          baseMovementPoints: null
+ *          gold: 500
+ *          imageFile: { type: "Buffer", data: [255, 216,..., 222] }
+ *          armoryItems:
+ *            - 62743655636ebf0013fd123c
+ *            - 627fa383d63f7b0014bdeff9
+ *     PlayerCards:
+ *       type: array
+ *       items:
+ *         $ref: '#/components/schemas/PlayerCard'
+ */
+
 const router = require("express").Router();
 const PlayerCard = require("../models/player_card.model");
 const ArmoryItem = require("../models/armory_item.model");
 
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Lists all the player cards
+ *     tags: [Player cards]
+ *     responses:
+ *       "200":
+ *         description: The list of all player cards
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/PlayerCards'
+ */
 router.route("").get((req, res) => {
   PlayerCard.find()
     .then((playerCards) => {
@@ -30,6 +142,16 @@ router.route("").get((req, res) => {
     .catch((err) => res.status(500).json("Error: " + err));
 });
 
+/**
+ * @swagger
+ * /add:
+ *   post:
+ *     summary: Adds a new player cards
+ *     tags: [Player cards]
+ *     responses:
+ *       "201":
+ *         description: Adds a new player cards
+ */
 router.route("/add").post((req, res) => {
   new PlayerCard({
     characterName: req.body.characterName,
@@ -51,6 +173,16 @@ router.route("/add").post((req, res) => {
     .catch((err) => res.status(500).json("Error: " + err));
 });
 
+/**
+ * @swagger
+ * /update:
+ *   post:
+ *     summary: Updates a player card
+ *     tags: [Player cards]
+ *     responses:
+ *       "200":
+ *         description: Updates a player card
+ */
 router.route("/update").post((req, res) => {
   for (var id in req.body) {
     PlayerCard.findOneAndUpdate({ _id: id }, req.body[id]).catch((err) =>
@@ -61,6 +193,16 @@ router.route("/update").post((req, res) => {
   res.json("Player cards updated");
 });
 
+/**
+ * @swagger
+ * /upload_image/{id}:
+ *   post:
+ *     summary: Uploads a new profile image for a player card
+ *     tags: [Player cards]
+ *     responses:
+ *       "200":
+ *         description: Uploads a new profile image for a player card
+ */
 router.route("/upload_image/:id").post((req, res) => {
   if (req.files == null) {
     return res.status(422).json({ msg: "No file uploaded" });
@@ -87,6 +229,20 @@ router.route("/upload_image/:id").post((req, res) => {
     .catch((err) => res.status(500).json("Error: " + err));
 });
 
+/**
+ * @swagger
+ * /add_armory_item/{id}:
+ *   post:
+ *     summary: Adds an armory item for the character
+ *     tags: [Player cards]
+ *     responses:
+ *       "200":
+ *         description: Adds an armory item for the character
+ *       "404":
+ *         description: The armory item does not exist
+ *       "409":
+ *         description: The character already has the armory item
+ */
 router.route("/add_armory_item/:id").post((req, res) => {
   if (req.body.itemId === null || req.body.itemId === "")
     return res.status(422).json("Error: Missing Armory Item ID");
@@ -111,6 +267,22 @@ router.route("/add_armory_item/:id").post((req, res) => {
   });
 });
 
+/**
+ * @swagger
+ * /delete_armory_item/{id}:
+ *   patch:
+ *     summary: Removes an armory item from the character
+ *     tags: [Player cards]
+ *     responses:
+ *       "200":
+ *         description: Removes an armory item from the character
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/PlayerCard'
+ *       "422":
+ *         description: The character does not have the armory item
+ */
 router.route("/delete_armory_item/:id").patch((req, res) => {
   if (!req.body.itemId)
     return res.status(422).json("Error: Missing Armory Item ID");
@@ -121,6 +293,16 @@ router.route("/delete_armory_item/:id").patch((req, res) => {
   ).then(() => res.json("Armory item deleted"));
 });
 
+/**
+ * @swagger
+ * /{id}:
+ *   delete:
+ *     summary: Delete's a character's player card
+ *     tags: [Player cards]
+ *     responses:
+ *       "200":
+ *         description: Delete's a character's player card
+ */
 router.route("/:id").delete((req, res) => {
   console.log("req.params");
   PlayerCard.findByIdAndDelete(req.params.id)

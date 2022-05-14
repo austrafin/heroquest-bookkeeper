@@ -1,7 +1,111 @@
+/**
+ * @swagger
+ * tags:
+ *   name: Armory items
+ *   description: API to manage armory items in the game.
+ * components:
+ *   schemas:
+ *     ArmoryItem:
+ *       type: object
+ *       required:
+ *         - name
+ *       properties:
+ *         defenceOperator:
+ *           type: string
+ *           nullable: true
+ *           description: Determines the effect of the item on the character's
+ *                        defence points.
+ *         defencePoints:
+ *           type: integer
+ *           nullable: true
+ *           description: The number of defence points that are either set,
+ *                        decreased or increased on the character wearing the
+ *                        item
+ *         diagonalOperator:
+ *           type: string
+ *           nullable: true
+ *           description: Determines the effect of the item on the character's
+ *                        diagonal attack points.
+ *         diagonalPoints:
+ *           type: integer
+ *           nullable: true
+ *           description: The number of diagonal attack points that are either
+ *                        set, decreased or increased on the character wearing
+ *                        the item
+ *         meleeOperator:
+ *           type: string
+ *           nullable: true
+ *           description: Determines the effect of the item on the character's
+ *                        melee attack points.
+ *         meleePoints:
+ *           type: integer
+ *           nullable: true
+ *           description: The number of melee attack points that are either
+ *                        set, decreased or increased on the character wearing
+ *                        the item
+ *         movementOperator:
+ *           type: string
+ *           nullable: true
+ *           description: Determines the effect of the item on the character's
+ *                        movement points.
+ *         movementPoints:
+ *           type: integer
+ *           nullable: true
+ *           description: The number of movement points that are either set,
+ *                        decreased or increased on the character wearing the
+ *                        item
+ *         name:
+ *           type: string
+ *           nullable: true
+ *           description: The name of the item
+ *         rangedOperator:
+ *           type: string
+ *           nullable: true
+ *           description: Determines the effect of the item on the character's
+ *                        ranged attack points.
+ *         rangedPoints:
+ *           type: integer
+ *           nullable: true
+ *           description: The number of ranged attack points that are either
+ *                        set, decreased or increased on the character wearing
+ *                        the item
+ *       example:
+ *          defenceOperator: +
+ *          defencePoints: 1
+ *          diagonalOperator: +
+ *          diagonalPoints: 1
+ *          meleeOperator: +
+ *          meleePoints: 3
+ *          movementOperator: "-"
+ *          movementPoints: 1
+ *          name: Long sword
+ *          rangedOperator: null
+ *          rangedPoints: null
+ *     ArmoryItems:
+ *       type: array
+ *       items:
+ *         $ref: '#/components/schemas/ArmoryItem'
+ *
+ */
+
 const router = require("express").Router();
 const ArmoryItem = require("../models/armory_item.model");
 const PlayerCard = require("../models/player_card.model");
 
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Lists all the armory items
+ *     tags: [Armory items]
+ *     responses:
+ *       "200":
+ *         description: The list of all armory items.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ArmoryItems'
+ */
 router.route("").get((req, res) => {
   ArmoryItem.find()
     .then((armoryItems) => {
@@ -29,30 +133,16 @@ router.route("").get((req, res) => {
     .catch((err) => res.status(500).json("Error: " + err));
 });
 
-router.route("/get_ids").get((req, res) => {
-  ArmoryItem.find()
-    .then((armoryItems) => {
-      const ids = [];
-      armoryItems.forEach((item) => {
-        ids.push(item._id);
-      });
-      res.json(ids);
-    })
-    .catch((err) => res.status(500).json("Error: " + err));
-});
-
-router.route("/get_names").get((req, res) => {
-  ArmoryItem.find()
-    .then((armoryItems) => {
-      const names = {};
-      armoryItems.forEach((item) => {
-        names[item._id] = item.name;
-      });
-      res.json(names);
-    })
-    .catch((err) => res.status(500).json("Error: " + err));
-});
-
+/**
+ * @swagger
+ * /add:
+ *   post:
+ *     summary: Adds a new armory item
+ *     tags: [Armory items]
+ *     responses:
+ *       "201":
+ *         description: Adds a new armory item
+ */
 router.route("/add").post((req, res) => {
   new ArmoryItem({
     name: req.body.name,
@@ -72,6 +162,16 @@ router.route("/add").post((req, res) => {
     .catch((err) => res.status(500).json("Error: " + err));
 });
 
+/**
+ * @swagger
+ * /update/{id}:
+ *   post:
+ *     summary: Updates an armory item
+ *     tags: [Armory items]
+ *     responses:
+ *       "200":
+ *         description: Updates an armory item
+ */
 router.route("/update/:id").post((req, res) => {
   ArmoryItem.findOneAndUpdate({ _id: req.params.id }, req.body, {
     new: true,
@@ -82,12 +182,36 @@ router.route("/update/:id").post((req, res) => {
     });
 });
 
+/**
+ * @swagger
+ * /{id}:
+ *   get:
+ *     summary: Returns an armory item by its ID
+ *     tags: [Armory items]
+ *     responses:
+ *       "200":
+ *         description: Returns an armory item by its ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ArmoryItem'
+ */
 router.route("/:id").get((req, res) => {
   ArmoryItem.find({ _id: req.params.id })
     .then((armoryItem) => res.json(armoryItem))
     .catch((err) => res.status(500).json("Error: " + err));
 });
 
+/**
+ * @swagger
+ * /{id}:
+ *   delete:
+ *     summary: Deletes an armory item
+ *     tags: [Armory items]
+ *     responses:
+ *       "200":
+ *         description: Deletes an armory item
+ */
 router.route("/:id").delete((req, res) => {
   ArmoryItem.findByIdAndDelete(req.params.id)
     .then(() => {

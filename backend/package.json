@@ -14,6 +14,8 @@
     "dotenv": "^8.6.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
-    "mongoose": "^5.13.7"
+    "mongoose": "^5.13.7",
+    "swagger-jsdoc": "^6.2.1",
+    "swagger-ui-express": "^4.3.0"
   }
 }
