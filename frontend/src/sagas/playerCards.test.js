@@ -99,9 +99,8 @@ describe("playerCards", () => {
 
   describe("addPlayerCard", () => {
     it("should add a new player card via an API call the loading actions.", async () => {
-      moxios.stubOnce("post", baseURL + "/add", {
+      moxios.stubOnce("post", baseURL, {
         status: 201,
-        response: "Player card added",
       });
 
       await assertSaga(
@@ -130,7 +129,6 @@ describe("playerCards", () => {
     it("should delete a player card via an API call and call the delete and loading actions.", async () => {
       moxios.stubOnce("delete", baseURL + "/" + cardId, {
         status: 200,
-        response: "PlayerCard deleted.",
       });
 
       await assertSaga(
@@ -149,7 +147,6 @@ describe("playerCards", () => {
     it("should successfully add a new armory item via an API call and call the player cards re-load action.", async () => {
       moxios.stubOnce("post", baseURL + "/add_armory_item/" + cardId, {
         status: 200,
-        response: "Armory item added",
       });
 
       await assertSaga(
@@ -175,9 +172,8 @@ describe("playerCards", () => {
 
   describe("updateDatabase", () => {
     it("should update the player card values via an API and call an action to clear the pending changes.", async () => {
-      moxios.stubOnce("post", baseURL + "/update", {
+      moxios.stubOnce("post", baseURL + "/update_multiple", {
         status: 200,
-        response: "Player cards updated",
       });
 
       await assertSaga(updateDatabase, [clearPendingChanges()]);
@@ -186,9 +182,8 @@ describe("playerCards", () => {
 
   describe("updateBaseValues", () => {
     it("should update the player card base values via an API and call the player cards loading call.", async () => {
-      moxios.stubOnce("post", baseURL + "/update", {
+      moxios.stubOnce("post", baseURL + "/update_multiple", {
         status: 200,
-        response: "Player cards updated",
       });
 
       await assertSaga(
@@ -216,7 +211,6 @@ describe("playerCards", () => {
     it("should successfully upload a new image for a player card via an API call and call the image set action.", async () => {
       moxios.stubOnce("post", baseURL + "/upload_image/" + cardId, {
         status: 200,
-        response: "Character image uploaded.",
       });
 
       await assertSaga(

@@ -64,7 +64,7 @@ export function* loadArmoryItems() {
 export function* addArmoryItem(action) {
   yield axios
     .post(
-      process.env.REACT_APP_API_BASE_URL + "armory_items/add",
+      process.env.REACT_APP_API_BASE_URL + "armory_items",
       mapReduxToDB(action.data)
     )
     .catch((error) => {
@@ -75,8 +75,8 @@ export function* addArmoryItem(action) {
 
 export function* updateDatabase(action) {
   yield axios
-    .post(
-      process.env.REACT_APP_API_BASE_URL + "armory_items/update/" + action.id,
+    .patch(
+      process.env.REACT_APP_API_BASE_URL + "armory_items/" + action.id,
       mapReduxToDB(action.data)
     )
     .catch((error) => {

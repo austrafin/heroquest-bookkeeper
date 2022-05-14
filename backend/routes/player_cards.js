@@ -102,7 +102,7 @@ const ArmoryItem = require("../models/armory_item.model");
 
 /**
  * @swagger
- * /:
+ * /player_cards/:
  *   get:
  *     summary: Lists all the player cards
  *     tags: [Player cards]
@@ -144,15 +144,15 @@ router.route("").get((req, res) => {
 
 /**
  * @swagger
- * /add:
+ * /player_cards:
  *   post:
- *     summary: Adds a new player cards
+ *     summary: Adds a new player card
  *     tags: [Player cards]
  *     responses:
  *       "201":
- *         description: Adds a new player cards
+ *         description: New player card added
  */
-router.route("/add").post((req, res) => {
+router.route("").post((req, res) => {
   new PlayerCard({
     characterName: req.body.characterName,
     baseBodyPoints: Number(req.body.baseBodyPoints) || 0,
@@ -169,39 +169,71 @@ router.route("/add").post((req, res) => {
     gold: Number(req.body.gold) || 0,
   })
     .save()
-    .then(() => res.status(201).json("Player card added"))
+    .then(() => res.status(201).send())
     .catch((err) => res.status(500).json("Error: " + err));
 });
 
 /**
  * @swagger
- * /update:
+ * /player_cards/update_multiple:
  *   post:
- *     summary: Updates a player card
+ *     summary: Updates the player cards defined in the request body
  *     tags: [Player cards]
+ *     requestBody:
+ *       description: Key-value pairs where the key is the card ID and the
+ *                    value is an object of fields to be updated
+ *       content:
+ *         application/json:
+ *           schema:
+ *             example:
+ *               {
+ *                 627fb4c58870a30013824faa: { bodyPoints: 5, gold: 270 },
+ *                 627fb4cb8870a30013824fac: { bodyPoints: 2, gold: 100 },
+ *               }
  *     responses:
  *       "200":
- *         description: Updates a player card
+ *         description: Player card updated
  */
-router.route("/update").post((req, res) => {
+router.route("/update_multiple").post((req, res) => {
   for (var id in req.body) {
     PlayerCard.findOneAndUpdate({ _id: id }, req.body[id]).catch((err) =>
       res.status(500).json("Error: " + err)
     );
   }
 
-  res.json("Player cards updated");
+  res.send();
 });
 
 /**
  * @swagger
- * /upload_image/{id}:
+ * /player_cards/upload_image/{id}:
  *   post:
  *     summary: Uploads a new profile image for a player card
  *     tags: [Player cards]
  *     responses:
  *       "200":
- *         description: Uploads a new profile image for a player card
+ *         description: Image added for the player card
+ *       "422":
+ *         description: The file is null
+ *         content:
+ *           application/json:
+ *             schema:
+ *             example:
+ *               { msg: "No file uploaded" }
+ *       "413":
+ *         description: The file size is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *             example:
+ *               { msg: "File size too large." }
+ *       "415":
+ *         description: Invalid file type
+ *         content:
+ *           application/json:
+ *             schema:
+ *             example:
+ *               { msg: "Error: file type is not image." }
  */
 router.route("/upload_image/:id").post((req, res) => {
   if (req.files == null) {
@@ -225,51 +257,68 @@ router.route("/upload_image/:id").post((req, res) => {
       ),
     }
   )
-    .then(() => res.json("Character image uploaded."))
+    .then(() => res.send())
     .catch((err) => res.status(500).json("Error: " + err));
 });
 
 /**
  * @swagger
- * /add_armory_item/{id}:
+ * /player_cards/add_armory_item/{id}:
  *   post:
  *     summary: Adds an armory item for the character
  *     tags: [Player cards]
  *     responses:
  *       "200":
- *         description: Adds an armory item for the character
+ *         description: New armory item added for the character
  *       "404":
  *         description: The armory item does not exist
+ *         content:
+ *           application/json:
+ *             schema:
+ *             example:
+ *               { msg: "Error: Armory item does not exist." }
  *       "409":
  *         description: The character already has the armory item
+ *         content:
+ *           application/json:
+ *             schema:
+ *             example:
+ *               { msg: "Error: Player card already contains the armory item." }
+ *       "422":
+ *         description: The armory item ID has not been provided in the URL or body
+ *         content:
+ *           application/json:
+ *             schema:
+ *             example:
+ *               { msg: "Error: Missing Armory Item ID" }
  */
 router.route("/add_armory_item/:id").post((req, res) => {
   if (req.body.itemId === null || req.body.itemId === "")
-    return res.status(422).json("Error: Missing Armory Item ID");
+    return res.status(422).json({ msg: "Error: Missing Armory Item ID" });
 
   ArmoryItem.findById(req.body.itemId, function (err, item) {
     if (item) {
       PlayerCard.findById(req.params.id, function (err, card) {
         if (card.armoryItems.includes(req.body.itemId)) {
-          return res
-            .status(409)
-            .json("Error: Player card already contains the armory item.");
+          return res.status(409).json({
+            msg: "Error: Player card already contains the armory item.",
+          });
         }
 
         PlayerCard.findOneAndUpdate(
           { _id: req.params.id },
           { $push: { armoryItems: req.body.itemId } }
-        ).then(() => res.json("Armory item added"));
+        ).then(() => res.send());
       }).catch((err) => res.status(500).json("Error: " + err));
     } else {
-      res.status(404).json("Error: Armory item does not exist.");
+      res.status(404).json({ msg: "Error: Armory item does not exist." });
     }
   });
 });
 
 /**
  * @swagger
- * /delete_armory_item/{id}:
+ * /player_cards/delete_armory_item/{id}:
  *   patch:
  *     summary: Removes an armory item from the character
  *     tags: [Player cards]
@@ -281,7 +330,12 @@ router.route("/add_armory_item/:id").post((req, res) => {
  *             schema:
  *               $ref: '#/components/schemas/PlayerCard'
  *       "422":
- *         description: The character does not have the armory item
+ *         description: No ID provided
+ *         content:
+ *           application/json:
+ *             schema:
+ *             example:
+ *               { msg: "Error: Missing Armory Item ID" }
  */
 router.route("/delete_armory_item/:id").patch((req, res) => {
   if (!req.body.itemId)
@@ -290,12 +344,12 @@ router.route("/delete_armory_item/:id").patch((req, res) => {
   PlayerCard.findOneAndUpdate(
     { _id: req.params.id },
     { $pull: { armoryItems: { $in: req.body.itemId } } }
-  ).then(() => res.json("Armory item deleted"));
+  ).then(() => res.send());
 });
 
 /**
  * @swagger
- * /{id}:
+ * /player_cards/{id}:
  *   delete:
  *     summary: Delete's a character's player card
  *     tags: [Player cards]
@@ -306,8 +360,8 @@ router.route("/delete_armory_item/:id").patch((req, res) => {
 router.route("/:id").delete((req, res) => {
   console.log("req.params");
   PlayerCard.findByIdAndDelete(req.params.id)
-    .then(() => res.json("PlayerCard deleted."))
-    .catch((err) => res.status(500).json("Error: " + err));
+    .then(() => res.send())
+    .catch((err) => res.status(500).send());
 });
 
 module.exports = router;

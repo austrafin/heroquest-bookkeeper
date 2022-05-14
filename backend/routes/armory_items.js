@@ -94,7 +94,7 @@ const PlayerCard = require("../models/player_card.model");
 
 /**
  * @swagger
- * /:
+ * /armory_items/:
  *   get:
  *     summary: Lists all the armory items
  *     tags: [Armory items]
@@ -135,15 +135,35 @@ router.route("").get((req, res) => {
 
 /**
  * @swagger
- * /add:
+ * /armory_items/{id}:
+ *   get:
+ *     summary: Returns an armory item by its ID
+ *     tags: [Armory items]
+ *     responses:
+ *       "200":
+ *         description: The armory item by the given ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ArmoryItem'
+ */
+router.route("/:id").get((req, res) => {
+  ArmoryItem.find({ _id: req.params.id })
+    .then((armoryItem) => res.json(armoryItem))
+    .catch((err) => res.status(500).json("Error: " + err));
+});
+
+/**
+ * @swagger
+ * /armory_items/:
  *   post:
  *     summary: Adds a new armory item
  *     tags: [Armory items]
  *     responses:
  *       "201":
- *         description: Adds a new armory item
+ *         description: New armory item added
  */
-router.route("/add").post((req, res) => {
+router.route("").post((req, res) => {
   new ArmoryItem({
     name: req.body.name,
     meleePoints: req.body.meleePoints,
@@ -158,25 +178,25 @@ router.route("/add").post((req, res) => {
     movementOperator: req.body.movementOperator,
   })
     .save()
-    .then(() => res.status(201).json("Armory item added"))
+    .then(() => res.status(201).send())
     .catch((err) => res.status(500).json("Error: " + err));
 });
 
 /**
  * @swagger
- * /update/{id}:
- *   post:
+ * /armory_items/{id}:
+ *   patch:
  *     summary: Updates an armory item
  *     tags: [Armory items]
  *     responses:
  *       "200":
- *         description: Updates an armory item
+ *         description: Armory item updated
  */
-router.route("/update/:id").post((req, res) => {
+router.route("/:id").patch((req, res) => {
   ArmoryItem.findOneAndUpdate({ _id: req.params.id }, req.body, {
     new: true,
   })
-    .then(() => res.json("Armory item updated"))
+    .then(() => res.send())
     .catch((err) => {
       res.status(500).json("Error: " + err);
     });
@@ -184,33 +204,13 @@ router.route("/update/:id").post((req, res) => {
 
 /**
  * @swagger
- * /{id}:
- *   get:
- *     summary: Returns an armory item by its ID
- *     tags: [Armory items]
- *     responses:
- *       "200":
- *         description: Returns an armory item by its ID
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ArmoryItem'
- */
-router.route("/:id").get((req, res) => {
-  ArmoryItem.find({ _id: req.params.id })
-    .then((armoryItem) => res.json(armoryItem))
-    .catch((err) => res.status(500).json("Error: " + err));
-});
-
-/**
- * @swagger
- * /{id}:
+ * /armory_items/{id}:
  *   delete:
  *     summary: Deletes an armory item
  *     tags: [Armory items]
  *     responses:
  *       "200":
- *         description: Deletes an armory item
+ *         description: Armory item deleted
  */
 router.route("/:id").delete((req, res) => {
   ArmoryItem.findByIdAndDelete(req.params.id)
@@ -226,7 +226,7 @@ router.route("/:id").delete((req, res) => {
         // Why does this need to be here for the deletion to work???
       });
 
-      res.json("Armory Item deleted.");
+      res.send();
     })
     .catch((err) => res.status(500).json("Error: " + err));
 });

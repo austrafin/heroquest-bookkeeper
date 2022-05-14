@@ -95,7 +95,7 @@ export function* addPlayerCard(action) {
   yield put(setCardsLoaded(false));
   yield axios
     .post(
-      process.env.REACT_APP_API_BASE_URL + "player_cards/add",
+      process.env.REACT_APP_API_BASE_URL + "player_cards",
       mapBaseValuesReduxToDB(action.values)
     )
     .catch((error) => {
@@ -188,7 +188,7 @@ export function* updateDatabase() {
 
   yield axios
     .post(
-      process.env.REACT_APP_API_BASE_URL + "player_cards/update",
+      process.env.REACT_APP_API_BASE_URL + "player_cards/update_multiple",
       updateValues
     )
     .catch((error) => {
@@ -200,7 +200,7 @@ export function* updateDatabase() {
 export function* updateBaseValues(action) {
   yield delay(200);
   yield axios
-    .post(process.env.REACT_APP_API_BASE_URL + "player_cards/update", {
+    .post(process.env.REACT_APP_API_BASE_URL + "player_cards/update_multiple", {
       [action.cardId]: mapBaseValuesReduxToDB(action.values),
     })
     .catch((error) => {
