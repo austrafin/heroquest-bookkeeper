@@ -139,7 +139,7 @@ router.route("").get((req, res) => {
       });
       res.json(response);
     })
-    .catch((err) => res.status(500).json("Error: " + err));
+    .catch((err) => res.status(500).send());
 });
 
 /**
@@ -170,7 +170,7 @@ router.route("").post((req, res) => {
   })
     .save()
     .then(() => res.status(201).send())
-    .catch((err) => res.status(500).json("Error: " + err));
+    .catch((err) => res.status(500).send());
 });
 
 /**
@@ -197,7 +197,7 @@ router.route("").post((req, res) => {
 router.route("/update_multiple").post((req, res) => {
   for (var id in req.body) {
     PlayerCard.findOneAndUpdate({ _id: id }, req.body[id]).catch((err) =>
-      res.status(500).json("Error: " + err)
+      res.status(500).send()
     );
   }
 
@@ -258,7 +258,7 @@ router.route("/upload_image/:id").post((req, res) => {
     }
   )
     .then(() => res.send())
-    .catch((err) => res.status(500).json("Error: " + err));
+    .catch((err) => res.status(500).send());
 });
 
 /**
@@ -309,7 +309,7 @@ router.route("/add_armory_item/:id").post((req, res) => {
           { _id: req.params.id },
           { $push: { armoryItems: req.body.itemId } }
         ).then(() => res.send());
-      }).catch((err) => res.status(500).json("Error: " + err));
+      }).catch((err) => res.status(500).send());
     } else {
       res.status(404).json({ msg: "Error: Armory item does not exist." });
     }

@@ -85,12 +85,35 @@
  *       type: array
  *       items:
  *         $ref: '#/components/schemas/ArmoryItem'
+ *     GenericError:
+ *       type: object
+ *       properties:
+ *         type:
+ *           type: string
+ *           description: Error type
+ *         message:
+ *           type: string
+ *           description: Error message
+ *       example:
+ *          type: ValidationError
+ *          message: Validation failed diagonalOperator `x` is not a valid enum
+ *                   value for path `diagonalOperator`., defenceOperator `y` is
+ *                   not a valid enum value for path `defenceOperator`.
  *
  */
 
 const router = require("express").Router();
 const ArmoryItem = require("../models/armory_item.model");
 const PlayerCard = require("../models/player_card.model");
+
+const sendError = (response, error) => {
+  if (error.name === "ValidationError") {
+    response.status(400).json({ type: error.name, message: error.message });
+    return;
+  }
+
+  response.status(500).send();
+};
 
 /**
  * @swagger
@@ -130,7 +153,7 @@ router.route("").get((req, res) => {
 
       res.json(response);
     })
-    .catch((err) => res.status(500).json("Error: " + err));
+    .catch((err) => res.status(500).send());
 });
 
 /**
@@ -150,7 +173,7 @@ router.route("").get((req, res) => {
 router.route("/:id").get((req, res) => {
   ArmoryItem.find({ _id: req.params.id })
     .then((armoryItem) => res.json(armoryItem))
-    .catch((err) => res.status(500).json("Error: " + err));
+    .catch((err) => res.status(500).send());
 });
 
 /**
@@ -162,6 +185,12 @@ router.route("/:id").get((req, res) => {
  *     responses:
  *       "201":
  *         description: New armory item added
+ *       "400":
+ *         description: Payload has errors
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GenericError'
  */
 router.route("").post((req, res) => {
   new ArmoryItem({
@@ -179,7 +208,7 @@ router.route("").post((req, res) => {
   })
     .save()
     .then(() => res.status(201).send())
-    .catch((err) => res.status(500).json("Error: " + err));
+    .catch((err) => sendError(res, err));
 });
 
 /**
@@ -191,15 +220,20 @@ router.route("").post((req, res) => {
  *     responses:
  *       "200":
  *         description: Armory item updated
+ *       "400":
+ *         description: Payload has errors
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GenericError'
+ *
  */
 router.route("/:id").patch((req, res) => {
   ArmoryItem.findOneAndUpdate({ _id: req.params.id }, req.body, {
     new: true,
   })
     .then(() => res.send())
-    .catch((err) => {
-      res.status(500).json("Error: " + err);
-    });
+    .catch((err) => sendError(res, err));
 });
 
 /**
@@ -228,7 +262,7 @@ router.route("/:id").delete((req, res) => {
 
       res.send();
     })
-    .catch((err) => res.status(500).json("Error: " + err));
+    .catch((err) => res.status(500).send());
 });
 
 module.exports = router;
