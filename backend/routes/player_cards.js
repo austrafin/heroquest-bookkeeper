@@ -222,7 +222,8 @@ router.route("").post((req, res) => {
  *     tags: [Player cards]
  *     requestBody:
  *       description: Key-value pairs where the key is the card ID and the
- *                    value is an object of fields to be updated
+ *                    value is an object of fields to be updated - The objects
+ *                    that are not found are ignored.
  *       content:
  *         application/json:
  *           schema:
