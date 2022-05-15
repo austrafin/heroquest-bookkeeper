@@ -226,7 +226,7 @@ export function* uploadImage(action) {
         .then((response) => {
           responseStatus = response.status;
         });
-      if (responseStatus === 200) {
+      if (responseStatus === 204) {
         yield put(setSelectedImageFile(null, action.cardId));
       }
     } catch (error) {

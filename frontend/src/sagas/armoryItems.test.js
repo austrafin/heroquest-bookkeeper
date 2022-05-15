@@ -96,7 +96,7 @@ describe("armoryItems", () => {
   describe("updateDatabase", () => {
     it("should update the armory item values via API and call the loading action.", async () => {
       moxios.stubOnce("patch", baseURL + "/" + itemId, {
-        status: 200,
+        status: 204,
       });
 
       await assertSaga(
@@ -110,7 +110,7 @@ describe("armoryItems", () => {
   describe("deleteArmoryItem", () => {
     it("should delete the armory item via API and call the loading actions.", async () => {
       moxios.stubOnce("delete", baseURL + "/" + itemId, {
-        status: 200,
+        status: 204,
       });
 
       await assertSaga(

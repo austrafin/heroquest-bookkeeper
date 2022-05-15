@@ -128,7 +128,7 @@ describe("playerCards", () => {
   describe("deletePlayerCard", () => {
     it("should delete a player card via an API call and call the delete and loading actions.", async () => {
       moxios.stubOnce("delete", baseURL + "/" + cardId, {
-        status: 200,
+        status: 204,
       });
 
       await assertSaga(
@@ -158,7 +158,7 @@ describe("playerCards", () => {
 
     it("should make an unsuccessful API call and no actions should be calles.", async () => {
       moxios.stubOnce("post", baseURL + "/add_armory_item/" + cardId, {
-        status: 500,
+        status: 400,
         response: "",
       });
 
@@ -210,7 +210,7 @@ describe("playerCards", () => {
   describe("uploadImage", () => {
     it("should successfully upload a new image for a player card via an API call and call the image set action.", async () => {
       moxios.stubOnce("post", baseURL + "/upload_image/" + cardId, {
-        status: 200,
+        status: 204,
       });
 
       await assertSaga(
@@ -222,7 +222,7 @@ describe("playerCards", () => {
 
     it("should fail to upload a new image for a player card via an API call and to not call any actions.", async () => {
       moxios.stubOnce("post", baseURL + "/upload_image/" + cardId, {
-        status: 500,
+        status: 400,
         response: "",
       });
 
