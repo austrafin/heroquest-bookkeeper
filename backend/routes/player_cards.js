@@ -142,7 +142,7 @@ router.route("").get((req, res) => {
     .then((playerCards) =>
       res.json(playerCards.map((card) => serializePlayerCard(card)))
     )
-    .catch((err) => res.status(500).send());
+    .catch((err) => Helper.sendError(res, err, Helper.GET));
 });
 
 /**
@@ -218,7 +218,7 @@ router.route("").post((req, res) => {
 router.route("/update_multiple").post((req, res) => {
   for (var id in req.body) {
     PlayerCard.findOneAndUpdate({ _id: id }, req.body[id]).catch((err) =>
-      res.status(500).send()
+      Helper.sendError(res, err, Helper.POST)
     );
   }
 
@@ -279,7 +279,7 @@ router.route("/upload_image/:id").post((req, res) => {
     }
   )
     .then(() => res.send())
-    .catch((err) => res.status(500).send());
+    .catch((err) => Helper.sendError(res, err, Helper.POST));
 });
 
 /**
@@ -330,7 +330,7 @@ router.route("/add_armory_item/:id").post((req, res) => {
           { _id: req.params.id },
           { $push: { armoryItems: req.body.itemId } }
         ).then(() => res.send());
-      }).catch((err) => res.status(500).send());
+      }).catch((err) => Helper.sendError(res, err, Helper.POST));
     } else {
       res.status(404).json({ msg: "Error: Armory item does not exist." });
     }
@@ -382,7 +382,7 @@ router.route("/:id").delete((req, res) => {
   console.log("req.params");
   PlayerCard.findByIdAndDelete(req.params.id)
     .then(() => res.send())
-    .catch((err) => res.status(500).send());
+    .catch((err) => Helper.sendError(res, err, Helper.DELETE));
 });
 
 module.exports = router;
