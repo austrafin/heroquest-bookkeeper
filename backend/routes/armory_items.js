@@ -106,6 +106,11 @@ const router = require("express").Router();
 const ArmoryItem = require("../models/armory_item.model");
 const PlayerCard = require("../models/player_card.model");
 
+/**
+ * A helper function which sets the return status in generic cases
+ * @param {object} response HTTP response
+ * @param {object} error
+ */
 const sendError = (response, error) => {
   switch (error.name) {
     case "ValidationError":
@@ -222,7 +227,7 @@ router.route("").post((req, res) => {
  *     summary: Updates an armory item
  *     tags: [Armory items]
  *     responses:
- *       "200":
+ *       "204":
  *         description: Armory item updated
  *       "400":
  *         description: Payload has errors
@@ -230,14 +235,34 @@ router.route("").post((req, res) => {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/GenericError'
+ *       "404":
+ *         description: The armory item is not found with the given ID
  *
  */
 router.route("/:id").patch((req, res) => {
-  ArmoryItem.findOneAndUpdate({ _id: req.params.id }, req.body, {
-    new: true,
-  })
-    .then(() => res.send())
-    .catch((err) => sendError(res, err));
+  const query = { _id: req.params.id };
+
+  ArmoryItem.exists(query)
+    .then((exists) => {
+      if (!exists) {
+        res.send(404);
+        return;
+      }
+
+      ArmoryItem.findOneAndUpdate(query, req.body, {
+        new: true,
+      })
+        .then(() => res.send(204))
+        .catch((err) => sendError(res, err));
+    })
+    .catch((err) => {
+      if (err.name === "CastError") {
+        res.send(404);
+        return;
+      }
+
+      res.send(500);
+    });
 });
 
 /**
