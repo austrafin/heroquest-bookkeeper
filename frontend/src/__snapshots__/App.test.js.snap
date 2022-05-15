@@ -26,13 +26,13 @@ exports[`App component renders correctly 1`] = `
     index={0}
     value={0}
   >
-    <_default />
+    <GamePage />
   </TabPanel>
   <TabPanel
     index={1}
     value={0}
   >
-    <_default />
+    <ArmoryPage />
   </TabPanel>
   <TabPanel
     index={2}

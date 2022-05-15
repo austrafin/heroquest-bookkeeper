@@ -3,10 +3,10 @@ import { mount } from "enzyme";
 import ArmoryPage from "./ArmoryPage";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import * as Constants from "./constants/armory_item.constants.js";
-import { loadArmoryItems, addArmoryItem } from "./actions/armoryItems";
+import * as Constants from "../constants/armory_item.constants.js";
+import { loadArmoryItems, addArmoryItem } from "../actions/armoryItems";
 
-jest.mock("./actions/armoryItems");
+jest.mock("../actions/armoryItems");
 
 describe("ArmoryPage component", () => {
   const mockStore = configureStore([]);

@@ -1,12 +1,12 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { REDUX_STORE_FIELDS as Constants } from "./constants/armory_item.constants";
+import { REDUX_STORE_FIELDS as Constants } from "../../constants/armory_item.constants";
 import Collapsible from "react-collapsible";
 import ArmoryItemForm from "./ArmoryItemForm";
 import styles from "./ArmoryItem.module.css";
-import CollapsibleTriggerLabel from "./CollapsibleTriggerLabel";
+import CollapsibleTriggerLabel from "../Common/CollapsibleTriggerLabel";
 import { ArrowDropDown, ArrowDropUp } from "@material-ui/icons";
-import { updateArmoryItem } from "./actions/armoryItems";
+import { updateArmoryItem } from "../../actions/armoryItems";
 
 const ArmoryItem = (props) => {
   const dispatch = useDispatch();

@@ -6,13 +6,13 @@ import configureStore from "redux-mock-store";
 import {
   REDUX_STORE_FIELDS as PlayerCardConstants,
   ALT_IMAGE_PATH,
-} from "./constants/player_card.constants";
-import { REDUX_STORE_FIELDS as ArmoryItemConstants } from "./constants/armory_item.constants";
-import { loadPlayerCards, addPlayerCard } from "./actions/playerCards";
-import { loadArmoryItems } from "./actions/armoryItems";
+} from "../constants/player_card.constants";
+import { REDUX_STORE_FIELDS as ArmoryItemConstants } from "../constants/armory_item.constants";
+import { loadPlayerCards, addPlayerCard } from "../actions/playerCards";
+import { loadArmoryItems } from "../actions/armoryItems";
 
-jest.mock("./actions/playerCards");
-jest.mock("./actions/armoryItems");
+jest.mock("../actions/playerCards");
+jest.mock("../actions/armoryItems");
 
 describe("GamePage component", () => {
   const cardId = "card_123";

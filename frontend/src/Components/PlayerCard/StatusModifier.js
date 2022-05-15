@@ -2,7 +2,7 @@ import React from "react";
 import CardNumberInput from "./CardNumberInput";
 import { Button, ButtonGroup, Grid } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { increment, decrement } from "./actions/playerCards";
+import { increment, decrement } from "../../actions/playerCards";
 
 const StatusModifier = (props) => {
   const dispatch = useDispatch();

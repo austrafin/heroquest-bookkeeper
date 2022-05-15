@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { REDUX_STORE_FIELDS as Constants } from "./constants/player_card.constants";
-import NumberInput from "./NumberInput";
-import ModalForm from "./ModalForm";
+import { REDUX_STORE_FIELDS as Constants } from "../../constants/player_card.constants";
+import NumberInput from "../Common/NumberInput";
+import ModalForm from "../Common/ModalForm";
 import { Grid, Button, TextField } from "@material-ui/core";
-import { deletePlayerCard } from "./actions/playerCards";
+import { deletePlayerCard } from "../../actions/playerCards";
 
 const PlayerCardForm = (props) => {
   const dispatch = useDispatch();

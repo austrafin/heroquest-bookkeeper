@@ -4,8 +4,8 @@ import {
   REDUX_STORE_FIELDS as PlayerCardConstants,
   ALT_ARMORY_ITEM,
   MAX_IMAGE_SIZE,
-} from "./constants/player_card.constants";
-import { REDUX_STORE_FIELDS as ArmoryItemConstants } from "./constants/armory_item.constants";
+} from "../../constants/player_card.constants";
+import { REDUX_STORE_FIELDS as ArmoryItemConstants } from "../../constants/armory_item.constants";
 import StatusModifier from "./StatusModifier";
 import styles from "./PlayerCard.module.css";
 import StatusLabel from "./StatusLabel";
@@ -16,10 +16,10 @@ import {
   addArmoryItem,
   deleteArmoryItem,
   updateBaseValues,
-} from "./actions/playerCards";
+} from "../../actions/playerCards";
 import { createTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Collapsible from "react-collapsible";
-import CollapsibleTriggerLabel from "./CollapsibleTriggerLabel";
+import CollapsibleTriggerLabel from "../Common/CollapsibleTriggerLabel";
 import {
   ArrowDropDown,
   ArrowDropUp,

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import ArmoryItem from "./ArmoryItem";
-import ArmoryItemForm from "./ArmoryItemForm";
-import ModalForm from "./ModalForm";
-import { loadArmoryItems, addArmoryItem } from "./actions/armoryItems";
+import ArmoryItem from "../Components/ArmoryItem/ArmoryItem";
+import ArmoryItemForm from "../Components/ArmoryItem/ArmoryItemForm";
+import ModalForm from "../Components/Common/ModalForm";
+import { loadArmoryItems, addArmoryItem } from "../actions/armoryItems";
 import { Button } from "@material-ui/core";
 
 const ArmoryPage = (props) => {

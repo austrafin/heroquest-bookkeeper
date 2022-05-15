@@ -2,10 +2,10 @@ import React from "react";
 import { mount } from "enzyme";
 import StatusModifier from "./StatusModifier";
 import { Provider } from "react-redux";
-import { increment, decrement } from "./actions/playerCards";
+import { increment, decrement } from "../../actions/playerCards";
 import configureStore from "redux-mock-store";
 
-jest.mock("./actions/playerCards");
+jest.mock("../../actions/playerCards");
 
 describe("StatusModifier", () => {
   const mockStore = configureStore([]);

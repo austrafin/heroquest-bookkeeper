@@ -19,10 +19,9 @@ exports[`ArmoryItem component renders correctly 1`] = `
         className="icon"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           viewBox="0 0 24 24"
         >
           <path
@@ -34,6 +33,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
   </span>
   <div
     className="Collapsible__contentOuter"
+    hidden={false}
     onTransitionEnd={[Function]}
     style={
       Object {
@@ -63,6 +63,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
           >
             Name
             <span
+              aria-hidden={true}
               className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
             >
                
@@ -113,7 +114,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                 >
                   <span
                     aria-disabled={false}
-                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-183 MuiRadio-root MuiRadio-colorSecondary PrivateSwitchBase-checked-184 Mui-checked MuiIconButton-colorSecondary"
+                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiRadio-root MuiRadio-colorSecondary PrivateSwitchBase-checked-2 Mui-checked MuiIconButton-colorSecondary"
                     onBlur={[Function]}
                     onDragLeave={[Function]}
                     onFocus={[Function]}
@@ -132,7 +133,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                     >
                       <input
                         checked={true}
-                        className="PrivateSwitchBase-input-186"
+                        className="PrivateSwitchBase-input-4"
                         disabled={false}
                         name="meleeOperator"
                         onChange={[Function]}
@@ -140,13 +141,12 @@ exports[`ArmoryItem component renders correctly 1`] = `
                         value="="
                       />
                       <div
-                        className="PrivateRadioButtonIcon-root-199 PrivateRadioButtonIcon-checked-201"
+                        className="PrivateRadioButtonIcon-root-5 PrivateRadioButtonIcon-checked-7"
                       >
                         <svg
-                          aria-hidden="true"
+                          aria-hidden={true}
                           className="MuiSvgIcon-root"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -154,10 +154,9 @@ exports[`ArmoryItem component renders correctly 1`] = `
                           />
                         </svg>
                         <svg
-                          aria-hidden="true"
-                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-200"
+                          aria-hidden={true}
+                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-6"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -181,7 +180,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                 >
                   <span
                     aria-disabled={false}
-                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-183 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
+                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
                     onBlur={[Function]}
                     onDragLeave={[Function]}
                     onFocus={[Function]}
@@ -200,7 +199,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                     >
                       <input
                         checked={false}
-                        className="PrivateSwitchBase-input-186"
+                        className="PrivateSwitchBase-input-4"
                         disabled={false}
                         name="meleeOperator"
                         onChange={[Function]}
@@ -208,13 +207,12 @@ exports[`ArmoryItem component renders correctly 1`] = `
                         value="+"
                       />
                       <div
-                        className="PrivateRadioButtonIcon-root-199"
+                        className="PrivateRadioButtonIcon-root-5"
                       >
                         <svg
-                          aria-hidden="true"
+                          aria-hidden={true}
                           className="MuiSvgIcon-root"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -222,10 +220,9 @@ exports[`ArmoryItem component renders correctly 1`] = `
                           />
                         </svg>
                         <svg
-                          aria-hidden="true"
-                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-200"
+                          aria-hidden={true}
+                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-6"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -249,7 +246,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                 >
                   <span
                     aria-disabled={false}
-                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-183 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
+                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
                     onBlur={[Function]}
                     onDragLeave={[Function]}
                     onFocus={[Function]}
@@ -268,7 +265,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                     >
                       <input
                         checked={false}
-                        className="PrivateSwitchBase-input-186"
+                        className="PrivateSwitchBase-input-4"
                         disabled={false}
                         name="meleeOperator"
                         onChange={[Function]}
@@ -276,13 +273,12 @@ exports[`ArmoryItem component renders correctly 1`] = `
                         value="-"
                       />
                       <div
-                        className="PrivateRadioButtonIcon-root-199"
+                        className="PrivateRadioButtonIcon-root-5"
                       >
                         <svg
-                          aria-hidden="true"
+                          aria-hidden={true}
                           className="MuiSvgIcon-root"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -290,10 +286,9 @@ exports[`ArmoryItem component renders correctly 1`] = `
                           />
                         </svg>
                         <svg
-                          aria-hidden="true"
-                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-200"
+                          aria-hidden={true}
+                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-6"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -377,7 +372,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                 >
                   <span
                     aria-disabled={false}
-                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-183 MuiRadio-root MuiRadio-colorSecondary PrivateSwitchBase-checked-184 Mui-checked MuiIconButton-colorSecondary"
+                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiRadio-root MuiRadio-colorSecondary PrivateSwitchBase-checked-2 Mui-checked MuiIconButton-colorSecondary"
                     onBlur={[Function]}
                     onDragLeave={[Function]}
                     onFocus={[Function]}
@@ -396,7 +391,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                     >
                       <input
                         checked={true}
-                        className="PrivateSwitchBase-input-186"
+                        className="PrivateSwitchBase-input-4"
                         disabled={false}
                         name="rangedOperator"
                         onChange={[Function]}
@@ -404,13 +399,12 @@ exports[`ArmoryItem component renders correctly 1`] = `
                         value="="
                       />
                       <div
-                        className="PrivateRadioButtonIcon-root-199 PrivateRadioButtonIcon-checked-201"
+                        className="PrivateRadioButtonIcon-root-5 PrivateRadioButtonIcon-checked-7"
                       >
                         <svg
-                          aria-hidden="true"
+                          aria-hidden={true}
                           className="MuiSvgIcon-root"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -418,10 +412,9 @@ exports[`ArmoryItem component renders correctly 1`] = `
                           />
                         </svg>
                         <svg
-                          aria-hidden="true"
-                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-200"
+                          aria-hidden={true}
+                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-6"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -445,7 +438,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                 >
                   <span
                     aria-disabled={false}
-                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-183 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
+                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
                     onBlur={[Function]}
                     onDragLeave={[Function]}
                     onFocus={[Function]}
@@ -464,7 +457,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                     >
                       <input
                         checked={false}
-                        className="PrivateSwitchBase-input-186"
+                        className="PrivateSwitchBase-input-4"
                         disabled={false}
                         name="rangedOperator"
                         onChange={[Function]}
@@ -472,13 +465,12 @@ exports[`ArmoryItem component renders correctly 1`] = `
                         value="+"
                       />
                       <div
-                        className="PrivateRadioButtonIcon-root-199"
+                        className="PrivateRadioButtonIcon-root-5"
                       >
                         <svg
-                          aria-hidden="true"
+                          aria-hidden={true}
                           className="MuiSvgIcon-root"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -486,10 +478,9 @@ exports[`ArmoryItem component renders correctly 1`] = `
                           />
                         </svg>
                         <svg
-                          aria-hidden="true"
-                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-200"
+                          aria-hidden={true}
+                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-6"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -513,7 +504,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                 >
                   <span
                     aria-disabled={false}
-                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-183 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
+                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
                     onBlur={[Function]}
                     onDragLeave={[Function]}
                     onFocus={[Function]}
@@ -532,7 +523,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                     >
                       <input
                         checked={false}
-                        className="PrivateSwitchBase-input-186"
+                        className="PrivateSwitchBase-input-4"
                         disabled={false}
                         name="rangedOperator"
                         onChange={[Function]}
@@ -540,13 +531,12 @@ exports[`ArmoryItem component renders correctly 1`] = `
                         value="-"
                       />
                       <div
-                        className="PrivateRadioButtonIcon-root-199"
+                        className="PrivateRadioButtonIcon-root-5"
                       >
                         <svg
-                          aria-hidden="true"
+                          aria-hidden={true}
                           className="MuiSvgIcon-root"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -554,10 +544,9 @@ exports[`ArmoryItem component renders correctly 1`] = `
                           />
                         </svg>
                         <svg
-                          aria-hidden="true"
-                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-200"
+                          aria-hidden={true}
+                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-6"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -641,7 +630,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                 >
                   <span
                     aria-disabled={false}
-                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-183 MuiRadio-root MuiRadio-colorSecondary PrivateSwitchBase-checked-184 Mui-checked MuiIconButton-colorSecondary"
+                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiRadio-root MuiRadio-colorSecondary PrivateSwitchBase-checked-2 Mui-checked MuiIconButton-colorSecondary"
                     onBlur={[Function]}
                     onDragLeave={[Function]}
                     onFocus={[Function]}
@@ -660,7 +649,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                     >
                       <input
                         checked={true}
-                        className="PrivateSwitchBase-input-186"
+                        className="PrivateSwitchBase-input-4"
                         disabled={false}
                         name="diagonalOperator"
                         onChange={[Function]}
@@ -668,13 +657,12 @@ exports[`ArmoryItem component renders correctly 1`] = `
                         value="="
                       />
                       <div
-                        className="PrivateRadioButtonIcon-root-199 PrivateRadioButtonIcon-checked-201"
+                        className="PrivateRadioButtonIcon-root-5 PrivateRadioButtonIcon-checked-7"
                       >
                         <svg
-                          aria-hidden="true"
+                          aria-hidden={true}
                           className="MuiSvgIcon-root"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -682,10 +670,9 @@ exports[`ArmoryItem component renders correctly 1`] = `
                           />
                         </svg>
                         <svg
-                          aria-hidden="true"
-                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-200"
+                          aria-hidden={true}
+                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-6"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -709,7 +696,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                 >
                   <span
                     aria-disabled={false}
-                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-183 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
+                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
                     onBlur={[Function]}
                     onDragLeave={[Function]}
                     onFocus={[Function]}
@@ -728,7 +715,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                     >
                       <input
                         checked={false}
-                        className="PrivateSwitchBase-input-186"
+                        className="PrivateSwitchBase-input-4"
                         disabled={false}
                         name="diagonalOperator"
                         onChange={[Function]}
@@ -736,13 +723,12 @@ exports[`ArmoryItem component renders correctly 1`] = `
                         value="+"
                       />
                       <div
-                        className="PrivateRadioButtonIcon-root-199"
+                        className="PrivateRadioButtonIcon-root-5"
                       >
                         <svg
-                          aria-hidden="true"
+                          aria-hidden={true}
                           className="MuiSvgIcon-root"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -750,10 +736,9 @@ exports[`ArmoryItem component renders correctly 1`] = `
                           />
                         </svg>
                         <svg
-                          aria-hidden="true"
-                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-200"
+                          aria-hidden={true}
+                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-6"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -777,7 +762,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                 >
                   <span
                     aria-disabled={false}
-                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-183 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
+                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
                     onBlur={[Function]}
                     onDragLeave={[Function]}
                     onFocus={[Function]}
@@ -796,7 +781,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                     >
                       <input
                         checked={false}
-                        className="PrivateSwitchBase-input-186"
+                        className="PrivateSwitchBase-input-4"
                         disabled={false}
                         name="diagonalOperator"
                         onChange={[Function]}
@@ -804,13 +789,12 @@ exports[`ArmoryItem component renders correctly 1`] = `
                         value="-"
                       />
                       <div
-                        className="PrivateRadioButtonIcon-root-199"
+                        className="PrivateRadioButtonIcon-root-5"
                       >
                         <svg
-                          aria-hidden="true"
+                          aria-hidden={true}
                           className="MuiSvgIcon-root"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -818,10 +802,9 @@ exports[`ArmoryItem component renders correctly 1`] = `
                           />
                         </svg>
                         <svg
-                          aria-hidden="true"
-                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-200"
+                          aria-hidden={true}
+                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-6"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -905,7 +888,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                 >
                   <span
                     aria-disabled={false}
-                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-183 MuiRadio-root MuiRadio-colorSecondary PrivateSwitchBase-checked-184 Mui-checked MuiIconButton-colorSecondary"
+                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiRadio-root MuiRadio-colorSecondary PrivateSwitchBase-checked-2 Mui-checked MuiIconButton-colorSecondary"
                     onBlur={[Function]}
                     onDragLeave={[Function]}
                     onFocus={[Function]}
@@ -924,7 +907,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                     >
                       <input
                         checked={true}
-                        className="PrivateSwitchBase-input-186"
+                        className="PrivateSwitchBase-input-4"
                         disabled={false}
                         name="defenceOperator"
                         onChange={[Function]}
@@ -932,13 +915,12 @@ exports[`ArmoryItem component renders correctly 1`] = `
                         value="="
                       />
                       <div
-                        className="PrivateRadioButtonIcon-root-199 PrivateRadioButtonIcon-checked-201"
+                        className="PrivateRadioButtonIcon-root-5 PrivateRadioButtonIcon-checked-7"
                       >
                         <svg
-                          aria-hidden="true"
+                          aria-hidden={true}
                           className="MuiSvgIcon-root"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -946,10 +928,9 @@ exports[`ArmoryItem component renders correctly 1`] = `
                           />
                         </svg>
                         <svg
-                          aria-hidden="true"
-                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-200"
+                          aria-hidden={true}
+                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-6"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -973,7 +954,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                 >
                   <span
                     aria-disabled={false}
-                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-183 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
+                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
                     onBlur={[Function]}
                     onDragLeave={[Function]}
                     onFocus={[Function]}
@@ -992,7 +973,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                     >
                       <input
                         checked={false}
-                        className="PrivateSwitchBase-input-186"
+                        className="PrivateSwitchBase-input-4"
                         disabled={false}
                         name="defenceOperator"
                         onChange={[Function]}
@@ -1000,13 +981,12 @@ exports[`ArmoryItem component renders correctly 1`] = `
                         value="+"
                       />
                       <div
-                        className="PrivateRadioButtonIcon-root-199"
+                        className="PrivateRadioButtonIcon-root-5"
                       >
                         <svg
-                          aria-hidden="true"
+                          aria-hidden={true}
                           className="MuiSvgIcon-root"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -1014,10 +994,9 @@ exports[`ArmoryItem component renders correctly 1`] = `
                           />
                         </svg>
                         <svg
-                          aria-hidden="true"
-                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-200"
+                          aria-hidden={true}
+                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-6"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -1041,7 +1020,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                 >
                   <span
                     aria-disabled={false}
-                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-183 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
+                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
                     onBlur={[Function]}
                     onDragLeave={[Function]}
                     onFocus={[Function]}
@@ -1060,7 +1039,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                     >
                       <input
                         checked={false}
-                        className="PrivateSwitchBase-input-186"
+                        className="PrivateSwitchBase-input-4"
                         disabled={false}
                         name="defenceOperator"
                         onChange={[Function]}
@@ -1068,13 +1047,12 @@ exports[`ArmoryItem component renders correctly 1`] = `
                         value="-"
                       />
                       <div
-                        className="PrivateRadioButtonIcon-root-199"
+                        className="PrivateRadioButtonIcon-root-5"
                       >
                         <svg
-                          aria-hidden="true"
+                          aria-hidden={true}
                           className="MuiSvgIcon-root"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -1082,10 +1060,9 @@ exports[`ArmoryItem component renders correctly 1`] = `
                           />
                         </svg>
                         <svg
-                          aria-hidden="true"
-                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-200"
+                          aria-hidden={true}
+                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-6"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -1169,7 +1146,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                 >
                   <span
                     aria-disabled={false}
-                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-183 MuiRadio-root MuiRadio-colorSecondary PrivateSwitchBase-checked-184 Mui-checked MuiIconButton-colorSecondary"
+                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiRadio-root MuiRadio-colorSecondary PrivateSwitchBase-checked-2 Mui-checked MuiIconButton-colorSecondary"
                     onBlur={[Function]}
                     onDragLeave={[Function]}
                     onFocus={[Function]}
@@ -1188,7 +1165,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                     >
                       <input
                         checked={true}
-                        className="PrivateSwitchBase-input-186"
+                        className="PrivateSwitchBase-input-4"
                         disabled={false}
                         name="movementOperator"
                         onChange={[Function]}
@@ -1196,13 +1173,12 @@ exports[`ArmoryItem component renders correctly 1`] = `
                         value="="
                       />
                       <div
-                        className="PrivateRadioButtonIcon-root-199 PrivateRadioButtonIcon-checked-201"
+                        className="PrivateRadioButtonIcon-root-5 PrivateRadioButtonIcon-checked-7"
                       >
                         <svg
-                          aria-hidden="true"
+                          aria-hidden={true}
                           className="MuiSvgIcon-root"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -1210,10 +1186,9 @@ exports[`ArmoryItem component renders correctly 1`] = `
                           />
                         </svg>
                         <svg
-                          aria-hidden="true"
-                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-200"
+                          aria-hidden={true}
+                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-6"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -1237,7 +1212,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                 >
                   <span
                     aria-disabled={false}
-                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-183 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
+                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
                     onBlur={[Function]}
                     onDragLeave={[Function]}
                     onFocus={[Function]}
@@ -1256,7 +1231,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                     >
                       <input
                         checked={false}
-                        className="PrivateSwitchBase-input-186"
+                        className="PrivateSwitchBase-input-4"
                         disabled={false}
                         name="movementOperator"
                         onChange={[Function]}
@@ -1264,13 +1239,12 @@ exports[`ArmoryItem component renders correctly 1`] = `
                         value="+"
                       />
                       <div
-                        className="PrivateRadioButtonIcon-root-199"
+                        className="PrivateRadioButtonIcon-root-5"
                       >
                         <svg
-                          aria-hidden="true"
+                          aria-hidden={true}
                           className="MuiSvgIcon-root"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -1278,10 +1252,9 @@ exports[`ArmoryItem component renders correctly 1`] = `
                           />
                         </svg>
                         <svg
-                          aria-hidden="true"
-                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-200"
+                          aria-hidden={true}
+                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-6"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -1305,7 +1278,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                 >
                   <span
                     aria-disabled={false}
-                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-183 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
+                    className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
                     onBlur={[Function]}
                     onDragLeave={[Function]}
                     onFocus={[Function]}
@@ -1324,7 +1297,7 @@ exports[`ArmoryItem component renders correctly 1`] = `
                     >
                       <input
                         checked={false}
-                        className="PrivateSwitchBase-input-186"
+                        className="PrivateSwitchBase-input-4"
                         disabled={false}
                         name="movementOperator"
                         onChange={[Function]}
@@ -1332,13 +1305,12 @@ exports[`ArmoryItem component renders correctly 1`] = `
                         value="-"
                       />
                       <div
-                        className="PrivateRadioButtonIcon-root-199"
+                        className="PrivateRadioButtonIcon-root-5"
                       >
                         <svg
-                          aria-hidden="true"
+                          aria-hidden={true}
                           className="MuiSvgIcon-root"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -1346,10 +1318,9 @@ exports[`ArmoryItem component renders correctly 1`] = `
                           />
                         </svg>
                         <svg
-                          aria-hidden="true"
-                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-200"
+                          aria-hidden={true}
+                          className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-6"
                           focusable="false"
-                          role="presentation"
                           viewBox="0 0 24 24"
                         >
                           <path

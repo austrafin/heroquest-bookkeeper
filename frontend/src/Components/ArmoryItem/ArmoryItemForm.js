@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { REDUX_STORE_FIELDS as Constants } from "./constants/armory_item.constants";
+import { REDUX_STORE_FIELDS as Constants } from "../../constants/armory_item.constants";
 import styles from "./ArmoryItemForm.module.css";
 import { Button, TextField } from "@material-ui/core";
 import ArmoryItemModifier from "./ArmoryItemModifier";
-import { deleteArmoryItem } from "./actions/armoryItems";
+import { deleteArmoryItem } from "../../actions/armoryItems";
 
 const ArmoryItemForm = (props) => {
   const dispatch = useDispatch();

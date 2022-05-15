@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./ArmoryItemModifier.module.css";
-import NumberInput from "./NumberInput";
+import NumberInput from "../Common/NumberInput";
 import {
   Radio,
   RadioGroup,

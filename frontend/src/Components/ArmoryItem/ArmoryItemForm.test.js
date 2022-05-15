@@ -3,9 +3,9 @@ import { mount } from "enzyme";
 import ArmoryItemForm from "./ArmoryItemForm";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import { deleteArmoryItem } from "./actions/armoryItems";
+import { deleteArmoryItem } from "../../actions/armoryItems";
 
-jest.mock("./actions/armoryItems");
+jest.mock("../../actions/armoryItems");
 
 describe("ArmoryItemForm component", () => {
   const mockStore = configureStore([]);

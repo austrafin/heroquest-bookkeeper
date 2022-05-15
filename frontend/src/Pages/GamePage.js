@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { REDUX_STORE_FIELDS as PlayerCardConstants } from "./constants/player_card.constants";
-import { REDUX_STORE_FIELDS as ArmoryItemConstants } from "./constants/armory_item.constants";
+import { REDUX_STORE_FIELDS as PlayerCardConstants } from "../constants/player_card.constants";
+import { REDUX_STORE_FIELDS as ArmoryItemConstants } from "../constants/armory_item.constants";
 import { Grid, Button } from "@material-ui/core";
-import { loadPlayerCards, addPlayerCard } from "./actions/playerCards";
-import PlayerCard from "./PlayerCard";
-import PlayerCardForm from "./PlayerCardForm";
+import { loadPlayerCards, addPlayerCard } from "../actions/playerCards";
+import PlayerCard from "../Components/PlayerCard/PlayerCard";
+import PlayerCardForm from "../Components/PlayerCard/PlayerCardForm";
 import styles from "./GamePage.module.css";
-import { loadArmoryItems } from "./actions/armoryItems";
+import { loadArmoryItems } from "../actions/armoryItems";
 
 const calculateStatusPoints = (item, currentValue, pointsKey, operatorKey) => {
   if (item === undefined) return currentValue;

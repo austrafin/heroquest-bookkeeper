@@ -3,9 +3,9 @@ import { mount } from "enzyme";
 import CardNumberInput from "./CardNumberInput";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import { setInputValue } from "./actions/playerCards";
+import { setInputValue } from "../../actions/playerCards";
 
-jest.mock("./actions/playerCards");
+jest.mock("../../actions/playerCards");
 
 describe("CardNumberInput component", () => {
   const cardId = "123";

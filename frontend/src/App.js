@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import ArmoryPage from "./ArmoryPage";
-import TabPanel from "./TabPanel";
+import ArmoryPage from "./Pages/ArmoryPage";
+import TabPanel from "./Components/Common/TabPanel";
 import { AppBar, Tabs, Tab } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import GamePage from "./GamePage";
+import GamePage from "./Pages/GamePage";
 
 const useStyles = makeStyles(() => ({
   root: {
