@@ -214,15 +214,19 @@ router.route("").post((req, res) => {
  *     responses:
  *       "200":
  *         description: Player card updated
+ *       "400":
+ *         description: Payload has errors
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GenericError'
  */
 router.route("/update_multiple").post((req, res) => {
   for (var id in req.body) {
-    PlayerCard.findOneAndUpdate({ _id: id }, req.body[id]).catch((err) =>
-      Helper.sendError(res, err, Helper.POST)
-    );
+    PlayerCard.findOneAndUpdate({ _id: id }, req.body[id])
+      .then(() => res.send())
+      .catch((err) => Helper.sendError(res, err, Helper.POST));
   }
-
-  res.send();
 });
 
 /**

@@ -32,7 +32,18 @@ const sendError = (response, error, method) => {
       response.status(400).json({ type: error.name, message: error.message });
       break;
     case "CastError":
-      response.status(method === "DELETE" ? 204 : 404).send();
+      switch (method) {
+        case DELETE:
+          response.status(204).send();
+          break;
+        case POST:
+          response
+            .status(400)
+            .send({ type: error.name, message: error.message });
+          break;
+        default:
+          response.status(404).send();
+      }
       break;
     default:
       response.status(500).send();
