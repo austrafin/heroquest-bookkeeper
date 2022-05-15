@@ -189,12 +189,7 @@ router.route("/:id").get((req, res) => Helper.getObject(PlayerCard, req, res));
  *         content:
  *           application/json:
  *             schema:
- *             example:
- *               {
- *                 "type": "Duplicate value",
- *                 "field": "characterName",
- *                 "message": "A character with the given name already exists"
- *               }
+ *               $ref: '#/components/schemas/DuplicateError'
  */
 router.route("").post((req, res) => {
   const {
@@ -243,22 +238,10 @@ router.route("").post((req, res) => {
 
 /**
  * @swagger
- * /player_cards/update_multiple:
- *   post:
- *     summary: Updates the player cards defined in the request body
+ * /player_cards/{id}:
+ *   patch:
+ *     summary: Updates a player card
  *     tags: [Player cards]
- *     requestBody:
- *       description: Key-value pairs where the key is the card ID and the
- *                    value is an object of fields to be updated - The objects
- *                    that are not found are ignored.
- *       content:
- *         application/json:
- *           schema:
- *             example:
- *               {
- *                 627fb4c58870a30013824faa: { bodyPoints: 5, gold: 270 },
- *                 627fb4cb8870a30013824fac: { bodyPoints: 2, gold: 100 },
- *               }
  *     responses:
  *       "204":
  *         description: Player card updated
@@ -268,14 +251,18 @@ router.route("").post((req, res) => {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/GenericError'
+ *       "404":
+ *         description: Player card is not found with the given ID
+ *       "409":
+ *         description: Duplicate value
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/DuplicateError'
  */
-router.route("/update_multiple").post((req, res) => {
-  for (var id in req.body) {
-    PlayerCard.findOneAndUpdate({ _id: id }, req.body[id])
-      .then(() => res.send(204))
-      .catch((err) => Helper.sendError(res, err, Helper.POST));
-  }
-});
+router
+  .route("/:id")
+  .patch((req, res) => Helper.patchObject(PlayerCard, req, res));
 
 /**
  * @swagger

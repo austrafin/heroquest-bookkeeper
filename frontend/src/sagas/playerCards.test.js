@@ -172,8 +172,8 @@ describe("playerCards", () => {
 
   describe("updateDatabase", () => {
     it("should update the player card values via an API and call an action to clear the pending changes.", async () => {
-      moxios.stubOnce("post", baseURL + "/update_multiple", {
-        status: 200,
+      moxios.stubOnce("patch", `${baseURL}/${cardId}`, {
+        status: 204,
       });
 
       await assertSaga(updateDatabase, [clearPendingChanges()]);
@@ -182,8 +182,8 @@ describe("playerCards", () => {
 
   describe("updateBaseValues", () => {
     it("should update the player card base values via an API and call the player cards loading call.", async () => {
-      moxios.stubOnce("post", baseURL + "/update_multiple", {
-        status: 200,
+      moxios.stubOnce("patch", `${baseURL}/${cardId}`, {
+        status: 204,
       });
 
       await assertSaga(

@@ -14,6 +14,22 @@
  *       example:
  *          type: ValidationError
  *          message: Validation failed
+ *     DuplicateError:
+ *       type: object
+ *       properties:
+ *         type:
+ *           type: string
+ *           description: Error type
+ *         field:
+ *           type: object
+ *           description: Key-value pair where the key is the field name
+ *         message:
+ *           type: string
+ *           description: Error message
+ *       example:
+ *          type: DuplicateKey
+ *          field: { "characterName": "Barbarian" }
+ *          message: Validation failed
  */
 
 const GET = "GET";
@@ -94,6 +110,33 @@ const getObject = (model, request, response) => {
     .catch((err) => sendError(response, err, GET));
 };
 
+/**
+ * Helper function which updates an object with new values
+ * @param {mongoose.Schema} model
+ * @param {object} request
+ * @param {object} response
+ */
+const patchObject = (model, request, response) => {
+  const query = { _id: request.params.id };
+
+  model
+    .exists(query)
+    .then((exists) => {
+      if (!exists) {
+        response.send(404);
+        return;
+      }
+
+      model
+        .findOneAndUpdate(query, request.body, {
+          new: true,
+        })
+        .then(() => response.send(204))
+        .catch((err) => sendError(response, err, PATCH));
+    })
+    .catch((err) => sendError(response, err, PATCH));
+};
+
 exports.GET = GET;
 exports.POST = POST;
 exports.PATCH = PATCH;
@@ -101,3 +144,4 @@ exports.DELETE = DELETE;
 exports.sendError = sendError;
 exports.getError = getError;
 exports.getObject = getObject;
+exports.patchObject = patchObject;

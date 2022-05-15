@@ -205,26 +205,16 @@ router.route("").post((req, res) => {
  *               $ref: '#/components/schemas/GenericError'
  *       "404":
  *         description: The armory item is not found with the given ID
- *
+ *       "409":
+ *         description: Duplicate value
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/DuplicateError'
  */
-router.route("/:id").patch((req, res) => {
-  const query = { _id: req.params.id };
-
-  ArmoryItem.exists(query)
-    .then((exists) => {
-      if (!exists) {
-        res.send(404);
-        return;
-      }
-
-      ArmoryItem.findOneAndUpdate(query, req.body, {
-        new: true,
-      })
-        .then(() => res.send(204))
-        .catch((err) => Helper.sendError(res, err, Helper.PATCH));
-    })
-    .catch((err) => Helper.sendError(res, err, Helper.PATCH));
-});
+router
+  .route("/:id")
+  .patch((req, res) => Helper.patchObject(ArmoryItem, req, res));
 
 /**
  * @swagger

@@ -170,42 +170,38 @@ export function* updateDatabase() {
   yield delay(200);
 
   const pendingChanges = store.getState().playerCards.pendingChanges;
-  const updateValues = {};
 
-  Object.entries(pendingChanges).map(([key, value]) => {
-    updateValues[key] = {};
+  for (const [id, values] of Object.entries(pendingChanges)) {
+    const updateValues = {};
 
-    if (Constants.BODY_POINTS in pendingChanges[key])
-      updateValues[key][DB.BODY_POINTS] =
-        pendingChanges[key][Constants.BODY_POINTS];
-    if (Constants.MIND_POINTS in pendingChanges[key])
-      updateValues[key][DB.MIND_POINTS] =
-        pendingChanges[key][Constants.MIND_POINTS];
-    if (Constants.GOLD in pendingChanges[key])
-      updateValues[key][DB.GOLD] = pendingChanges[key][Constants.GOLD];
-    return updateValues;
-  });
+    if (Constants.BODY_POINTS in values) {
+      updateValues[DB.BODY_POINTS] = values[Constants.BODY_POINTS];
+    }
 
-  yield axios
-    .post(
-      process.env.REACT_APP_API_BASE_URL + "player_cards/update_multiple",
-      updateValues
-    )
-    .catch((error) => {
-      console.log(error);
-    });
+    if (Constants.MIND_POINTS in values) {
+      updateValues[DB.MIND_POINTS] = values[Constants.MIND_POINTS];
+    }
+
+    if (Constants.GOLD in values) {
+      updateValues[DB.GOLD] = values[Constants.GOLD];
+    }
+
+    yield axios
+      .patch(process.env.REACT_APP_API_BASE_URL + `player_cards/${id}`, values)
+      .catch((error) => console.error(error));
+  }
+
   yield put(clearPendingChanges());
 }
 
 export function* updateBaseValues(action) {
   yield delay(200);
   yield axios
-    .post(process.env.REACT_APP_API_BASE_URL + "player_cards/update_multiple", {
-      [action.cardId]: mapBaseValuesReduxToDB(action.values),
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    .patch(
+      process.env.REACT_APP_API_BASE_URL + `player_cards/${action.cardId}`,
+      mapBaseValuesReduxToDB(action.values)
+    )
+    .catch((error) => console.log(error));
   yield put(setCardsLoaded(false));
 }
 
