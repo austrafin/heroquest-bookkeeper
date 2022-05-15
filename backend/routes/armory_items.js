@@ -149,17 +149,7 @@ router.route("").get((req, res) => {
  *       "404":
  *         description: The armory item is not found with the given ID
  */
-router.route("/:id").get((req, res) => {
-  ArmoryItem.findOne({ _id: req.params.id })
-    .then((armoryItem) => {
-      if (armoryItem) {
-        res.json(armoryItem);
-      } else {
-        res.send(404);
-      }
-    })
-    .catch((err) => Helper.sendError(res, err, Helper.GET));
-});
+router.route("/:id").get((req, res) => Helper.getObject(ArmoryItem, req, res));
 
 /**
  * @swagger

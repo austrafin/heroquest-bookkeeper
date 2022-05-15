@@ -149,6 +149,24 @@ router.route("").get((req, res) => {
 
 /**
  * @swagger
+ * /player_cards/{id}:
+ *   get:
+ *     summary: Returns a player card by its ID
+ *     tags: [Player cards]
+ *     responses:
+ *       "200":
+ *         description: The player card by the defined ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/PlayerCard'
+ *       "404":
+ *         description: The player card is not found with the given ID
+ */
+router.route("/:id").get((req, res) => Helper.getObject(PlayerCard, req, res));
+
+/**
+ * @swagger
  * /player_cards:
  *   post:
  *     summary: Adds a new player card

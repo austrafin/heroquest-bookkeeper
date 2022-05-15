@@ -50,8 +50,28 @@ const sendError = (response, error, method) => {
   }
 };
 
+/**
+ * Helper function which returns an object by its ID in the response body
+ * @param {mongoose.Schema} model
+ * @param {object} request
+ * @param {object} response
+ */
+const getObject = (model, request, response) => {
+  model
+    .findOne({ _id: request.params.id })
+    .then((armoryItem) => {
+      if (armoryItem) {
+        response.json(armoryItem);
+      } else {
+        response.send(404);
+      }
+    })
+    .catch((err) => sendError(response, err, GET));
+};
+
 exports.GET = GET;
 exports.POST = POST;
 exports.PATCH = PATCH;
 exports.DELETE = DELETE;
 exports.sendError = sendError;
+exports.getObject = getObject;
