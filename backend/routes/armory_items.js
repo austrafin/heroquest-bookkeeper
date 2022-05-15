@@ -158,6 +158,10 @@ router.route("/:id").get((req, res) => Helper.getObject(ArmoryItem, req, res));
  *     responses:
  *       "201":
  *         description: New armory item added
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ArmoryItem'
  *       "400":
  *         description: Payload has errors
  *         content:

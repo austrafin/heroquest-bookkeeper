@@ -174,6 +174,10 @@ router.route("/:id").get((req, res) => Helper.getObject(PlayerCard, req, res));
  *     responses:
  *       "201":
  *         description: New player card added
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/PlayerCard'
  *       "400":
  *         description: Payload has errors
  *         content:
