@@ -1,0 +1,332 @@
+{
+	"info": {
+		"_postman_id": "0f79065f-89ee-4717-bde8-76212f65eca2",
+		"name": "HeroQuest bookkeeper",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Armory items",
+			"item": [
+				{
+					"name": "Get all armory items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{armory_items_url}}",
+							"host": [
+								"{{armory_items_url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get armory item",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{armory_items_url}}/628157a1c58f82001497823d",
+							"host": [
+								"{{armory_items_url}}"
+							],
+							"path": [
+								"628157a1c58f82001497823d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add armory item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"defenceOperator\": \"=\",\r\n    \"defencePoints\": \"\",\r\n    \"diagonalOperator\": \"+\",\r\n    \"diagonalPoints\": 1,\r\n    \"meleeOperator\": \"=\",\r\n    \"meleePoints\": 4,\r\n    \"movementOperator\": \"=\",\r\n    \"movementPoints\": \"\",\r\n    \"name\": \"Long sword\",\r\n    \"rangedOperator\": \"=\",\r\n    \"rangedPoints\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{armory_items_url}}",
+							"host": [
+								"{{armory_items_url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update armory item",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"defenceOperator\": \"-\",\r\n    \"defencePoints\": \"\",\r\n    \"diagonalOperator\": \"-\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{armory_items_url}}/627fa383d63f7b0014bdeff9",
+							"host": [
+								"{{armory_items_url}}"
+							],
+							"path": [
+								"627fa383d63f7b0014bdeff9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete armory item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{armory_items_url}}/627fa8054d135d0013330ed8",
+							"host": [
+								"{{armory_items_url}}"
+							],
+							"path": [
+								"627fa8054d135d0013330ed8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Player cards",
+			"item": [
+				{
+					"name": "Get all player cards",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{player_cards_url}}",
+							"host": [
+								"{{player_cards_url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get player card",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{player_cards_url}}/62812a7ea9bae700143a1079",
+							"host": [
+								"{{player_cards_url}}"
+							],
+							"path": [
+								"62812a7ea9bae700143a1079"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add player card",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"characterName\": \"Barbarian\",\r\n    \"baseBodyPoints\": \"7\",\r\n    \"baseMindPoints\": 3,\r\n    \"bodyPoints\": 7,\r\n    \"baseDiagonalPoints\": 0,\r\n    \"baseMeleePoints\": 3,\r\n    \"baseRangedPoints\": 0,\r\n    \"baseDefencePoints\": 2,\r\n    \"baseMovementPoints\": null,\r\n    \"gold\": 200\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{player_cards_url}}",
+							"host": [
+								"{{player_cards_url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete player card",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{player_cards_url}}/628157ecc58f82001497824d",
+							"host": [
+								"{{player_cards_url}}"
+							],
+							"path": [
+								"628157ecc58f82001497824d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update player card",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"characterName\": \"Elf\",\r\n    \"gold\": 250\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{player_cards_url}}/62812c554fcc2d0014cfdf63",
+							"host": [
+								"{{player_cards_url}}"
+							],
+							"path": [
+								"62812c554fcc2d0014cfdf63"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add armory item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"itemId\": \"6281582ac58f820014978255\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{player_cards_url}}/add_armory_item/62812a7ea9bae700143a1079",
+							"host": [
+								"{{player_cards_url}}"
+							],
+							"path": [
+								"add_armory_item",
+								"62812a7ea9bae700143a1079"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete armory item",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"itemId\": \"627fa8054d135d0013330ed8\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{player_cards_url}}/delete_armory_item/627ebc3ebb1f640013593352",
+							"host": [
+								"{{player_cards_url}}"
+							],
+							"path": [
+								"delete_armory_item",
+								"627ebc3ebb1f640013593352"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "characterImage",
+									"type": "file",
+									"src": "/C:/Users/Matti/Downloads/barbarian.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{player_cards_url}}/upload_image/6274363f636ebf0013fd1235",
+							"host": [
+								"{{player_cards_url}}"
+							],
+							"path": [
+								"upload_image",
+								"6274363f636ebf0013fd1235"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "localhost:5000",
+			"type": "default"
+		},
+		{
+			"key": "armory_items_url",
+			"value": "{{base_url}}/armory_items",
+			"type": "default"
+		},
+		{
+			"key": "player_cards_url",
+			"value": "{{base_url}}/player_cards",
+			"type": "default"
+		}
+	]
+}
