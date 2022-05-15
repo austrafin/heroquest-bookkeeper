@@ -122,6 +122,8 @@ const serializeArmoryItem = (item) => {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ArmoryItems'
+ *       "404":
+ *         description: The armory item is not found with the given ID
  */
 router.route("").get((req, res) => {
   ArmoryItem.find()

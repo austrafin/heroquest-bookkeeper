@@ -138,6 +138,8 @@ const serializePlayerCard = (card) => {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/PlayerCards'
+ *       "404":
+ *         description: Player card is not found with the given ID
  */
 router.route("").get((req, res) => {
   PlayerCard.find()
