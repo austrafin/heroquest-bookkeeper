@@ -4,7 +4,7 @@ This program is for keeping note of heroes' stats in a game called HeroQuest (ht
 
 ## Development
 
-The easiest way to set up the development environment is to run it on Docker by running ```docker compose up``` in the root directory. The default URL for the frontend is http://localhost:3000 and for the backend http://localhost:5000.
+The easiest way to set up the development environment is to run it on Docker by running command ```docker compose up``` in the root directory. The default URL for the frontend is http://localhost:3000 and for the backend http://localhost:5000. Before this, however the .env files should be created for both, the frontend and the backend. This can be done by copying the values from .env.example.
 
 ## API
 
