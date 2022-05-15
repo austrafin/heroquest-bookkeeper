@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const playerCardSchema = new Schema(
   {
-    characterName: { type: String, required: true },
+    characterName: { type: String, required: true, unique: true },
     baseBodyPoints: { type: Number, required: true, min: 0 },
     bodyPoints: { type: Number, required: true, min: 0 },
     baseMindPoints: { type: Number, required: true, min: 0 },

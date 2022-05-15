@@ -184,6 +184,17 @@ router.route("/:id").get((req, res) => Helper.getObject(PlayerCard, req, res));
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/GenericError'
+ *       "409":
+ *         description: Duplicate value
+ *         content:
+ *           application/json:
+ *             schema:
+ *             example:
+ *               {
+ *                 "type": "Duplicate value",
+ *                 "field": "characterName",
+ *                 "message": "A character with the given name already exists"
+ *               }
  */
 router.route("").post((req, res) => {
   const {
@@ -200,22 +211,34 @@ router.route("").post((req, res) => {
     gold,
   } = req.body;
 
-  new PlayerCard({
-    characterName: characterName,
-    baseBodyPoints: Number(baseBodyPoints),
-    bodyPoints: bodyPoints ? Number(bodyPoints) : Number(baseBodyPoints),
-    baseMindPoints: Number(baseMindPoints),
-    mindPoints: mindPoints ? Number(mindPoints) : Number(baseMindPoints),
-    baseMeleePoints: baseMeleePoints ? Number(baseMeleePoints) : 0,
-    baseDiagonalPoints: baseDiagonalPoints ? Number(baseDiagonalPoints) : 0,
-    baseRangedPoints: baseRangedPoints ? Number(baseRangedPoints) : 0,
-    baseDefencePoints: baseDefencePoints ? Number(baseDefencePoints) : 0,
-    baseMovementPoints: baseMovementPoints ? Number(baseMovementPoints) : null,
-    gold: gold ? Number(gold) : 0,
-  })
-    .save()
-    .then((card) => res.status(201).send(serializePlayerCard(card)))
-    .catch((err) => Helper.sendError(res, err, Helper.POST));
+  PlayerCard.exists({ characterName: characterName }).then((exists) => {
+    if (exists) {
+      return res.status(409).send({
+        type: "Duplicate value",
+        field: "characterName",
+        message: "A character with the given name already exists",
+      });
+    }
+
+    new PlayerCard({
+      characterName: characterName,
+      baseBodyPoints: Number(baseBodyPoints),
+      bodyPoints: bodyPoints ? Number(bodyPoints) : Number(baseBodyPoints),
+      baseMindPoints: Number(baseMindPoints),
+      mindPoints: mindPoints ? Number(mindPoints) : Number(baseMindPoints),
+      baseMeleePoints: baseMeleePoints ? Number(baseMeleePoints) : 0,
+      baseDiagonalPoints: baseDiagonalPoints ? Number(baseDiagonalPoints) : 0,
+      baseRangedPoints: baseRangedPoints ? Number(baseRangedPoints) : 0,
+      baseDefencePoints: baseDefencePoints ? Number(baseDefencePoints) : 0,
+      baseMovementPoints: baseMovementPoints
+        ? Number(baseMovementPoints)
+        : null,
+      gold: gold ? Number(gold) : 0,
+    })
+      .save()
+      .then((card) => res.status(201).send(serializePlayerCard(card)))
+      .catch((err) => Helper.sendError(res, err, Helper.POST));
+  });
 });
 
 /**

@@ -22,32 +22,57 @@ const PATCH = "PATCH";
 const DELETE = "DELETE";
 
 /**
- * A helper function which sets the return status in generic cases
- * @param {object} response HTTP response
+ * A helper function which returns the error status and body in generic cases
  * @param {object} error
+ * @param {object} method HTTP method
  */
-const sendError = (response, error, method) => {
+const getError = (error, method) => {
   switch (error.name) {
     case "ValidationError":
-      response.status(400).json({ type: error.name, message: error.message });
-      break;
+      return {
+        status: 400,
+        body: { type: error.name, message: error.message },
+      };
     case "CastError":
       switch (method) {
         case DELETE:
-          response.status(204).send();
-          break;
+          return { status: 204, body: null };
         case POST:
-          response
-            .status(400)
-            .send({ type: error.name, message: error.message });
-          break;
+          return {
+            status: 400,
+            body: { type: error.name, message: error.message },
+          };
         default:
-          response.status(404).send();
+          return { status: 404, body: null };
       }
-      break;
+    case "MongoError":
+      if (error.codeName === "DuplicateKey") {
+        return {
+          status: 409,
+          body: {
+            type: error.codeName,
+            field: JSON.stringify(error.keyValue),
+            message: "Duplicate field value",
+          },
+        };
+      } else {
+        return { status: 500, body: null };
+      }
     default:
-      response.status(500).send();
+      return { status: 500, body: null };
   }
+};
+
+/**
+ * A helper which sets the response status and body and sends the response
+ * @param {object} response HTTP response
+ * @param {object} error
+ * @param {object} method HTTP method
+ */
+const sendError = (response, error, method) => {
+  const { status, body } = getError(error, method);
+
+  response.status(status).send(body);
 };
 
 /**
@@ -74,4 +99,5 @@ exports.POST = POST;
 exports.PATCH = PATCH;
 exports.DELETE = DELETE;
 exports.sendError = sendError;
+exports.getError = getError;
 exports.getObject = getObject;
