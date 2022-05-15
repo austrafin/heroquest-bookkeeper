@@ -102,6 +102,11 @@
  *
  */
 
+const GET = "GET";
+const POST = "POST";
+const PATCH = "PATCH";
+const DELETE = "DELETE";
+
 const router = require("express").Router();
 const ArmoryItem = require("../models/armory_item.model");
 const PlayerCard = require("../models/player_card.model");
@@ -111,13 +116,13 @@ const PlayerCard = require("../models/player_card.model");
  * @param {object} response HTTP response
  * @param {object} error
  */
-const sendError = (response, error) => {
+const sendError = (response, error, method) => {
   switch (error.name) {
     case "ValidationError":
       response.status(400).json({ type: error.name, message: error.message });
       break;
     case "CastError":
-      response.status(204).send();
+      response.status(method === "DELETE" ? 204 : 404).send();
       break;
     default:
       response.status(500).send();
@@ -178,11 +183,19 @@ router.route("").get((req, res) => {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ArmoryItem'
+ *       "404":
+ *         description: The armory item is not found with the given ID
  */
 router.route("/:id").get((req, res) => {
-  ArmoryItem.find({ _id: req.params.id })
-    .then((armoryItem) => res.json(armoryItem))
-    .catch((err) => res.status(500).send());
+  ArmoryItem.findOne({ _id: req.params.id })
+    .then((armoryItem) => {
+      if (armoryItem) {
+        res.json(armoryItem);
+      } else {
+        res.send(404);
+      }
+    })
+    .catch((err) => sendError(res, err, GET));
 });
 
 /**
@@ -217,7 +230,7 @@ router.route("").post((req, res) => {
   })
     .save()
     .then(() => res.status(201).send())
-    .catch((err) => sendError(res, err));
+    .catch((err) => sendError(res, err, POST));
 });
 
 /**
@@ -253,16 +266,9 @@ router.route("/:id").patch((req, res) => {
         new: true,
       })
         .then(() => res.send(204))
-        .catch((err) => sendError(res, err));
+        .catch((err) => sendError(res, err, PATCH));
     })
-    .catch((err) => {
-      if (err.name === "CastError") {
-        res.send(404);
-        return;
-      }
-
-      res.send(500);
-    });
+    .catch((err) => sendError(res, err, PATCH));
 });
 
 /**
@@ -291,7 +297,7 @@ router.route("/:id").delete((req, res) => {
 
       res.send(204);
     })
-    .catch((err) => sendError(res, err));
+    .catch((err) => sendError(res, err, DELETE));
 });
 
 module.exports = router;
