@@ -9,6 +9,8 @@
  *       type: object
  *       required:
  *         - characterName
+ *         - baseBodyPoints
+ *         - baseMindPoints
  *       properties:
  *         _id:
  *           type: uuid
@@ -18,37 +20,37 @@
  *           description: The name of the character
  *         baseBodyPoints:
  *           type: integer
- *           nullable: true
  *           description: The base body points that the character starts with
  *         bodyPoints:
  *           type: integer
- *           description: Current body points of the character
+ *           description: Current body points of the character - if not
+ *                        provided defaults to the base body points
  *         baseMindPoints:
  *           type: integer
- *           nullable: true
  *           description: The base base mind points that the character starts
  *                        with
  *         mindPoints:
  *           type: integer
- *           description: Current mind points of the character
+ *           description: Current mind points of the character - if not
+ *                        provided defaults to the base mind points
  *         baseDiagonalPoints:
  *           type: integer
- *           nullable: true
+ *           default: 0
  *           description: The base diagonal attack points that the character
  *                        starts with
  *         baseMeleePoints:
  *           type: integer
- *           nullable: true
+ *           default: 0
  *           description: The base melee attack points that the character
  *                        starts with
  *         baseRangedPoints:
  *           type: integer
- *           nullable: true
+ *           default: 0
  *           description: The base ranged attack points that the character
  *                        starts with
  *         baseDefencePoints:
  *           type: integer
- *           nullable: true
+ *           default: 0
  *           description: The base defence points that the character starts with
  *         baseMovementPoints:
  *           type: integer
@@ -57,6 +59,7 @@
  *                        with
  *         gold:
  *           type: integer
+ *           default: 0
  *           description: The amount of gold the character has
  *         imageFile:
  *           type: object
@@ -99,6 +102,26 @@
 const router = require("express").Router();
 const PlayerCard = require("../models/player_card.model");
 const ArmoryItem = require("../models/armory_item.model");
+const Helper = require("./common");
+
+const serializePlayerCard = (card) => {
+  return {
+    _id: card._id,
+    characterName: card.characterName,
+    baseBodyPoints: card.baseBodyPoints,
+    bodyPoints: card.bodyPoints,
+    baseMindPoints: card.baseMindPoints,
+    mindPoints: card.mindPoints,
+    baseMeleePoints: card.baseMeleePoints,
+    baseDiagonalPoints: card.baseDiagonalPoints,
+    baseRangedPoints: card.baseRangedPoints,
+    baseDefencePoints: card.baseDefencePoints,
+    baseMovementPoints: card.baseMovementPoints,
+    gold: card.gold,
+    imageFile: card.imageFile,
+    armoryItems: card.armoryItems,
+  };
+};
 
 /**
  * @swagger
@@ -116,29 +139,9 @@ const ArmoryItem = require("../models/armory_item.model");
  */
 router.route("").get((req, res) => {
   PlayerCard.find()
-    .then((playerCards) => {
-      const response = [];
-      playerCards.forEach((card) => {
-        const cardsResponse = {};
-        cardsResponse["_id"] = card._id;
-        cardsResponse["characterName"] = card.characterName;
-        cardsResponse["baseBodyPoints"] = card.baseBodyPoints;
-        cardsResponse["bodyPoints"] = card.bodyPoints;
-        cardsResponse["baseMindPoints"] = card.baseMindPoints;
-        cardsResponse["mindPoints"] = card.mindPoints;
-        cardsResponse["baseMeleePoints"] = card.baseMeleePoints;
-        cardsResponse["baseDiagonalPoints"] = card.baseDiagonalPoints;
-        cardsResponse["baseRangedPoints"] = card.baseRangedPoints;
-        cardsResponse["baseDefencePoints"] = card.baseDefencePoints;
-        cardsResponse["baseMovementPoints"] = card.baseMovementPoints;
-        cardsResponse["gold"] = card.gold;
-        cardsResponse["imageFile"] = card.imageFile;
-        cardsResponse["armoryItems"] = card.armoryItems;
-
-        response.push(cardsResponse);
-      });
-      res.json(response);
-    })
+    .then((playerCards) =>
+      res.json(playerCards.map((card) => serializePlayerCard(card)))
+    )
     .catch((err) => res.status(500).send());
 });
 
@@ -151,26 +154,44 @@ router.route("").get((req, res) => {
  *     responses:
  *       "201":
  *         description: New player card added
+ *       "400":
+ *         description: Payload has errors
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GenericError'
  */
 router.route("").post((req, res) => {
+  const {
+    characterName,
+    baseBodyPoints,
+    bodyPoints,
+    baseMindPoints,
+    mindPoints,
+    baseMeleePoints,
+    baseDiagonalPoints,
+    baseRangedPoints,
+    baseDefencePoints,
+    baseMovementPoints,
+    gold,
+  } = req.body;
+
   new PlayerCard({
-    characterName: req.body.characterName,
-    baseBodyPoints: Number(req.body.baseBodyPoints) || 0,
-    bodyPoints:
-      Number(req.body.bodyPoints) || Number(req.body.baseBodyPoints) || 0,
-    baseMindPoints: Number(req.body.baseMindPoints) || 0,
-    mindPoints:
-      Number(req.body.mindPoints) || Number(req.body.baseMindPoints) || 0,
-    baseMeleePoints: Number(req.body.baseMeleePoints) || 0,
-    baseDiagonalPoints: Number(req.body.baseDiagonalPoints) || 0,
-    baseRangedPoints: Number(req.body.baseRangedPoints) || 0,
-    baseDefencePoints: Number(req.body.baseDefencePoints) || 0,
-    baseMovementPoints: Number(req.body.baseMovementPoints) || 0,
-    gold: Number(req.body.gold) || 0,
+    characterName: characterName,
+    baseBodyPoints: Number(baseBodyPoints),
+    bodyPoints: bodyPoints ? Number(bodyPoints) : Number(baseBodyPoints),
+    baseMindPoints: Number(baseMindPoints),
+    mindPoints: mindPoints ? Number(mindPoints) : Number(baseMindPoints),
+    baseMeleePoints: baseMeleePoints ? Number(baseMeleePoints) : 0,
+    baseDiagonalPoints: baseDiagonalPoints ? Number(baseDiagonalPoints) : 0,
+    baseRangedPoints: baseRangedPoints ? Number(baseRangedPoints) : 0,
+    baseDefencePoints: baseDefencePoints ? Number(baseDefencePoints) : 0,
+    baseMovementPoints: baseMovementPoints ? Number(baseMovementPoints) : null,
+    gold: gold ? Number(gold) : 0,
   })
     .save()
-    .then(() => res.status(201).send())
-    .catch((err) => res.status(500).send());
+    .then((card) => res.status(201).send(serializePlayerCard(card)))
+    .catch((err) => Helper.sendError(res, err, Helper.POST));
 });
 
 /**

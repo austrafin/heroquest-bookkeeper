@@ -85,49 +85,12 @@
  *       type: array
  *       items:
  *         $ref: '#/components/schemas/ArmoryItem'
- *     GenericError:
- *       type: object
- *       properties:
- *         type:
- *           type: string
- *           description: Error type
- *         message:
- *           type: string
- *           description: Error message
- *       example:
- *          type: ValidationError
- *          message: Validation failed diagonalOperator `x` is not a valid enum
- *                   value for path `diagonalOperator`., defenceOperator `y` is
- *                   not a valid enum value for path `defenceOperator`.
- *
  */
-
-const GET = "GET";
-const POST = "POST";
-const PATCH = "PATCH";
-const DELETE = "DELETE";
 
 const router = require("express").Router();
 const ArmoryItem = require("../models/armory_item.model");
 const PlayerCard = require("../models/player_card.model");
-
-/**
- * A helper function which sets the return status in generic cases
- * @param {object} response HTTP response
- * @param {object} error
- */
-const sendError = (response, error, method) => {
-  switch (error.name) {
-    case "ValidationError":
-      response.status(400).json({ type: error.name, message: error.message });
-      break;
-    case "CastError":
-      response.status(method === "DELETE" ? 204 : 404).send();
-      break;
-    default:
-      response.status(500).send();
-  }
-};
+const Helper = require("./common");
 
 /**
  * @swagger
@@ -195,7 +158,7 @@ router.route("/:id").get((req, res) => {
         res.send(404);
       }
     })
-    .catch((err) => sendError(res, err, GET));
+    .catch((err) => Helper.sendError(res, err, Helper.GET));
 });
 
 /**
@@ -230,7 +193,7 @@ router.route("").post((req, res) => {
   })
     .save()
     .then(() => res.status(201).send())
-    .catch((err) => sendError(res, err, POST));
+    .catch((err) => Helper.sendError(res, err, Helper.POST));
 });
 
 /**
@@ -266,9 +229,9 @@ router.route("/:id").patch((req, res) => {
         new: true,
       })
         .then(() => res.send(204))
-        .catch((err) => sendError(res, err, PATCH));
+        .catch((err) => Helper.sendError(res, err, Helper.PATCH));
     })
-    .catch((err) => sendError(res, err, PATCH));
+    .catch((err) => Helper.sendError(res, err, Helper.PATCH));
 });
 
 /**
@@ -297,7 +260,7 @@ router.route("/:id").delete((req, res) => {
 
       res.send(204);
     })
-    .catch((err) => sendError(res, err, DELETE));
+    .catch((err) => Helper.sendError(res, err, Helper.DELETE));
 });
 
 module.exports = router;

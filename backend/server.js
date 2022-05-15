@@ -44,7 +44,11 @@ app.use(
           },
         ],
       },
-      apis: ["./routes/armory_items.js", "./routes/player_cards.js"],
+      apis: [
+        "./routes/armory_items.js",
+        "./routes/player_cards.js",
+        "./routes/common.js",
+      ],
     })
   )
 );
