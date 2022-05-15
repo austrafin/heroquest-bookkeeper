@@ -214,7 +214,7 @@ router.route("").post((req, res) => {
  *                 627fb4cb8870a30013824fac: { bodyPoints: 2, gold: 100 },
  *               }
  *     responses:
- *       "200":
+ *       "204":
  *         description: Player card updated
  *       "400":
  *         description: Payload has errors
@@ -226,7 +226,7 @@ router.route("").post((req, res) => {
 router.route("/update_multiple").post((req, res) => {
   for (var id in req.body) {
     PlayerCard.findOneAndUpdate({ _id: id }, req.body[id])
-      .then(() => res.send())
+      .then(() => res.send(204))
       .catch((err) => Helper.sendError(res, err, Helper.POST));
   }
 });
@@ -238,7 +238,7 @@ router.route("/update_multiple").post((req, res) => {
  *     summary: Uploads a new profile image for a player card
  *     tags: [Player cards]
  *     responses:
- *       "200":
+ *       "204":
  *         description: Image added for the player card
  *       "422":
  *         description: The file is null
@@ -284,7 +284,7 @@ router.route("/upload_image/:id").post((req, res) => {
       ),
     }
   )
-    .then(() => res.send())
+    .then(() => res.send(204))
     .catch((err) => Helper.sendError(res, err, Helper.POST));
 });
 
@@ -295,7 +295,7 @@ router.route("/upload_image/:id").post((req, res) => {
  *     summary: Adds an armory item for the character
  *     tags: [Player cards]
  *     responses:
- *       "200":
+ *       "204":
  *         description: New armory item added for the character
  *       "404":
  *         description: The armory item does not exist
@@ -335,7 +335,7 @@ router.route("/add_armory_item/:id").post((req, res) => {
         PlayerCard.findOneAndUpdate(
           { _id: req.params.id },
           { $push: { armoryItems: req.body.itemId } }
-        ).then(() => res.send());
+        ).then(() => res.send(204));
       }).catch((err) => Helper.sendError(res, err, Helper.POST));
     } else {
       res.status(404).json({ msg: "Error: Armory item does not exist." });
@@ -350,7 +350,7 @@ router.route("/add_armory_item/:id").post((req, res) => {
  *     summary: Removes an armory item from the character
  *     tags: [Player cards]
  *     responses:
- *       "200":
+ *       "204":
  *         description: Removes an armory item from the character
  *         content:
  *           application/json:
@@ -371,7 +371,7 @@ router.route("/delete_armory_item/:id").patch((req, res) => {
   PlayerCard.findOneAndUpdate(
     { _id: req.params.id },
     { $pull: { armoryItems: { $in: req.body.itemId } } }
-  ).then(() => res.send());
+  ).then(() => res.send(204));
 });
 
 /**
@@ -381,13 +381,13 @@ router.route("/delete_armory_item/:id").patch((req, res) => {
  *     summary: Delete's a character's player card
  *     tags: [Player cards]
  *     responses:
- *       "200":
+ *       "204":
  *         description: Delete's a character's player card
  */
 router.route("/:id").delete((req, res) => {
   console.log("req.params");
   PlayerCard.findByIdAndDelete(req.params.id)
-    .then(() => res.send())
+    .then(() => res.send(204))
     .catch((err) => Helper.sendError(res, err, Helper.DELETE));
 });
 
