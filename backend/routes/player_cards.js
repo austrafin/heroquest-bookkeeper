@@ -256,6 +256,13 @@ router.route("/update_multiple").post((req, res) => {
  *   post:
  *     summary: Uploads a new profile image for a player card
  *     tags: [Player cards]
+ *     consumes:
+ *       - multipart/form-data
+ *     parameters:
+ *       - in: formData
+ *         name: characterImage
+ *         type: file
+ *         description: The character image file.
  *     responses:
  *       "204":
  *         description: Image added for the player card
@@ -313,6 +320,15 @@ router.route("/upload_image/:id").post((req, res) => {
  *   post:
  *     summary: Adds an armory item for the character
  *     tags: [Player cards]
+ *     requestBody:
+ *       description: Contains the armory item's ID
+ *       content:
+ *         application/json:
+ *           schema:
+ *             example:
+ *               {
+ *                 "itemId": "627fa8054d135d0013330ed8"
+ *               }
  *     responses:
  *       "204":
  *         description: New armory item added for the character
@@ -368,6 +384,15 @@ router.route("/add_armory_item/:id").post((req, res) => {
  *   patch:
  *     summary: Removes an armory item from the character
  *     tags: [Player cards]
+ *     requestBody:
+ *       description: Contains the armory item's ID
+ *       content:
+ *         application/json:
+ *           schema:
+ *             example:
+ *               {
+ *                 "itemId": "627fa8054d135d0013330ed8"
+ *               }
  *     responses:
  *       "204":
  *         description: Removes an armory item from the character
