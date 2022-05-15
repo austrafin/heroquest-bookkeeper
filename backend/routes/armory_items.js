@@ -107,12 +107,16 @@ const ArmoryItem = require("../models/armory_item.model");
 const PlayerCard = require("../models/player_card.model");
 
 const sendError = (response, error) => {
-  if (error.name === "ValidationError") {
-    response.status(400).json({ type: error.name, message: error.message });
-    return;
+  switch (error.name) {
+    case "ValidationError":
+      response.status(400).json({ type: error.name, message: error.message });
+      break;
+    case "CastError":
+      response.status(204).send();
+      break;
+    default:
+      response.status(500).send();
   }
-
-  response.status(500).send();
 };
 
 /**
@@ -243,7 +247,7 @@ router.route("/:id").patch((req, res) => {
  *     summary: Deletes an armory item
  *     tags: [Armory items]
  *     responses:
- *       "200":
+ *       "204":
  *         description: Armory item deleted
  */
 router.route("/:id").delete((req, res) => {
@@ -260,9 +264,9 @@ router.route("/:id").delete((req, res) => {
         // Why does this need to be here for the deletion to work???
       });
 
-      res.send();
+      res.send(204);
     })
-    .catch((err) => res.status(500).send());
+    .catch((err) => sendError(res, err));
 });
 
 module.exports = router;
