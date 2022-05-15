@@ -99,6 +99,8 @@
  *         $ref: '#/components/schemas/PlayerCard'
  */
 
+const MAX_FILE_SIZE = 17825792;
+
 const router = require("express").Router();
 const PlayerCard = require("../models/player_card.model");
 const ArmoryItem = require("../models/armory_item.model");
@@ -265,7 +267,7 @@ router.route("/upload_image/:id").post((req, res) => {
     return res.status(422).json({ msg: "No file uploaded" });
   }
 
-  if (req.files.characterImage.size > 17825792) {
+  if (req.files.characterImage.size > MAX_FILE_SIZE) {
     return res.status(413).json({ msg: "File size too large." });
   }
 
