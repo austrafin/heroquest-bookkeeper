@@ -92,6 +92,23 @@ const ArmoryItem = require("../models/armory_item.model");
 const PlayerCard = require("../models/player_card.model");
 const Helper = require("./common");
 
+const serializeArmoryItem = (item) => {
+  return {
+    _id: item._id,
+    defenceOperator: item.defenceOperator,
+    defencePoints: item.defencePoints,
+    diagonalOperator: item.diagonalOperator,
+    diagonalPoints: item.diagonalPoints,
+    meleeOperator: item.meleeOperator,
+    meleePoints: item.meleePoints,
+    movementOperator: item.movementOperator,
+    movementPoints: item.movementPoints,
+    name: item.name,
+    rangedOperator: item.rangedOperator,
+    rangedPoints: item.rangedPoints,
+  };
+};
+
 /**
  * @swagger
  * /armory_items/:
@@ -108,28 +125,9 @@ const Helper = require("./common");
  */
 router.route("").get((req, res) => {
   ArmoryItem.find()
-    .then((armoryItems) => {
-      const response = [];
-      armoryItems.forEach((item) => {
-        const armoryItemResponse = {};
-        armoryItemResponse["_id"] = item._id;
-        armoryItemResponse["defenceOperator"] = item.defenceOperator;
-        armoryItemResponse["defencePoints"] = item.defencePoints;
-        armoryItemResponse["diagonalOperator"] = item.diagonalOperator;
-        armoryItemResponse["diagonalPoints"] = item.diagonalPoints;
-        armoryItemResponse["meleeOperator"] = item.meleeOperator;
-        armoryItemResponse["meleePoints"] = item.meleePoints;
-        armoryItemResponse["movementOperator"] = item.movementOperator;
-        armoryItemResponse["movementPoints"] = item.movementPoints;
-        armoryItemResponse["name"] = item.name;
-        armoryItemResponse["rangedOperator"] = item.rangedOperator;
-        armoryItemResponse["rangedPoints"] = item.rangedPoints;
-
-        response.push(armoryItemResponse);
-      });
-
-      res.json(response);
-    })
+    .then((armoryItems) =>
+      res.json(armoryItems.map((item) => serializeArmoryItem(item)))
+    )
     .catch((err) => res.status(500).send());
 });
 
@@ -182,7 +180,7 @@ router.route("").post((req, res) => {
     movementOperator: req.body.movementOperator,
   })
     .save()
-    .then(() => res.status(201).send())
+    .then((item) => res.status(201).send(serializeArmoryItem(item)))
     .catch((err) => Helper.sendError(res, err, Helper.POST));
 });
 
