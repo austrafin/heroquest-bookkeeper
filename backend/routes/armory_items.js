@@ -244,9 +244,7 @@ router.route("/:id").delete((req, res) => {
             armoryItems: [req.params.id],
           },
         }
-      ).then(() => {
-        // Why does this need to be here for the deletion to work???
-      });
+      );
 
       res.send(204);
     })
