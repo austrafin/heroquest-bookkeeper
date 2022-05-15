@@ -290,15 +290,21 @@ router.route("/update_multiple").post((req, res) => {
  */
 router.route("/upload_image/:id").post((req, res) => {
   if (req.files == null) {
-    return res.status(422).json({ msg: "No file uploaded" });
+    return res
+      .status(422)
+      .json({ type: "No file", message: "No file uploaded" });
   }
 
   if (req.files.characterImage.size > MAX_FILE_SIZE) {
-    return res.status(413).json({ msg: "File size too large." });
+    return res
+      .status(413)
+      .json({ type: "File too large", message: "File size too large." });
   }
 
   if (!/^image[/]/.test(req.files.characterImage.mimetype)) {
-    return res.status(415).json({ msg: "Error: file type is not image." });
+    return res
+      .status(415)
+      .json({ type: "Invalid type", message: "File type is not image." });
   }
 
   PlayerCard.findOneAndUpdate(
@@ -356,14 +362,17 @@ router.route("/upload_image/:id").post((req, res) => {
  */
 router.route("/add_armory_item/:id").post((req, res) => {
   if (req.body.itemId === null || req.body.itemId === "")
-    return res.status(422).json({ msg: "Error: Missing Armory Item ID" });
+    return res
+      .status(422)
+      .json({ type: "Missing ID", message: "Missing Armory Item ID" });
 
   ArmoryItem.findById(req.body.itemId, function (err, item) {
     if (item) {
       PlayerCard.findById(req.params.id, function (err, card) {
         if (card.armoryItems.includes(req.body.itemId)) {
           return res.status(409).json({
-            msg: "Error: Player card already contains the armory item.",
+            type: "Duplicate item",
+            message: "Player card already contains the armory item.",
           });
         }
 
@@ -373,7 +382,10 @@ router.route("/add_armory_item/:id").post((req, res) => {
         ).then(() => res.send(204));
       }).catch((err) => Helper.sendError(res, err, Helper.POST));
     } else {
-      res.status(404).json({ msg: "Error: Armory item does not exist." });
+      res.status(404).json({
+        type: "Item does not exist",
+        message: "Armory item does not exist.",
+      });
     }
   });
 });
@@ -410,7 +422,9 @@ router.route("/add_armory_item/:id").post((req, res) => {
  */
 router.route("/delete_armory_item/:id").patch((req, res) => {
   if (!req.body.itemId)
-    return res.status(422).json("Error: Missing Armory Item ID");
+    return res
+      .status(422)
+      .json({ type: "Missing ID", message: " Missing Armory Item ID" });
 
   PlayerCard.findOneAndUpdate(
     { _id: req.params.id },
